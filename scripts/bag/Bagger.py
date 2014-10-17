@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Bag specified topics."""
+"""Topic bagging manager."""
 
 import os
 import sys
@@ -16,11 +16,17 @@ class Bagger(object):
     """Bag specified topics."""
 
     def __init__(self, arg, robot):
-        """Construct Bagger object."""
+        """Construct Bagger object and bag specified topics.
+
+        :param arg: command-line arguments
+        :type arg: list of str
+        :param robot: robot name
+        :type robot: str
+        """
         self.arg = arg
         topics_file = '{}/{}.topics'.format(os.path.dirname(__file__), robot)
         self.topics = TopicList(topics_file).topics
-        self.enabled = Shortcuts(arg, self.topics).enabled
+        self.enabled = Shortcuts(arg, self.topics, 'bag').enabled
         self.process = None
         self.bag()
 
@@ -56,8 +62,11 @@ if __name__ == '__main__':
         robot = os.environ["ROBOT"]
         bag = Bagger(sys.argv, robot)
         bag.wait()
-    except KeyError as e:
+    except KeyError:
         print "E: 'ROBOT' variable not exported properly"
         sys.exit(2)
     except KeyboardInterrupt:
+        bag.kill()
+    except Exception as e:
+        print e
         bag.kill()

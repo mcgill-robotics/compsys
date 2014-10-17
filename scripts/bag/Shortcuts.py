@@ -8,11 +8,19 @@ class Shortcuts(object):
 
     """Parse command line arguments for shortcuts."""
 
-    def __init__(self, arg, raw):
-        """Construct Shortcuts object."""
-        self._file = arg[0][2:] if arg[0].startswith('./') else arg[0]
+    def __init__(self, arg, raw, executable):
+        """Construct Shortcuts object.
+
+        :param arg: command-line arguments
+        :type arg: list of str
+        :param raw: list of shortcuts to parse
+        :type raw: TopicList
+        :param executable: name of executable
+        :type executable: str
+        """
         self.arg = arg[1:]
         self.raw = raw
+        self.executable = executable
         self.enabled = []
         self.parse()
 
@@ -40,14 +48,18 @@ class Shortcuts(object):
             self.enabled = self.raw
 
     def _print_topic_info(self, elem):
-        """Print element information."""
+        """Print element information.
+
+        :param elem: object with shortcut and description
+        :type elem: Topic
+        """
         shortcut = elem.shortcut
         description = elem.description
         print '-{0: <9} {1: <69}'.format(shortcut, description)
 
     def usage(self):
         """Print usage based on configuration."""
-        print 'usage: python {} [OPTIONS]'.format(self._file)
+        print 'usage: python {} [OPTIONS]'.format(self.executable)
         print '{0: <10} {1: <69}'.format('OPTION', 'DESCRIPTION')
         for elem in self.raw:
             self._print_topic_info(elem)
