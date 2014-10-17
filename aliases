@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# CONNECTING
+alias robosh='mosh robotics@10.0.0.1'
+alias robotx='ssh -Y robotics@10.0.0.1'
+
+# BAGGING
+alias bag='python $ROBOTIC_PATH/scripts/bag/Bagger.py'
+alias bag_merge='python $ROBOTIC_PATH/scripts/bag/Merger.py'
+
+# MONITORING
+alias glances='glances -yet 5'
+alias main='tmux attach -t MAIN || tmux new -s MAIN'

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# DETERMINE SHELL
+if [ $SHELL = "/bin/bash" ]; then
+    extension='bash'
+elif [ $SHELL = "/bin/sh" ]; then
+    extension='sh'
+elif [ $SHELL = "/bin/zsh" ]; then
+    extension='zsh'
+fi
+
+# EXPORTS
+export ROS_WORKSPACE=$ROBOTIC_PATH/$ROBOT/catkin_ws
+export ROS_PACKAGE_PATH=/opt/ros/indigo/stacks:/opt/ros/indigo/share:$ROS_WORKSPACE/catkin_ws
+
+# SOURCES
+if [ -f $ROS_WORKSPACE/catkin_ws/devel/setup.$extension ];
+then
+    source $ROS_WORKSPACE/catkin_ws/devel/setup.$extension
+fi
+source /opt/ros/inidigo/setup.$extension
+source $ROBOTIC_PATH/aliases
