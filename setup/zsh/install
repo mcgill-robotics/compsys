@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo 'INSTALLING ZSHELL'
+sudo apt-get install zsh
+echo
+
+echo 'INSTALLING ZSPREZTO'
+git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
+echo
+
+echo 'SETTING UP RC FILES'
+if [ ! -f ~/.zshrc ];
+then
+	cp $ROBOTIC_PATH/setup/zsh/zshrc ~/.zshrc
+fi
+ln -s $ROBOTIC_PATH/setup/zsh/zpreztorc ~/.zpreztorc
+echo
+
+echo 'SWITCHING DEFAULT SHELL'
+chsh -s /bin/zsh
+echo
