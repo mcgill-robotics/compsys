@@ -1,0 +1,137 @@
+set nocompatible
+syntax on
+set hidden
+set showmode
+set wildmenu
+set winaltkeys=no
+
+" Change map leader
+let mapleader = ","
+let g:mapleader = ","
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+nmap <silent> ,ev :e $MYVIMRC<cr>
+nmap <silent> ,sv :so $MYVIMRC<cr>
+
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
+    filetype off
+    " set the runtime path to include Vundle and initialize
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+
+    Plugin 'gmarik/Vundle.vim'
+    Plugin 'tpope/vim-fugitive'
+    Plugin 'L9'
+    Plugin 'flazz/vim-colorschemes'
+    Plugin 'sudar/vim-arduino-syntax'
+    Plugin 'jwhitley/vim-matchit'
+    Plugin 'MarcWeber/vim-addon-mw-utils'
+    Plugin 'tomtom/tlib_vim'
+    Plugin 'garbas/vim-snipmate'
+    Plugin 'honza/vim-snippets'
+    Plugin 'tpope/vim-surround'
+    Plugin 'scrooloose/nerdtree'
+    Plugin 'jistr/vim-nerdtree-tabs'
+    Plugin 'kien/ctrlp.vim'
+    Plugin 'vim-scripts/taglist.vim'
+    Plugin 'gerw/vim-latex-suite'
+    Plugin 'tomasr/molokai'
+    Plugin 'Lokaltog/vim-distinguished'
+    Plugin 'ervandew/supertab'
+    Plugin 'davidhalter/jedi-vim'
+    Plugin 'terryma/vim-multiple-cursors'
+    "Plugin 'bling/vim-airline'
+    "Plugin 'edkolev/tmuxline.vim'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'LaTeX-Box-Team/LaTeX-Box'
+    Plugin 'coot/atp_vim'
+    Plugin 'chriskempson/base16-vim'
+
+    " All of your Plugins must be added before the following line
+    call vundle#end()            " required
+    filetype plugin indent on    " required
+endif
+
+" Vim settings
+" Set the search scan to wrap around the file
+set wrapscan
+" Command line height
+set ch=1
+" Visual bell
+"set vb
+" Allow backspace over indent, eol, and start of insert
+set backspace=2
+" Status Line
+"set stl=%f\ %m\ %r\ Line:\ %l/%L[%p%%]\ Col:\ %c\ Buf:\ #%n\ [%b][0x%B]
+
+"Tell vim to put a status line
+set laststatus=2
+
+" Hide mouse while typing
+set mousehide
+set history=100
+set complete=.,w,b,t
+set incsearch
+
+" Set cursor line
+set cursorline
+hi CursorLine term=bold cterm=bold guibg=Grey40
+
+" Turn backup off
+set nobackup
+set nowb
+set noswapfile
+
+" Use spaces instead of tabs
+set expandtab
+set smarttab
+set shiftwidth=4
+set ai
+set si
+set wrap
+
+map j gj
+map k gk
+
+"set relativenumber
+set number
+set t_Co=256
+"set background=dark
+"colorscheme distinguished
+"colorscheme molokai
+"let g:rehash256 = 1
+"let g:molokai_original = 1
+let g:rehash256 = 1
+
+" Taglist Settings
+noremap <silent> <Leader>t :TlistToggle<CR>
+
+" Taglist plugin config
+let Tlist_Use_Right_Window = 1
+let Tlist_Inc_Winwidth = 0
+let Tlist_WinWidth = 45
+let Tlist_GainFocus_On_ToggleOpen= 1
+let Tlist_Ctags_Cmd = 'ctags'
+let Tlist_Show_One_File = 1
+
+" NERDTree settings
+:map <F5> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=0
+
+" Mouse Mode iterm2
+set mouse=a
+set ttym=xterm2
+
+" ctrlp hotkeys
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
