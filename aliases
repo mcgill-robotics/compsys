@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # CONNECTING
-alias robosh='mosh robotics@10.0.0.1'
+alias robot='mosh robotics@10.0.0.1'
 alias robotx='ssh -Y robotics@10.0.0.1'
 
 # BAGGING
