@@ -1,16 +1,14 @@
-#!/bin/bash
-
 # DETERMINE SHELL
-SHELL_EXTENSION=`echo $SHELL | cut -d '/' -f 2`
+SHELL_EXTENSION=`echo $SHELL | rev | cut -d '/' -f 1 | rev`
 
 # EXPORTS
 export ROS_WORKSPACE=$ROBOTIC_PATH/$ROBOT/catkin_ws
-export ROS_PACKAGE_PATH=/opt/ros/indigo/stacks:/opt/ros/indigo/share:$ROS_WORKSPACE/catkin_ws
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$ROS_WORKSPACE/catkin_ws
 
 # SOURCES
 if [ -f $ROS_WORKSPACE/catkin_ws/devel/setup.$SHELL_EXTENSION ];
 then
     source $ROS_WORKSPACE/catkin_ws/devel/setup.$SHELL_EXTENSION
 fi
-source /opt/ros/inidigo/setup.$SHELL_EXTENSION
+source /opt/ros/indigo/setup.$SHELL_EXTENSION
 source $ROBOTIC_PATH/compsys/aliases
