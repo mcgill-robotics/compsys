@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo 'UPDATING SHELL RC FILES'
+for rcfile in "$HOME/.bashrc" "$HOME/.zshrc"
+do
+    if [ -f $rcfile ]
+    then
+        if [[ `grep "export ROBOT=" $rcfile | wc -l` -eq 0 ]]
+        then
+            echo "updating $rcfile"
+            echo "" >> $rcfile
+            echo "# ROBOTICS CONFIGURATION" >> $rcfile
+            echo "export ROBOT=$ROBOT" >> $rcfile
+            echo "export ROBOTIC_PATH=$ROBOTIC_PATH" >> $rcfile
+            echo "source $ROBOTIC_PATH/compsys/roboticrc" >> $rcfile
+        fi
+    fi
+done
+
+echo 'ADDING OTHER CONFIGURATION FILES'
+for rcfile in "vimrc" "tmux.conf" "tline"
+do
+    if [ ! -f $HOME/.$rcfile ]
+    then
+        echo "adding $HOME/.$rcfile"
+        ln -s $ROBOTIC_PATH/compsys/setup/config/$rcfile $HOME/.$rcfile
+    fi
+done
+
+echo 'DONE'
+echo
