@@ -19,6 +19,7 @@ zstyle ':prezto:load' pmodule \
     'ssh' \
     'syntax-highlighting' \
     'history-substring-search' \
+    'command-not-found' \
     'python' \
     'tmux' \
     'fasd'
