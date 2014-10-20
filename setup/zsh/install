@@ -10,13 +10,19 @@ then
 fi
 
 echo 'SETTING UP RC FILES'
-if [ ! -f ~/.zshrc ]
+if [ ! -f $HOME/.zshrc ]
 then
-	cp $ROBOTIC_PATH/compsys/setup/zsh/zshrc ~/.zshrc
+	cp $ROBOTIC_PATH/compsys/setup/zsh/zshrc $HOME/.zshrc
 fi
-if [ ! -f ~/.zpreztorc ]
+if [ ! -f $HOME/.zpreztorc ]
 then
-	ln -s $ROBOTIC_PATH/compsys/setup/zsh/zpreztorc ~/.zpreztorc
+	ln -s $ROBOTIC_PATH/compsys/setup/zsh/zpreztorc $HOME/.zpreztorc
+fi
+
+echo 'SETTING UP FASD'
+if [ ! -f /usr/bin/fasd ]
+then
+	sudo wget https://raw.githubusercontent.com/clvv/fasd/master/fasd -P /usr/bin
 fi
 
 echo 'SWITCHING DEFAULT SHELL'
