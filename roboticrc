@@ -3,7 +3,7 @@ SHELL_EXTENSION=`echo $SHELL | rev | cut -d '/' -f 1 | rev`
 
 # ROS
 source /opt/ros/indigo/setup.$SHELL_EXTENSION
-export ROS_WORKSPACE=$ROBOTIC_PATH/$ROBOT-2014/catkin_ws
+export ROS_WORKSPACE=$ROBOTIC_PATH/$ROBOT/catkin_ws
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$ROS_WORKSPACE/catkin_ws
 if [ -f $ROS_WORKSPACE/catkin_ws/devel/setup.$SHELL_EXTENSION ];
 then
