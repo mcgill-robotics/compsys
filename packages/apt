@@ -3,7 +3,6 @@ python-pip
 vim
 tmux
 mosh
-autojump
 glances
 tig
 sl
