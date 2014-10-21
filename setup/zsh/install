@@ -23,6 +23,7 @@ echo 'SETTING UP FASD'
 if [ ! -f /usr/bin/fasd ]
 then
 	sudo wget https://raw.githubusercontent.com/clvv/fasd/master/fasd -P /usr/bin
+	sudo chmod +x /usr/bin/fasd
 fi
 
 echo 'SWITCHING DEFAULT SHELL'
