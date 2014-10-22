@@ -14,15 +14,15 @@ zstyle ':prezto:load' pmodule \
     'spectrum' \
     'utility' \
     'completion' \
-    'prompt' \
     'git' \
     'ssh' \
-    'syntax-highlighting' \
-    'history-substring-search' \
     'command-not-found' \
     'python' \
     'tmux' \
-    'fasd'
+    'fasd' \
+    'syntax-highlighting' \
+    'history-substring-search' \
+    'prompt'
 
 # EDITOR BINDINGS
 zstyle ':prezto:module:editor' key-bindings 'vi'
