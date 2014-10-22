@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # DETERMINE SHELL
-SHELL_EXTENSION=`echo $SHELL | rev | cut -d '/' -f 1 | rev`
+SHELL_EXTENSION=${SHELL##*/}
 
 # ROS
 source /opt/ros/indigo/setup.$SHELL_EXTENSION
