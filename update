@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'INSTALLING DEPENDENCIES'
+echo 'UPDATING DEPENDENCIES'
 apt=`cat $ROBOTIC_PATH/compsys/packages/apt | awk 'BEGIN{ORS=" "}1'`
 sudo apt-get install $apt
 echo 'DONE'
