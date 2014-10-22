@@ -7,7 +7,7 @@ then
     mkdir $ROBOTIC_PATH/compsys/.git/hooks
 fi
 echo "#!/bin/bash" > $ROBOTIC_PATH/compsys/.git/hooks/post-merge
-echo "" > $ROBOTIC_PATH/compsys/.git/hooks/post-merge
+echo "" >> $ROBOTIC_PATH/compsys/.git/hooks/post-merge
 echo "source $ROBOTIC_PATH/compsys/update" >> $ROBOTIC_PATH/compsys/.git/hooks/post-merge
 chmod +x $ROBOTIC_PATH/compsys/.git/hooks/post-merge
 
