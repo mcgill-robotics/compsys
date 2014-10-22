@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# FIGURE OUT ROBOTIC PATH
+export ROBOTIC_PATH=`dirname $PWD`
+
 # ROBOT OR NOT
 echo 'ARE YOU A ROBOT?'
 select yn in "YES" "NO"
@@ -37,9 +40,6 @@ do
     esac
 done
 echo
-
-# FIGURE OUT ROBOTIC PATH
-export ROBOTIC_PATH=`dirname $PWD`
 
 # CLONING REPOSITORY
 if [ ! -d $ROBOTIC_PATH/$ROBOT ]
