@@ -8,9 +8,11 @@ echo 'ARE YOU A ROBOT?'
 select yn in "YES" "NO"
 do
     case $yn in
-        YES )   echo 'E: ROBOT NOT YET SUPPORTED'
+        YES )   export IAMROBOT=true
+                echo 'E: ROBOT NOT YET SUPPORTED'
                 exit;;
-        NO )    break;;
+        NO )    export IAMROBOT=false
+                break;;
     esac
 done
 echo
@@ -20,9 +22,9 @@ echo 'WHICH TEAM ARE YOU ON?'
 select team in "AUV" "ROVER"
 do
     case $team in
-        AUV )   export ROBOT='auv'
+        AUV )   export ROBOT=auv
                 break;;
-        ROVER ) export ROBOT='rover'
+        ROVER ) export ROBOT=rover
                 break;;
     esac
 done

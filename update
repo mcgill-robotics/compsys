@@ -1,7 +1,24 @@
 #!/bin/bash
 
-echo 'UPDATING DEPENDENCIES'
-apt=`cat $ROBOTIC_PATH/compsys/packages/apt | awk 'BEGIN{ORS=" "}1'`
-sudo apt-get install $apt
-echo 'DONE'
+function get_dependencies () {
+    if [ -s $ROBOTIC_PATH/compsys/packages/$1 ]
+    then
+        cat $ROBOTIC_PATH/compsys/packages/$1 | awk 'BEGIN{ORS=" "}1'
+    fi
+}
+
+echo 'UPDATING APT-GET DEPENDENCIES'
+apt=`get_dependencies apt`
+[[ -n "$apt" ]] && sudo apt-get install $apt || echo 'no apt packages to install'
 echo
+
+echo 'UPDATING RUBY GEMS DEPENDENCIES'
+gem=`get_dependencies gem`
+[[ -n "$gem" ]] && sudo gem install $gem || echo 'no gem packages to install'
+echo
+
+echo 'UPDATING PYTHON DEPENDENCIES'
+pip=`get_dependencies pip`
+[[ -n "$pip" ]] && sudo pip install --upgrade $pip || echo 'no pip packages to install'
+echo
+

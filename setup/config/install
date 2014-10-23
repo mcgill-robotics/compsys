@@ -1,18 +1,33 @@
 #!/bin/bash
 
+config="
+###
+#
+# MCGILL ROBOTICS PERSONAL CONFIGURATION
+#
+# The following can be personalized to your liking.
+# EDITOR        Your text editor of choice.
+# ROBOT         Team you are working on ('auv' or 'rover').
+# IAMROBOT      If computer will be shared ('true' or 'false').
+# ROBOTIC_PATH  Absolute path to directory containing the local
+#               McGill Robotics git repositories.
+#
+export EDITOR=vim
+export ROBOT=$ROBOT
+export IAMROBOT=$IAMROBOT
+export ROBOTIC_PATH=$ROBOTIC_PATH
+source "'$ROBOTIC_PATH'"/compsys/roboticrc
+"
+
 echo 'UPDATING SHELL RC FILES'
 for rcfile in "$HOME/.bashrc" "$HOME/.zshrc"
 do
     if [ -f $rcfile ]
     then
-        if [[ `grep "export ROBOT=" $rcfile | wc -l` -eq 0 ]]
+        if [[ -z `grep "export ROBOT=" $rcfile` ]]
         then
             echo "updating $rcfile"
-            echo "" >> $rcfile
-            echo "# ROBOTICS CONFIGURATION" >> $rcfile
-            echo "export ROBOT=$ROBOT" >> $rcfile
-            echo "export ROBOTIC_PATH=$ROBOTIC_PATH" >> $rcfile
-            echo "source $ROBOTIC_PATH/compsys/roboticrc" >> $rcfile
+            echo $config >> $rcfile
         fi
     fi
 done
@@ -28,7 +43,7 @@ do
 done
 
 echo 'SETTING UP VIM FOR USE'
-if [ ! -f $HOME/.vim/bundle/Vundle.vim ]
+if [ ! -d $HOME/.vim/bundle/Vundle.vim ]
 then
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
