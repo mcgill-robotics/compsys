@@ -10,7 +10,7 @@ do
             echo "updating $rcfile"
             echo "" >> $rcfile
             echo "# ROBOTICS CONFIGURATION" >> $rcfile
-            echo "export EDITOR=`which vim`" >> $rcfile
+            echo "export EDITOR=vim" >> $rcfile
             echo "export ROBOT=$ROBOT" >> $rcfile
             echo "export ROBOTIC_PATH=$ROBOTIC_PATH" >> $rcfile
             echo "source $ROBOTIC_PATH/compsys/roboticrc" >> $rcfile
