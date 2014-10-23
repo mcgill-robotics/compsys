@@ -10,6 +10,7 @@ do
             echo "updating $rcfile"
             echo "" >> $rcfile
             echo "# ROBOTICS CONFIGURATION" >> $rcfile
+            echo "export EDITOR=`which vim`" >> $rcfile
             echo "export ROBOT=$ROBOT" >> $rcfile
             echo "export ROBOTIC_PATH=$ROBOTIC_PATH" >> $rcfile
             echo "source $ROBOTIC_PATH/compsys/roboticrc" >> $rcfile
@@ -28,7 +29,7 @@ do
 done
 
 echo 'SETTING UP VIM FOR USE'
-if [ ! -f $HOME/.vim/bundle/Vundle.vim ]
+if [ ! -d $HOME/.vim/bundle/Vundle.vim ]
 then
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
