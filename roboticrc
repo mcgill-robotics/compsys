@@ -7,9 +7,9 @@ SHELL_EXTENSION=${SHELL##*/}
 source /opt/ros/indigo/setup.$SHELL_EXTENSION
 export ROS_WORKSPACE=$ROBOTIC_PATH/$ROBOT/catkin_ws
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$ROS_WORKSPACE
-if [ -f $ROS_WORKSPACE/catkin_ws/devel/setup.$SHELL_EXTENSION ]
-then
-    source $ROS_WORKSPACE/catkin_ws/devel/setup.$SHELL_EXTENSION
+if [ -a $ROS_WORKSPACE/devel/setup.$SHELL_EXTENSION ]
+  then
+    source $ROS_WORKSPACE/devel/setup.$SHELL_EXTENSION
 fi
 
 # CUSTOM ALIASES
