@@ -1,22 +1,22 @@
 #!/bin/bash
 
-config="
-###
-#
-# MCGILL ROBOTICS PERSONAL CONFIGURATION
-#
-# The following can be personalized to your liking.
-# EDITOR        Your text editor of choice.
-# ROBOT         Team you are working on ('auv' or 'rover').
-# IAMROBOT      If computer will be shared ('true' or 'false').
-# ROBOTIC_PATH  Absolute path to directory containing the local
-#               McGill Robotics git repositories.
-#
-export EDITOR=vim
-export ROBOT=$ROBOT
-export IAMROBOT=$IAMROBOT
-export ROBOTIC_PATH=$ROBOTIC_PATH
-source "'$ROBOTIC_PATH'"/compsys/roboticrc
+config=$"
+#################################################################### \n
+# \n
+# MCGILL ROBOTICS PERSONAL CONFIGURATION \n
+# \n
+# The following can be personalized to your liking. \n
+# EDITOR        Your text editor of choice. \n
+# ROBOT         Team you are working on ('auv' or 'rover'). \n
+# IAMROBOT      If computer will be shared ('true' or 'false'). \n
+# ROBOTIC_PATH  Absolute path to directory containing the local \n
+#               McGill Robotics git repositories. \n
+#################################################################### \n\n
+export EDITOR=vim \n
+export ROBOT=$ROBOT \n
+export IAMROBOT=$IAMROBOT \n
+export ROBOTIC_PATH=$ROBOTIC_PATH \n
+source "'$ROBOTIC_PATH'"/compsys/roboticrc \n
 "
 
 echo 'UPDATING SHELL RC FILES'
@@ -27,7 +27,7 @@ do
         if [[ -z `grep "export ROBOT=" $rcfile` ]]
         then
             echo "updating $rcfile"
-            echo $config >> $rcfile
+            echo -e $config >> $rcfile
         fi
     fi
 done
