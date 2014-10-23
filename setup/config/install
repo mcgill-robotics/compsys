@@ -5,7 +5,7 @@ for rcfile in "$HOME/.bashrc" "$HOME/.zshrc"
 do
     if [ -f $rcfile ]
     then
-        if [[ `grep "export ROBOT=" $rcfile | wc -l` -eq 0 ]]
+        if [[ -z `grep "export ROBOT=" $rcfile` ]]
         then
             echo "updating $rcfile"
             echo "" >> $rcfile
