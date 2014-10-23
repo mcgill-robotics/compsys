@@ -32,7 +32,7 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 
 # PROMPT THEME
-zstyle ':prezto:module:prompt' theme 'nicoulaj'
+zstyle ':prezto:module:prompt' theme 'mcgill'
 
 # SSH-AGENT
 zstyle ':prezto:module:ssh:load' identities 'id_rsa'

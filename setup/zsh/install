@@ -18,6 +18,10 @@ if [ ! -f $HOME/.zpreztorc ]
 then
 	ln -s $ROBOTIC_PATH/compsys/setup/zsh/zpreztorc $HOME/.zpreztorc
 fi
+if [ ! -f $HOME/.zprezto/modules/prompt/functions/prompt_mcgill_setup ]
+then
+	ln -s $ROBOTIC_PATH/compsys/setup/zsh/prompt_mcgill_setup $HOME/.zprezto/modules/prompt/functions/prompt_mcgill_setup
+fi
 
 echo 'SETTING UP FASD'
 if [ ! -f /usr/bin/fasd ]
