@@ -43,6 +43,9 @@ do
 done
 echo
 
+# UPDATE
+source $ROBOTIC_PATH/compsys/update
+
 # CLONING REPOSITORY
 if [ ! -d $ROBOTIC_PATH/$ROBOT ]
 then
@@ -56,6 +59,3 @@ source $ROBOTIC_PATH/compsys/setup/config/install
 
 # GIT HOOKS
 source $ROBOTIC_PATH/compsys/setup/hooks/install
-
-# UPDATE
-source $ROBOTIC_PATH/compsys/update
