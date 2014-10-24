@@ -15,11 +15,10 @@ pmodload 'helper'
 function prompt_mcgill_pwd {
   local pwd="${PWD/#$HOME/~}"
 
-  if [[ "$pwd" == (#m)[/~] ]]; then
-    _prompt_mcgill_pwd="$MATCH"
-    unset MATCH
+  if [[ "$pwd" == '~' ]]; then
+    _prompt_mcgill_pwd=$pwd
   else
-    _prompt_mcgill_pwd="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
+    _prompt_mcgill_pwd="${${${${(@j:/:M)${(@s:/:)pwd}##?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
   fi
 }
 
