@@ -8,23 +8,23 @@ do
         if [[ -z `grep "export ROBOT=" $rcfile` ]]
         then
             echo "updating $rcfile"
-            echo "
-            #
-            # MCGILL ROBOTICS PERSONAL CONFIGURATION
-            #
-            # The following can be personalized to your liking.
-            # EDITOR        Your text editor of choice.
-            # ROBOT         Team you are working on ('auv' or 'rover').
-            # IAMROBOT      If computer will be shared ('true' or 'false').
-            # ROBOTIC_PATH  Absolute path to directory containing the local
-            #               McGill Robotics git repositories.
-            #
-            export EDITOR=vim
-            export ROBOT=$ROBOT
-            export IAMROBOT=$IAMROBOT
-            export ROBOTIC_PATH=$ROBOTIC_PATH
-            source "'$ROBOTIC_PATH'"/compsys/roboticrc
-            " >> $rcfile
+            echo "" >> $rcfile
+            echo "#" >> $rcfile
+            echo "# MCGILL ROBOTICS PERSONAL CONFIGURATION" >> $rcfile
+            echo "#" >> $rcfile
+            echo "# The following can be personalized to your liking." >> $rcfile
+            echo "# EDITOR        Your text editor of choice." >> $rcfile
+            echo "# ROBOT         Team you are working on ('auv' or 'rover')." >> $rcfile
+            echo "# IAMROBOT      If computer will be shared ('true' or 'false')." >> $rcfile
+            echo "# ROBOTIC_PATH  Absolute path to directory containing the local" >> $rcfile
+            echo "#               McGill Robotics git repositories." >> $rcfile
+            echo "#" >> $rcfile
+            echo "export EDITOR=vim" >> $rcfile
+            echo "export ROBOT=$ROBOT" >> $rcfile
+            echo "export IAMROBOT=$IAMROBOT" >> $rcfile
+            echo "export ROBOTIC_PATH=$ROBOTIC_PATH" >> $rcfile
+            echo "source "'$ROBOTIC_PATH'"/compsys/roboticrc" >> $rcfile
+            echo "" >> $rcfile
         fi
     fi
 done
