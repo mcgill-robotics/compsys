@@ -14,4 +14,3 @@ fi
 
 # CUSTOM ALIASES
 source $ROBOTIC_PATH/compsys/aliases
-
