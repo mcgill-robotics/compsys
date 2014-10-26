@@ -9,19 +9,6 @@ This package sets up the user's computer to accomodate McGill Robotics' developm
 #### 0.1. Basic Setup
 Follow the [basic setup](http://mcgillrobotics.com/wiki/index.php/Basic_Setup) instructions on the wiki.
 
-##### 0.1.1. Install Ubuntu
-Install Ubuntu 14.04 LTS onto your machine replacing your main operating system, in a dual boot setup or in a virtual machine.
-
-##### 0.1.2. Install git
-Install `git` by opening up a terminal and running:
-
-```bash
-sudo apt-get install git
-```
-
-##### 0.1.3. Install ROS Indigo
-Install ROS Indigo Igloo following the instructions from [here](http://wiki.ros.org/indigo/Installation/Ubuntu).
-
 #### 0.2. Make sure there aren't any cloned McGill Robotics repositories
 If you have previously cloned the `mcgill-robotics/auv` or `mcgill-robotics/rover` repositories, delete them. This script will clone and set up the appropriate one for you.
 
