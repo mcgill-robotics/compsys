@@ -6,34 +6,34 @@ sudo apt-get install zsh
 echo 'INSTALLING ZSPREZTO'
 if [ ! -d ~/.zprezto ]
 then
-	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
 fi
 
 echo 'SETTING UP RC FILES'
 if [ ! -f $HOME/.zshrc ]
 then
-	cp $ROBOTIC_PATH/compsys/setup/zsh/zshrc $HOME/.zshrc
+    cp $ROBOTIC_PATH/compsys/setup/zsh/zshrc $HOME/.zshrc
 fi
 if [ ! -f $HOME/.zpreztorc ]
 then
-	ln -s $ROBOTIC_PATH/compsys/setup/zsh/zpreztorc $HOME/.zpreztorc
+    ln -s $ROBOTIC_PATH/compsys/setup/zsh/zpreztorc $HOME/.zpreztorc
 fi
 if [ ! -f $HOME/.zprezto/modules/prompt/functions/prompt_mcgill_setup ]
 then
-	ln -s $ROBOTIC_PATH/compsys/setup/zsh/prompt_mcgill_setup $HOME/.zprezto/modules/prompt/functions/prompt_mcgill_setup
+    ln -s $ROBOTIC_PATH/compsys/setup/zsh/prompt_mcgill_setup $HOME/.zprezto/modules/prompt/functions/prompt_mcgill_setup
 fi
 
 echo 'SETTING UP FASD'
 if [ ! -f /usr/bin/fasd ]
 then
-	sudo wget https://raw.githubusercontent.com/clvv/fasd/master/fasd -P /usr/bin
-	sudo chmod +x /usr/bin/fasd
+    sudo wget https://raw.githubusercontent.com/clvv/fasd/master/fasd -P /usr/bin
+    sudo chmod +x /usr/bin/fasd
 fi
 
 echo 'SWITCHING DEFAULT SHELL'
 if [ $SHELL != '/bin/zsh' ]
 then
-	chsh -s /bin/zsh
+    chsh -s /bin/zsh
 fi
 
 echo 'DONE'
