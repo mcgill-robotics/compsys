@@ -6,18 +6,10 @@ This package sets up the user's computer to accomodate McGill Robotics' developm
 
 ### 0. Pre-requisites
 
-#### 0.1. Install Ubuntu
-Install Ubuntu 14.04 LTS onto your machine replacing your main operating system, in a dual boot setup or in a virtual machine.
+#### 0.1. Basic Setup
+Follow the [basic setup](http://mcgillrobotics.com/wiki/index.php/Basic_Setup) instructions on the wiki.
 
-#### 0.2. Install git
-Install `git` by opening up a terminal and running:
-
-    sudo apt-get install git
-
-#### 0.3. Install ROS Indigo
-Install ROS Indigo Igloo following the instructions from [here](http://wiki.ros.org/indigo/Installation/Ubuntu).
-
-#### 0.4. Remove any cloned McGill Robotics repositories
+#### 0.2. Make sure there aren't any cloned McGill Robotics repositories
 If you have previously cloned the `mcgill-robotics/auv` or `mcgill-robotics/rover` repositories, delete them. This script will clone and set up the appropriate one for you.
 
 
@@ -30,13 +22,16 @@ This folder will become your `$ROBOTIC_PATH` and will contain both this `compsys
 #### 1.2. Clone this repository
 Clone the mcgill-robotics/compsys repository into your `$ROBOTIC_PATH` as `compsys`.
 
-    git clone https://github.com/mcgill-robotics/compsys.git
-
+```bash
+git clone https://github.com/mcgill-robotics/compsys.git
+```
 
 ### 2. Install
 Simply run the installation script
 
-    cd compsys && ./install
+```bash
+cd compsys && ./install
+```
 
 and follow the on-screen instructions.  
 **This may ask for your user's password several times.** If you are uncomfortable with this, simply look through the code yourself.
@@ -58,7 +53,9 @@ This will `export ROBOT` in your `.bashrc` (or `.zshrc`) to `auv` or `rover` dep
 **Here be dragons.**  
 This gives you the option to switch your default shell from Ubuntu's default `bash` to the more feature-full `zsh` along with `prezto` framework. If you are still unsure after reading this, simply say no; you can always change your mind later by installing it manually as such:
 
-    cd $ROBOTIC_PATH/compsys/setup/zsh && ./install
+```bash
+cd $ROBOTIC_PATH/compsys/setup/zsh && ./install
+```
 
 #### Why would I want to?
 *Many reasons.*  
