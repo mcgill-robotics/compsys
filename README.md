@@ -12,7 +12,9 @@ Install Ubuntu 14.04 LTS onto your machine replacing your main operating system,
 #### 0.2. Install git
 Install `git` by opening up a terminal and running:
 
-    sudo apt-get install git
+```bash
+sudo apt-get install git
+```
 
 #### 0.3. Install ROS Indigo
 Install ROS Indigo Igloo following the instructions from [here](http://wiki.ros.org/indigo/Installation/Ubuntu).
@@ -30,13 +32,16 @@ This folder will become your `$ROBOTIC_PATH` and will contain both this `compsys
 #### 1.2. Clone this repository
 Clone the mcgill-robotics/compsys repository into your `$ROBOTIC_PATH` as `compsys`.
 
-    git clone https://github.com/mcgill-robotics/compsys.git
-
+```bash
+git clone https://github.com/mcgill-robotics/compsys.git
+```
 
 ### 2. Install
 Simply run the installation script
 
-    cd compsys && ./install
+```bash
+cd compsys && ./install
+```
 
 and follow the on-screen instructions.  
 **This may ask for your user's password several times.** If you are uncomfortable with this, simply look through the code yourself.
@@ -58,7 +63,9 @@ This will `export ROBOT` in your `.bashrc` (or `.zshrc`) to `auv` or `rover` dep
 **Here be dragons.**  
 This gives you the option to switch your default shell from Ubuntu's default `bash` to the more feature-full `zsh` along with `prezto` framework. If you are still unsure after reading this, simply say no; you can always change your mind later by installing it manually as such:
 
-    cd $ROBOTIC_PATH/compsys/setup/zsh && ./install
+```bash
+cd $ROBOTIC_PATH/compsys/setup/zsh && ./install
+```
 
 #### Why would I want to?
 *Many reasons.*  
