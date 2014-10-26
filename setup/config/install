@@ -5,8 +5,10 @@ for rcfile in "$HOME/.bashrc" "$HOME/.zshrc"
 do
     if [ -f $rcfile ]
     then
-        cat $rcfile | grep -v "source /opt/ros/indigo/setup" > $rcfile
-        if [[ -z `grep "export ROBOT=" $rcfile` ]]
+        #cat $rcfile | grep -v "source /opt/ros/indigo/setup" > $rcfile
+	#WTF? WHY? ANASS PLEASE! MY .BASHRC!!!
+
+	if [[ -z `grep "export ROBOT=" $rcfile` ]]
         then
             echo "updating $rcfile"
             echo "" >> $rcfile
