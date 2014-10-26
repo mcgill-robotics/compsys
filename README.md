@@ -34,7 +34,7 @@ Clone the mcgill-robotics/compsys repository into your `$ROBOTIC_PATH` as `comps
 
 
 ### 2. Install
-Simply `cd` into the cloned repository and run the installation script
+Simply run the installation script
 
     cd compsys && ./install
 
