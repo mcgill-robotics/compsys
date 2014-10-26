@@ -5,7 +5,7 @@ export ROBOTIC_PATH=`dirname $PWD`
 
 # ROBOT OR NOT
 echo 'ARE YOU A ROBOT?'
-select yn in "YES" "NO"
+select yn in "NO" "YES"
 do
     case $yn in
         YES )   export IAMROBOT=true
@@ -33,7 +33,7 @@ echo
 # ZSHELL INSTALLATION
 echo 'WOULD YOU LIKE TO SWITCH FROM BASH TO ZSH?'
 echo 'if uncertain, select no'
-select yn in "YES" "NO"
+select yn in "NO" "YES"
 do
     case $yn in
         YES )   ./setup/zsh/install
