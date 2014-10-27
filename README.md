@@ -30,20 +30,18 @@ and follow the on-screen instructions.
 If you are asking yourself this question, the answer is probably no. This option is there if you want to install this on one of the team robots or on one of the team's public computers.  
 This will `export IAMROBOT` in your `.bashrc` (or `.zshrc`) to `true` or `false` depending on your answer.
 
-
 ### 2. Which team am I on?
 *Really?*  
 This will `export ROBOT` in your `.bashrc` (or `.zshrc`) to `auv` or `rover` depending on your answer.
 
-### 3. ROS
-ROS is the most important part of McGill Robotics software system, if you have not install it yet, the script will ask to install it.
-The full ROS is quite big, so we recommand you only install it when you have a stable network connection and about one to two hours of waiting time.
-If you can't install it right now, select no, you can install it later by runnning the following command:
+### 3. How do I install ROS?
+ROS is the most important part of the McGill Robotics software system, if you have not installed it yet, the script will ask if you want to install it.
+The complete ROS package is quite big, so we recommend you only install it when you have a stable network connection and about one to two hours to spare.
+If you can't install it right away, simply select no. You can install it later by runnning the following command:
 
 ```bash
-cd $ROBOTIC_PATH/compsys/setup/config && ./install_ros
+cd $ROBOTIC_PATH/compsys/setup/ros && ./install
 ```
-
 
 ### 4. Would I like to switch from `bash` to `zsh`?
 **Here be dragons.**  
@@ -74,7 +72,6 @@ By setting this option, you will be using the custom `mcgill` prompt which looks
 ![GitHub Logo](/setup/zsh/mcgill_theme.png)
 *Colors and font may vary depending on your terminal settings.*  
 We recommend the `menlo` font in combination with the `monokai` colorscheme.
-
 
 ### 4. I don't like *something*. Can I change it?
 **No.**  
