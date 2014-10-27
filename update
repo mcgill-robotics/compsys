@@ -9,22 +9,15 @@ function get_dependencies () {
 
 echo 'UPDATING APT-GET DEPENDENCIES'
 apt=`get_dependencies apt`
-[[ -n "$apt" ]] && sudo apt-get update && sudo apt-get install $apt || echo 'no apt packages to install'
+[[ -n "$apt" ]] && sudo apt-get install $apt || echo 'no apt packages to install'
 echo
 
 echo 'UPDATING RUBY GEMS DEPENDENCIES'
 gem=`get_dependencies gem`
-[[ -n "$gem" ]] && sudo gem install -V $gem || echo 'no gem packages to install'
+[[ -n "$gem" ]] && sudo gem install $gem || echo 'no gem packages to install'
 echo
 
 echo 'UPDATING PYTHON DEPENDENCIES'
 pip=`get_dependencies pip`
 [[ -n "$pip" ]] && sudo pip install --upgrade $pip || echo 'no pip packages to install'
 echo
-
-if [ -d $HOME/.vim/bundle/Vundle.vim ]
-then
-    echo 'UPDATING VIM PLUGINS'
-    bash -ic "vim +PluginInstall +qall"
-    echo
-fi
