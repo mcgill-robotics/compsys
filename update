@@ -25,6 +25,6 @@ echo
 if [ -d $HOME/.vim/bundle/Vundle.vim ]
 then
     echo 'UPDATING VIM PLUGINS'
-    vim +PluginInstall +qall
+    bash -ic "vim +PluginInstall +qall"
     echo
 fi
