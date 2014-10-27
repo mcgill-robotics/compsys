@@ -35,8 +35,8 @@ This will `export IAMROBOT` in your `.bashrc` (or `.zshrc`) to `true` or `false`
 This will `export ROBOT` in your `.bashrc` (or `.zshrc`) to `auv` or `rover` depending on your answer.
 
 ### 3. How do I install ROS?
-ROS is the most important part of the McGill Robotics software system, if you have not installed it yet, the script will ask if you want to install it.
-The complete ROS package is quite big, so we recommend you only install it when you have a stable network connection and about one to two hours to spare.
+ROS is the most important part of the McGill Robotics software system, if you have not installed it yet, this tool will ask if you want to.
+The complete ROS package is quite large however, so we recommend you only install it when you have a stable network connection and about one to two hours to spare.
 If you can't install it right away, simply select no. You can install it later by runnning the following command:
 
 ```bash
