@@ -4,7 +4,10 @@
 SHELL_EXTENSION=${SHELL##*/}
 
 # ROS
-source /opt/ros/indigo/setup.$SHELL_EXTENSION
+if [ -s /opt/ros/indigo/setup.$SHELL_EXTENSION ]
+then
+    source /opt/ros/indigo/setup.$SHELL_EXTENSION
+fi
 if [ -s $ROBOTIC_PATH/$ROBOT/catkin_ws/devel/setup.$SHELL_EXTENSION ]
 then
     source $ROBOTIC_PATH/$ROBOT/catkin_ws/devel/setup.$SHELL_EXTENSION
