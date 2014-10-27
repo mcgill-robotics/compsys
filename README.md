@@ -5,8 +5,7 @@ This package sets up the user's computer to accomodate McGill Robotics' developm
 ## Installation
 
 ### 0. Pre-requisites
-<!---->
-Install Ubuntu 14.04 LTS onto your machine, in a dual boot setup or in a virtual machine.
+Follow the [basic setup](http://mcgillrobotics.com/wiki/index.php/Basic_Setup) instructions on the wiki.
 If you are not sure how to do it, ask any software section leader to help you.
 
 ### 1. Setup
@@ -17,7 +16,6 @@ This folder will become your `$ROBOTIC_PATH` and will contain both this `compsys
 Run the following commmand:
 
 ```bash
-sudo apt-get update && sudo apt-get install git
 git clone https://github.com/mcgill-robotics/compsys.git
 cd compsys && ./install
 ```
@@ -32,20 +30,18 @@ and follow the on-screen instructions.
 If you are asking yourself this question, the answer is probably no. This option is there if you want to install this on one of the team robots or on one of the team's public computers.  
 This will `export IAMROBOT` in your `.bashrc` (or `.zshrc`) to `true` or `false` depending on your answer.
 
-
 ### 2. Which team am I on?
 *Really?*  
 This will `export ROBOT` in your `.bashrc` (or `.zshrc`) to `auv` or `rover` depending on your answer.
 
-### 3. ROS
-ROS is the most important part of McGill Robotics software system, if you have not install it yet, the script will ask to install it.
-The full ROS is quite big, so we recommand you only install it when you have a stable network connection and about one to two hours of waiting time.
-If you can't install it right now, select no, you can install it later by runnning the following command:
+### 3. How do I install ROS?
+ROS is the most important part of the McGill Robotics software system, if you have not installed it yet, this tool will ask if you want to.
+The complete ROS package is quite large however, so we recommend you only install it when you have a stable network connection and about one to two hours to spare.
+If you can't install it right away, simply select no. You can install it later by runnning the following command:
 
 ```bash
-cd $ROBOTIC_PATH/compsys/setup/config && ./install_ros
+cd $ROBOTIC_PATH/compsys/setup/ros && ./install
 ```
-
 
 ### 4. Would I like to switch from `bash` to `zsh`?
 **Here be dragons.**  
@@ -76,7 +72,6 @@ By setting this option, you will be using the custom `mcgill` prompt which looks
 ![GitHub Logo](/setup/zsh/mcgill_theme.png)
 *Colors and font may vary depending on your terminal settings.*  
 We recommend the `menlo` font in combination with the `monokai` colorscheme.
-
 
 ### 4. I don't like *something*. Can I change it?
 **No.**  
