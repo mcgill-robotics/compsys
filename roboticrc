@@ -4,16 +4,12 @@
 SHELL_EXTENSION=${SHELL##*/}
 
 # ROS
-if [-f source /opt/ros/indigo/setup.$SHELL_EXTENSION]
+if [ -f source /opt/ros/indigo/setup.$SHELL_EXTENSION ]
 then
     source /opt/ros/indigo/setup.$SHELL_EXTENSION
 fi
-
-#ROS_WORKSPACE is depreciated and should not be used
-#export ROS_WORKSPACE=$ROBOTIC_PATH/$ROBOT/catkin_ws
 export CATKIN_WORKSPACE=$ROBOTIC_PATH/$ROBOT/catkin_ws
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$ROS_WORKSPACE
-
 if [ -s $CATKIN_WORKSPACE/devel/setup.$SHELL_EXTENSION ]
 then
     source $CATKIN_WORKSPACE/devel/setup.$SHELL_EXTENSION
