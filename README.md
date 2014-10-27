@@ -5,36 +5,25 @@ This package sets up the user's computer to accomodate McGill Robotics' developm
 ## Installation
 
 ### 0. Pre-requisites
-
-#### 0.1. Basic Setup
-Follow the [basic setup](http://mcgillrobotics.com/wiki/index.php/Basic_Setup) instructions on the wiki.
-
-#### 0.2. Make sure there aren't any cloned McGill Robotics repositories
-If you have previously cloned the `mcgill-robotics/auv` or `mcgill-robotics/rover` repositories, delete them. This script will clone and set up the appropriate one for you.
-
+<!---->
+Install Ubuntu 14.04 LTS onto your machine, in a dual boot setup or in a virtual machine.
+If you are not sure how to do it, ask any software section leader to help you.
 
 ### 1. Setup
 
-#### 1.1. Create your robotics directory  
 Create a directory to contain all of your McGill Robotics files and `cd` into it from your terminal.  
 This folder will become your `$ROBOTIC_PATH` and will contain both this `compsys` repository **and** your team repository.
 
-#### 1.2. Clone this repository
-Clone the mcgill-robotics/compsys repository into your `$ROBOTIC_PATH` as `compsys`.
+Run the following commmand:
 
 ```bash
+sudo apt-get update && sudo apt-get install git
 git clone https://github.com/mcgill-robotics/compsys.git
-```
-
-### 2. Install
-Simply run the installation script
-
-```bash
 cd compsys && ./install
 ```
 
 and follow the on-screen instructions.  
-**This may ask for your user's password several times.** If you are uncomfortable with this, simply look through the code yourself.
+**This may ask for your user's password several times.**
 
 ## FAQs
 
@@ -48,8 +37,17 @@ This will `export IAMROBOT` in your `.bashrc` (or `.zshrc`) to `true` or `false`
 *Really?*  
 This will `export ROBOT` in your `.bashrc` (or `.zshrc`) to `auv` or `rover` depending on your answer.
 
+### 3. ROS
+ROS is the most important part of McGill Robotics software system, if you have not install it yet, the script will ask to install it.
+The full ROS is quite big, so we recommand you only install it when you have a stable network connection and about one to two hours of waiting time.
+If you can't install it right now, select no, you can install it later by runnning the following command:
 
-### 3. Would I like to switch from `bash` to `zsh`?
+```bash
+cd $ROBOTIC_PATH/compsys/setup/config && ./install_ros
+```
+
+
+### 4. Would I like to switch from `bash` to `zsh`?
 **Here be dragons.**  
 This gives you the option to switch your default shell from Ubuntu's default `bash` to the more feature-full `zsh` along with `prezto` framework. If you are still unsure after reading this, simply say no; you can always change your mind later by installing it manually as such:
 

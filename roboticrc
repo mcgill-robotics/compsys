@@ -4,7 +4,10 @@
 SHELL_EXTENSION=${SHELL##*/}
 
 # ROS
-source /opt/ros/indigo/setup.$SHELL_EXTENSION
+if [-f source /opt/ros/indigo/setup.$SHELL_EXTENSION]
+then
+    source /opt/ros/indigo/setup.$SHELL_EXTENSION
+fi
 
 #ROS_WORKSPACE is depreciated and should not be used
 #export ROS_WORKSPACE=$ROBOTIC_PATH/$ROBOT/catkin_ws
