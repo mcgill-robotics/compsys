@@ -22,3 +22,9 @@ pip=`get_dependencies pip`
 [[ -n "$pip" ]] && sudo pip install --upgrade $pip || echo 'no pip packages to install'
 echo
 
+if [ -d $HOME/.vim/bundle/Vundle.vim ]
+then
+    echo 'UPDATING VIM PLUGINS'
+    vim +PluginInstall +qall
+    echo
+fi

@@ -5,10 +5,7 @@ for rcfile in "$HOME/.bashrc" "$HOME/.zshrc"
 do
     if [ -f $rcfile ]
     then
-        #cat $rcfile | grep -v "source /opt/ros/indigo/setup" > $rcfile
-	#WTF? WHY? ANASS PLEASE! MY .BASHRC!!!
-
-	if [[ -z `grep "export ROBOT=" $rcfile` ]]
+        if [[ -z `grep "export ROBOT=" $rcfile` ]]
         then
             echo "updating $rcfile"
             echo "" >> $rcfile
@@ -26,7 +23,7 @@ do
             echo "export ROBOT=$ROBOT" >> $rcfile
             echo "export IAMROBOT=$IAMROBOT" >> $rcfile
             echo "export ROBOTIC_PATH=$ROBOTIC_PATH" >> $rcfile
-            echo "source "'$ROBOTIC_PATH'"/compsys/roboticrc" >> $rcfile
+            echo 'source $ROBOTIC_PATH/compsys/roboticrc' >> $rcfile
             echo "" >> $rcfile
         fi
     fi
@@ -46,8 +43,8 @@ echo 'SETTING UP VIM FOR USE'
 if [ ! -d $HOME/.vim/bundle/Vundle.vim ]
 then
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    vim +PluginInstall +qall
 fi
-vim +PluginInstall +qall
 
 echo 'DONE'
 echo
