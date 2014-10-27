@@ -5,8 +5,7 @@ This package sets up the user's computer to accomodate McGill Robotics' developm
 ## Installation
 
 ### 0. Pre-requisites
-<!---->
-Install Ubuntu 14.04 LTS onto your machine, in a dual boot setup or in a virtual machine.
+Follow the [basic setup](http://mcgillrobotics.com/wiki/index.php/Basic_Setup) instructions on the wiki.
 If you are not sure how to do it, ask any software section leader to help you.
 
 ### 1. Setup
@@ -17,7 +16,6 @@ This folder will become your `$ROBOTIC_PATH` and will contain both this `compsys
 Run the following commmand:
 
 ```bash
-sudo apt-get update && sudo apt-get install git
 git clone https://github.com/mcgill-robotics/compsys.git
 cd compsys && ./install
 ```
