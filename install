@@ -19,10 +19,10 @@ done
 echo
 
 # SELECT TEAM
-echo 'WHICH TEAM ARE YOU ON?'
-select team in "AUV" "ROVER"
+echo 'WHICH PROJECT ARE YOU WORKING ON?'
+select project in "AUV" "ROVER"
 do
-    case $team in
+    case $project in
         AUV )   export ROBOT=auv
                 break;;
         ROVER ) export ROBOT=rover

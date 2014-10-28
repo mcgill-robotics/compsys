@@ -30,7 +30,7 @@ and follow the on-screen instructions.
 If you are asking yourself this question, the answer is probably no. This option is there if you want to install this on one of the team robots or on one of the team's public computers.  
 This will `export IAMROBOT` in your `.bashrc` (or `.zshrc`) to `true` or `false` depending on your answer.
 
-### 2. Which team am I on?
+### 2. Which project am I working on?
 *Really?*  
 This will `export ROBOT` in your `.bashrc` (or `.zshrc`) to `auv` or `rover` depending on your answer.
 
