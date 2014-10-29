@@ -71,7 +71,7 @@ Two things to note though:
 By setting this option, you will be using the custom `mcgill` prompt which looks like this:
 ![GitHub Logo](/setup/zsh/mcgill_theme.png)
 *Colors and font may vary depending on your terminal settings.*  
-We recommend the `menlo` font in combination with the `monokai` colorscheme.
+We recommend the `monaco` or `menlo` fonts in combination with the [monokai](https://github.com/pricco/gnome-terminal-colors-monokai) colorscheme.
 
 ### 4. I don't like *something*. Can I change it?
 **No.**  
