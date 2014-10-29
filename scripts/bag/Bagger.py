@@ -8,7 +8,7 @@ from datetime import datetime
 from shlex import split
 from Shortcuts import Shortcuts
 from Topics import TopicList
-from subprocess import *
+from subprocess import Popen
 
 
 class Bagger(object):
