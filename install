@@ -60,6 +60,7 @@ then
 fi
 
 # UPDATE
+sudo apt-get update
 source $ROBOTIC_PATH/compsys/update
 
 # CLONING REPOSITORY
