@@ -5,8 +5,8 @@ alias robot='mosh robotics@10.0.0.1'
 alias robotx='ssh -Y robotics@10.0.0.1'
 
 # BAGGING
-alias bag='python $ROBOTIC_PATH/scripts/bag/Bagger.py'
-alias bag_merge='python $ROBOTIC_PATH/scripts/bag/Merger.py'
+alias bag='python $ROBOTIC_PATH/compsys/scripts/bag/Bagger.py'
+alias bag_merge='python $ROBOTIC_PATH/compsys/scripts/bag/Merger.py'
 
 # MONITORING
 alias glances='glances -yet 5'
