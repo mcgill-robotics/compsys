@@ -6,13 +6,15 @@ export ROBOTIC_PATH=`dirname $PWD`
 # ROBOT OR NOT
 echo 'ARE YOU A ROBOT?'
 echo 'Select NO.'
-select yn in "NO" "YES"; do
+select yn in "NO" "yes"; do
   case "${yn}" in
-    YES )   
+    yes )
       export IAMROBOT=true
       echo 'E: ROBOT NOT YET SUPPORTED'
       exit;;
-    NO )    export IAMROBOT=false; break;;
+    NO )
+      export IAMROBOT=false;
+      break;;
   esac
 done
 echo
@@ -21,8 +23,12 @@ echo
 echo 'WHICH PROJECT ARE YOU WORKING ON?'
 select project in "AUV" "ROVER"; do
   case "${project}" in
-    AUV )   export ROBOT=auv; break;;
-    ROVER ) export ROBOT=rover; break;;
+    AUV )
+      export ROBOT=auv;
+      break;;
+    ROVER )
+      export ROBOT=rover;
+      break;;
   esac
 done
 echo
@@ -30,10 +36,13 @@ echo
 # ZSHELL INSTALLATION
 echo 'WOULD YOU LIKE TO SWITCH FROM BASH TO ZSH?'
 echo 'If uncertain, select NO.'
-select yn in "NO" "YES"; do
+select yn in "NO" "yes"; do
   case "${yn}" in
-    YES )   ./setup/zsh/install; break;;
-    NO )    break;;
+    yes )
+      ./setup/zsh/install;
+      break;;
+    NO )
+      break;;
   esac
 done
 echo
@@ -44,8 +53,11 @@ if [[ -z ${ROS_DISTRO} ]]; then
   echo "This will take a while, select NO if you don't have time."
   select ros in "NO" "YES"; do
     case "${ros}" in
-      YES ) ./setup/ros/install; break;;
-      NO )  break;;
+      YES )
+        ./setup/ros/install;
+        break;;
+      NO )
+        break;;
     esac
   done
 fi
@@ -56,11 +68,10 @@ sudo apt-get -qq update
 source ${ROBOTIC_PATH}/compsys/update
 
 # CLONING REPOSITORY
-if [[ ! -d ${ROBOTIC_PATH}/${ROBOT} ]]
-then
-    echo "Cloning ${robot} git repository..."
-    git clone https://github.com/mcgill-robotics/${ROBOT}.git ${ROBOTIC_PATH}/${ROBOT}
-    echo
+if [[ ! -d ${ROBOTIC_PATH}/${ROBOT} ]]; then
+  echo "Cloning ${robot} git repository..."
+  git clone https://github.com/mcgill-robotics/${ROBOT}.git ${ROBOTIC_PATH}/${ROBOT}
+  echo
 fi
 
 # APPEND TO RC FILES

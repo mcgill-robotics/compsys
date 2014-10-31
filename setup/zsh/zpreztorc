@@ -6,24 +6,24 @@ zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 
 # PREZTO MODULES
 zstyle ':prezto:load' pmodule \
-    'environment' \
-    'terminal' \
-    'editor' \
-    'history' \
-    'directory' \
-    'spectrum' \
-    'utility' \
-    'completion' \
-    'git' \
-    'ssh' \
-    'command-not-found' \
-    'python' \
-    'tmux' \
-    'fasd' \
-    'wakeonlan' \
-    'syntax-highlighting' \
-    'history-substring-search' \
-    'prompt'
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'completion' \
+  'git' \
+  'ssh' \
+  'command-not-found' \
+  'python' \
+  'tmux' \
+  'fasd' \
+  'wakeonlan' \
+  'syntax-highlighting' \
+  'history-substring-search' \
+  'prompt'
 
 # EDITOR BINDINGS
 zstyle ':prezto:module:editor' key-bindings 'vi'
@@ -39,11 +39,11 @@ zstyle ':prezto:module:ssh:load' identities 'id_rsa'
 
 # SYNTAX HIGHLIGHTING
 zstyle ':prezto:module:syntax-highlighting' highlighters \
-    'main' \
-    'brackets' \
-    'pattern' \
-    'cursor' \
-    'root'
+  'main' \
+  'brackets' \
+  'pattern' \
+  'cursor' \
+  'root'
 
 # CASE SENSITIVITY
 zstyle ':prezto:*:*' case-sensitive 'no'

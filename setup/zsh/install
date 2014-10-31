@@ -32,7 +32,7 @@ fi
 echo
 
 echo 'Switching default login shell...'
-echo 'You need logout and login to reflect the changes.'
+echo 'You need to logout and log back in to reflect the changes.'
 if [[ ${SHELL} != '/bin/zsh' ]]; then
   chsh -s /bin/zsh
 fi

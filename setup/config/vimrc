@@ -20,40 +20,40 @@ nmap <silent> ,sv :so $MYVIMRC<cr>
 set shellslash
 
 if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
-    filetype off
-    " set the runtime path to include Vundle and initialize
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
+  filetype off
+  " set the runtime path to include Vundle and initialize
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
 
-    Plugin 'gmarik/Vundle.vim'
-    Plugin 'tpope/vim-fugitive'
-    Plugin 'L9'
-    Plugin 'flazz/vim-colorschemes'
-    Plugin 'sudar/vim-arduino-syntax'
-    Plugin 'jwhitley/vim-matchit'
-    Plugin 'MarcWeber/vim-addon-mw-utils'
-    Plugin 'tomtom/tlib_vim'
-    Plugin 'garbas/vim-snipmate'
-    Plugin 'honza/vim-snippets'
-    Plugin 'tpope/vim-surround'
-    Plugin 'scrooloose/nerdtree'
-    Plugin 'jistr/vim-nerdtree-tabs'
-    Plugin 'kien/ctrlp.vim'
-    Plugin 'vim-scripts/taglist.vim'
-    Plugin 'gerw/vim-latex-suite'
-    Plugin 'tomasr/molokai'
-    Plugin 'Lokaltog/vim-distinguished'
-    Plugin 'ervandew/supertab'
-    Plugin 'davidhalter/jedi-vim'
-    Plugin 'terryma/vim-multiple-cursors'
-    Plugin 'scrooloose/syntastic'
-    Plugin 'LaTeX-Box-Team/LaTeX-Box'
-    Plugin 'coot/atp_vim'
-    Plugin 'chriskempson/base16-vim'
+  Plugin 'gmarik/Vundle.vim'
+  Plugin 'tpope/vim-fugitive'
+  Plugin 'L9'
+  Plugin 'flazz/vim-colorschemes'
+  Plugin 'sudar/vim-arduino-syntax'
+  Plugin 'jwhitley/vim-matchit'
+  Plugin 'MarcWeber/vim-addon-mw-utils'
+  Plugin 'tomtom/tlib_vim'
+  Plugin 'garbas/vim-snipmate'
+  Plugin 'honza/vim-snippets'
+  Plugin 'tpope/vim-surround'
+  Plugin 'scrooloose/nerdtree'
+  Plugin 'jistr/vim-nerdtree-tabs'
+  Plugin 'kien/ctrlp.vim'
+  Plugin 'vim-scripts/taglist.vim'
+  Plugin 'gerw/vim-latex-suite'
+  Plugin 'tomasr/molokai'
+  Plugin 'Lokaltog/vim-distinguished'
+  Plugin 'ervandew/supertab'
+  Plugin 'davidhalter/jedi-vim'
+  Plugin 'terryma/vim-multiple-cursors'
+  Plugin 'scrooloose/syntastic'
+  Plugin 'LaTeX-Box-Team/LaTeX-Box'
+  Plugin 'coot/atp_vim'
+  Plugin 'chriskempson/base16-vim'
 
-    " All of your Plugins must be added before the following line
-    call vundle#end()            " required
-    filetype plugin indent on    " required
+  " All of your Plugins must be added before the following line
+  call vundle#end()            " required
+  filetype plugin indent on    " required
 endif
 
 " Vim settings
