@@ -4,19 +4,24 @@
 
 echo "Adding ROS PPA..."
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
+echo
 
 echo "Getting ROS apt verification key..."
-wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
+wget -q https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
+echo
 
-echo "Updating apt package list"
-sudo apt-get update
+echo "Updating apt package list..."
+sudo apt-get -qq update
+echo
 
 echo "Installing ROS..."
 sudo apt-get -y install ros-indigo-desktop-full
+echo
 
 echo "Setting up ROS dependancies..."
 sudo rosdep init
 rosdep update
+echo
 
 echo 'Finish installing ROS.'
 echo

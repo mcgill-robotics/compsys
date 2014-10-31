@@ -1,12 +1,14 @@
 #!/bin/bash
 
 echo 'Installing Zsh...'
-sudo apt-get -y install zsh
+sudo apt-get -y -qq install zsh
+echo
 
 echo 'Installing Prezto, configuration framework for Zsh...'
 if [[ ! -d ~/.zprezto ]]; then
-  git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
+  git clone -q --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
 fi
+echo
 
 echo 'Setting up .zshrc...'
 if [[ ! -f $HOME/.zshrc ]];then
@@ -20,12 +22,14 @@ fi
 if [[ ! -f ${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup ]]; then
   ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/prompt_mcgill_setup ${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup
 fi
+echo
 
 echo 'Setting up Fasd...'
 if [[ ! -f /usr/bin/fasd ]]; then
-  sudo wget https://raw.githubusercontent.com/clvv/fasd/master/fasd -P /usr/bin
+  sudo wget -q https://raw.githubusercontent.com/clvv/fasd/master/fasd -P /usr/bin
   sudo chmod +x /usr/bin/fasd
 fi
+echo
 
 echo 'Switching default login shell...'
 echo 'You need logout and login to reflect the changes.'

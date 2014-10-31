@@ -1,20 +1,19 @@
 #!/bin/bash
 
 function get_dependencies () {
-    if [[ -s ${ROBOTIC_PATH}/compsys/packages/$1 ]]
-    then
-        cat ${ROBOTIC_PATH}/compsys/packages/$1 | awk 'BEGIN{ORS=" "}1'
-    fi
+  if [[ -s ${ROBOTIC_PATH}/compsys/packages/$1 ]]; then
+    cat ${ROBOTIC_PATH}/compsys/packages/$1 | awk 'BEGIN{ORS=" "}1'
+  fi
 }
 
 echo 'Updating apt dependancies...'
 apt=`get_dependencies apt`
-[[ -n "${apt}" ]] && sudo apt-get -d install ${apt} || echo 'no apt packages to install'
+[[ -n "${apt}" ]] && sudo apt-get -y -qq install ${apt} || echo 'no apt packages to install'
 echo
 
 echo 'Updating gem dependancies...'
 gem=`get_dependencies gem`
-[[ -n "${gem}" ]] && sudo gem install ${gem} || echo 'no gem packages to install'
+[[ -n "${gem}" ]] && sudo gem install -q ${gem} || echo 'no gem packages to install'
 echo
 
 echo 'Updating pip dependancies...'
