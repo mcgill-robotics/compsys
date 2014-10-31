@@ -1,20 +1,22 @@
 #!/bin/bash
+#
+#ROS auto installation script
 
-echo "ADDING ROS PPA"
+echo "Adding ROS PPA..."
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
 
-echo "GETTING ROS VERIFICATION KEY"
+echo "Getting ROS apt verification key..."
 wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
 
-echo "UPDATING DEBIAN PACKAGE INDEX"
+echo "Updating apt package list"
 sudo apt-get update
 
-echo "INSTALLING ROS"
-sudo apt-get install ros-indigo-desktop-full
+echo "Installing ROS..."
+sudo apt-get -y install ros-indigo-desktop-full
 
-echo "SETTING UP ROS DEPENDENCIES"
+echo "Setting up ROS dependancies..."
 sudo rosdep init
 rosdep update
 
-echo 'DONE'
+echo 'Finish installing ROS.'
 echo

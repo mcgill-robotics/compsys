@@ -5,7 +5,7 @@ export ROBOTIC_PATH=`dirname $PWD`
 
 # ROBOT OR NOT
 echo 'ARE YOU A ROBOT?'
-echo 'select NO'
+echo 'Select NO.'
 select yn in "NO" "YES"; do
   case "${yn}" in
     YES )   
@@ -29,7 +29,7 @@ echo
 
 # ZSHELL INSTALLATION
 echo 'WOULD YOU LIKE TO SWITCH FROM BASH TO ZSH?'
-echo 'if uncertain, select NO'
+echo 'If uncertain, select NO.'
 select yn in "NO" "YES"; do
   case "${yn}" in
     YES )   ./setup/zsh/install; break;;
@@ -41,7 +41,7 @@ echo
 # ROS INSTALLATION
 if [[ -z ${ROS_DISTRO} ]]; then
   echo "ROS IS NOT INSTALLED! WOULD YOU LIKE TO INSTALL IT?"
-  echo "this will take a while, select NO if you don't have time"
+  echo "This will take a while, select NO if you don't have time."
   select ros in "NO" "YES"; do
     case "${ros}" in
       YES ) ./setup/ros/install; break;;
@@ -52,7 +52,7 @@ fi
 
 # UPDATE
 echo "Refreshing apt packages list..."
-sudo apt-get -qq -d update
+sudo apt-get -qq update
 source ${ROBOTIC_PATH}/compsys/update
 
 # CLONING REPOSITORY

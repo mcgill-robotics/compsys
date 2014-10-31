@@ -2,7 +2,7 @@
 #
 #Set up shell rc files and configuration files
 
-echo 'UPDATING SHELL RC FILES'
+echo 'Updating shell rc files...'
 for rcfile in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
   if [[ -f ${rcfile} ]]; then
     if [[ -z `grep "export ROBOT=" ${rcfile}` ]]; then
@@ -35,7 +35,7 @@ for rcfile in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
   fi
 done
 
-echo 'ADDING OTHER CONFIGURATION FILES'
+echo 'Adding other configuration files...'
 for rcfile in "vimrc" "tmux.conf"; do
   if [[ ! -f ${HOME}/.${rcfile} ]]; then
     echo "adding ${HOME}/.${rcfile}"
@@ -43,11 +43,11 @@ for rcfile in "vimrc" "tmux.conf"; do
   fi
 done
 
-echo 'SETTING UP VIM FOR USE'
+echo 'Setting up vim bundles...'
 if [[ ! -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
 fi
 
-echo 'DONE'
+echo 'Configurations setup done.'
 echo
