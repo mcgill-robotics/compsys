@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
-"""Bag merging manager."""
+"""This script merges all bags split by the 'bag' script.
+By default, all topics defined in your team's '.topics' will be merged if no
+arguments are given. Otherwise, only the topics specified will be merged."""
+
+__version__ = '0.9'
 
 import re
 import os
@@ -31,7 +35,10 @@ class Merger(object):
         self.arg = arg
         topics_file = '{}/{}.topics'.format(os.path.dirname(__file__), robot)
         all_topics = TopicList(topics_file).topics
-        self.enabled = Shortcuts(arg, all_topics, 'merge_bag').enabled
+        parsed_args = Shortcuts(arg, all_topics, 'bag_merge',
+                                __doc__, __version__)
+        self.enabled = parsed_args.enabled
+        self.name = parsed_args.name
         enabled_topics = (' '.join(elem.topics) for elem in self.enabled)
         self.topics = ' '.join(enabled_topics)
         self.folder = folder
@@ -86,7 +93,7 @@ class Merger(object):
         self.bags = self.get_bags()
 
         # CREATE AND NAME OUTPUT BAG
-        name = None
+        name = self.name
         while not name:
             name = raw_input("name me: ")
         path = "{folder}/{name}.bag".format(

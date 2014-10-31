@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
-"""Topic bagging manager."""
+"""This script bags the specified topics and splits them every 15 seconds.
+By default, all topics defined in your team's '.topics' will be bagged if no
+arguments are given. Otherwise, only the topics specified will be bagged."""
+
+__version__ = '0.9'
 
 import os
 import sys
@@ -26,7 +30,9 @@ class Bagger(object):
         self.arg = arg
         topics_file = '{}/{}.topics'.format(os.path.dirname(__file__), robot)
         self.topics = TopicList(topics_file).topics
-        self.enabled = Shortcuts(arg, self.topics, 'bag').enabled
+        parsed_args = Shortcuts(arg, self.topics, 'bag', __doc__, __version__)
+        self.enabled = parsed_args.enabled
+        self.name = parsed_args.name
         self.process = None
         self.bag()
 
@@ -34,7 +40,7 @@ class Bagger(object):
         """Bag topics to folder."""
         topics = (' '.join(elem.topics) for elem in self.enabled)
         topics = ' '.join(topics)
-        folder = None
+        folder = self.name
         while not folder:
             folder = raw_input("name me: ")
         folder = datetime.now().strftime('%Y-%m-%d-%H-%M-%S-') + folder
@@ -63,10 +69,13 @@ if __name__ == '__main__':
         bag = Bagger(sys.argv, robot)
         bag.wait()
     except KeyError:
-        print "E: 'ROBOT' variable not exported properly"
+        print "E: 'ROBOT' variable not exported properly."
+        print "did you install the 'compsys' package correctly?"
         sys.exit(2)
     except KeyboardInterrupt:
-        bag.kill()
-    except Exception as e:
-        print e
-        bag.kill()
+        pass
+    finally:
+        try:
+            bag.kill()
+        except NameError:
+            sys.exit(1)
