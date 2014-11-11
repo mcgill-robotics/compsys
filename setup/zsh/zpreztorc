@@ -25,9 +25,6 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'prompt'
 
-# EDITOR BINDINGS
-zstyle ':prezto:module:editor' key-bindings 'vi'
-
 # DOT EXPANSION
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 
@@ -47,3 +44,4 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
 
 # CASE SENSITIVITY
 zstyle ':prezto:*:*' case-sensitive 'no'
+
