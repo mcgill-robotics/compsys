@@ -40,15 +40,10 @@ if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
   Plugin 'jistr/vim-nerdtree-tabs'
   Plugin 'kien/ctrlp.vim'
   Plugin 'vim-scripts/taglist.vim'
-  Plugin 'gerw/vim-latex-suite'
-  Plugin 'tomasr/molokai'
-  Plugin 'Lokaltog/vim-distinguished'
   Plugin 'ervandew/supertab'
   Plugin 'davidhalter/jedi-vim'
   Plugin 'terryma/vim-multiple-cursors'
   Plugin 'scrooloose/syntastic'
-  Plugin 'LaTeX-Box-Team/LaTeX-Box'
-  Plugin 'coot/atp_vim'
   Plugin 'chriskempson/base16-vim'
 
   " All of your Plugins must be added before the following line
@@ -101,11 +96,6 @@ map k gk
 "set relativenumber
 set number
 set t_Co=256
-"set background=dark
-"colorscheme distinguished
-"colorscheme molokai
-"let g:rehash256 = 1
-"let g:molokai_original = 1
 let g:rehash256 = 1
 
 " Taglist Settings
