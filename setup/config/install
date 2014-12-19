@@ -1,41 +1,21 @@
 #!/bin/bash
 #
-#Set up shell rc files and configuration files
+# Set up shell, vim and tmux configuration files
 
-echo 'Updating shell rc files...'
+echo " * Updating shell rc files..."
 for rcfile in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
   if [[ -f ${rcfile} ]]; then
     if [[ -z `grep "export ROBOT=" ${rcfile}` ]]; then
       echo "updating ${rcfile}"
-      echo "" >> ${rcfile}
-      echo "#" >> ${rcfile}
-      echo "# MCGILL ROBOTICS CONFIGURATION" >> ${rcfile}
-      echo "#" >> ${rcfile}
-      echo "# The following can be modified." >> ${rcfile}
-      echo "# EDITOR        Your text editor of choice." >> ${rcfile}
-      echo "# ROBOT         Team you are working on ('auv' or 'rover')." >> ${rcfile}
-      echo "# IAMROBOT      If computer will be shared ('true' or 'false')." >> ${rcfile}
-      echo "# ROBOTIC_PATH  Absolute path to directory containing the local" >> ${rcfile}
-      echo "#               McGill Robotics git repositories." >> ${rcfile}
-      echo "#" >> ${rcfile}
-      echo "export EDITOR=vim" >> ${rcfile}
-      echo "export ROBOT=${ROBOT}" >> ${rcfile}
-      echo "export IAMROBOT=${IAMROBOT}" >> ${rcfile}
-      echo "export ROBOTIC_PATH=${ROBOTIC_PATH}" >> ${rcfile}
-      echo 'if [[ -f ${ROBOTIC_PATH}/compsys/roboticrc ]]; then' >> ${rcfile}
-      echo '  source $ROBOTIC_PATH/compsys/roboticrc' >> ${rcfile}
-      echo "else" >> ${rcfile}
-      echo '  echo "Could not find ${ROBOTIC_PATH}/compsys/roboticrc"' >> ${rcfile}
-      echo '  echo "This could result from moving the compsys folder"' >> ${rcfile}
-      echo '  echo "Please modify ROBOTIC_PATH in your .bashrc or .zshrc"' >> ${rcfile}
-      echo '  echo "to the new location of compsys folder."' >> ${rcfile}
-      echo "fi" >> ${rcfile}
-      echo "" >> $rcfile
+      sed -e "s/=\${ROBOT}/=${ROBOT}/" \
+        -e "s/=\${IAMROBOT}/=${IAMROBOT}/" \
+        -e "s/=\${ROBOTIC_PATH}/=${ROBOTIC_PATH//\//\/}/" \
+        -e "s/\${rcfile}/~\/${rcfile##*/}/" rc >> ${rcfile}
     fi
   fi
 done
 
-echo 'Adding other configuration files...'
+echo " * Adding other configuration files..."
 for rcfile in "vimrc" "tmux.conf"; do
   if [[ ! -f ${HOME}/.${rcfile} ]]; then
     echo "adding ${HOME}/.${rcfile}"
@@ -43,11 +23,11 @@ for rcfile in "vimrc" "tmux.conf"; do
   fi
 done
 
-echo 'Setting up vim bundles...'
+echo " * Setting up vim bundles..."
 if [[ ! -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
 fi
 
-echo 'Configurations setup done.'
+echo "   ...done."
 echo
