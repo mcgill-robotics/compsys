@@ -1,14 +1,15 @@
 #!/bin/bash
+#
+# Install git hook to update dependencies on pull
 
-echo 'Setting up git hook'
-if [[ ! -d ${ROBOTIC_PATH}/compsys/.git/hooks ]]; then
-  echo 'creating git hooks directory'
-  mkdir ${ROBOTIC_PATH}/compsys/.git/hooks
+hooks=${ROBOTIC_PATH}/compsys/.git/hooks
+
+echo " * Setting up git hook..."
+if [[ ! -d ${hooks} ]]; then
+  mkdir ${hooks}
 fi
-echo "#!/bin/bash" > ${ROBOTIC_PATH}/compsys/.git/hooks/post-merge
-echo "" >> ${ROBOTIC_PATH}/compsys/.git/hooks/post-merge
-echo "source ${ROBOTIC_PATH}/compsys/update" >> ${ROBOTIC_PATH}/compsys/.git/hooks/post-merge
-chmod +x ${ROBOTIC_PATH}/compsys/.git/hooks/post-merge
+cp ${ROBOTIC_PATH}/compsys/setup/hooks/post-merge ${hooks}/post-merge
+chmod +x ${hooks}/post-merge
 
-echo 'Done.'
+echo "   ...done."
 echo
