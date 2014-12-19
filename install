@@ -1,60 +1,63 @@
 #!/bin/bash
+#
+# Install the McGill Robotic CompSys package
 
-# FIGURE OUT ROBOTIC PATH
-export ROBOTIC_PATH=`dirname $PWD`
+# Determine ROBOTIC_PATH
+export ROBOTIC_PATH=$(dirname ${PWD})
 
-# ROBOT OR NOT
-echo 'ARE YOU A ROBOT?'
-echo 'Select NO.'
-select yn in "NO" "yes"; do
+# Ask if robot
+echo "Are you a robot?"
+echo "If uncertain, select NO."
+select yn in "YES" "NO"; do
   case "${yn}" in
-    yes )
+    YES )
       export IAMROBOT=true
-      echo 'E: ROBOT NOT YET SUPPORTED'
-      exit;;
+      echo "E: ROBOT NOT YET SUPPORTED"
+      exit 1
+      break;;
     NO )
-      export IAMROBOT=false;
+      export IAMROBOT=false
       break;;
   esac
 done
 echo
 
-# SELECT TEAM
-echo 'WHICH PROJECT ARE YOU WORKING ON?'
+# Select project
+echo "Which project are you working on?"
 select project in "AUV" "ROVER"; do
   case "${project}" in
     AUV )
-      export ROBOT=auv;
+      export ROBOT=auv
       break;;
     ROVER )
-      export ROBOT=rover;
+      export ROBOT=rover
       break;;
   esac
 done
 echo
 
-# ZSHELL INSTALLATION
-echo 'WOULD YOU LIKE TO SWITCH FROM BASH TO ZSH?'
-echo 'If uncertain, select NO.'
-select yn in "NO" "yes"; do
+# Ask to install Zsh
+echo "Would you like to switch from bash to Zsh?"
+echo "If uncertain, select NO."
+select yn in "YES" "NO"; do
   case "${yn}" in
-    yes )
-      ./setup/zsh/install;
+    YES )
+      echo
+      ./setup/zsh/install
       break;;
     NO )
       break;;
   esac
 done
-echo
 
-# ROS INSTALLATION
+# Ask to install ROS if not installed
 if [[ -z ${ROS_DISTRO} ]]; then
-  echo "ROS IS NOT INSTALLED! WOULD YOU LIKE TO INSTALL IT?"
-  echo "This will take a while, select NO if you don't have time."
-  select ros in "NO" "YES"; do
+  echo "ROS is not installed! Would you like to install it?"
+  echo "This will take a while, select NO if you don't have time now."
+  select ros in "YES" "NO"; do
     case "${ros}" in
       YES )
-        ./setup/ros/install;
+        ./setup/ros/install
         break;;
       NO )
         break;;
@@ -62,20 +65,22 @@ if [[ -z ${ROS_DISTRO} ]]; then
   done
 fi
 
-# UPDATE
-echo "Refreshing apt packages list..."
+# Update and install packages
+echo " * Refreshing apt package list..."
 sudo apt-get -qq update
 source ${ROBOTIC_PATH}/compsys/update
 
-# CLONING REPOSITORY
-if [[ ! -d ${ROBOTIC_PATH}/${ROBOT} ]]; then
-  echo "Cloning ${robot} git repository..."
-  git clone https://github.com/mcgill-robotics/${ROBOT}.git ${ROBOTIC_PATH}/${ROBOT}
+# Clone repository
+robot_git=${ROBOTIC_PATH}/${ROBOT}
+if [[ ! -d ${robot_git} ]]; then
+  echo " * Cloning ${robot} git repository..."
+  git clone git@github.com:mcgill-robotics/${ROBOT}.git ${robot_git}
+  echo "   ...done."
   echo
 fi
 
-# APPEND TO RC FILES
+# Configure RC files
 source ${ROBOTIC_PATH}/compsys/setup/config/install
 
-# GIT HOOKS
+# Setup git hook
 source ${ROBOTIC_PATH}/compsys/setup/hooks/install

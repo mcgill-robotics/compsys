@@ -1,22 +1,31 @@
 #!/bin/bash
+#
+# Update apt, gem and pip dependencies
 
+#########################################
+# Get dependencies from /packages
+# Arguments:
+#   File in /packages
+# Returns:
+#   Space separated list of dependencies
+#########################################
 function get_dependencies () {
   if [[ -s ${ROBOTIC_PATH}/compsys/packages/$1 ]]; then
     cat ${ROBOTIC_PATH}/compsys/packages/$1 | awk 'BEGIN{ORS=" "}1'
   fi
 }
 
-echo 'Updating apt dependancies...'
-apt=`get_dependencies apt`
-[[ -n "${apt}" ]] && sudo apt-get -y -qq install ${apt} || echo 'no apt packages to install'
-echo
+echo " * Updating apt dependencies..."
+apt=$(get_dependencies apt)
+[[ -n "${apt}" ]] && sudo apt-get -y -qq install ${apt} || :
 
-echo 'Updating gem dependancies...'
-gem=`get_dependencies gem`
-[[ -n "${gem}" ]] && sudo gem install -q ${gem} || echo 'no gem packages to install'
-echo
+echo " * Updating gem dependencies..."
+gem=$(get_dependencies gem)
+[[ -n "${gem}" ]] && sudo gem install -q ${gem} > /dev/null || :
 
-echo 'Updating pip dependancies...'
-pip=`get_dependencies pip`
-[[ -n "${pip}" ]] && sudo pip install --upgrade ${pip} || echo 'no pip packages to install'
+echo " * Updating pip dependencies..."
+pip=$(get_dependencies pip)
+[[ -n "${pip}" ]] && sudo pip install --upgrade ${pip} > /dev/null || :
+
+echo "   ...done."
 echo

@@ -4,6 +4,7 @@
 By default, all topics defined in your team's '.topics' will be merged if no
 arguments are given. Otherwise, only the topics specified will be merged."""
 
+__author__ = "Anass Al-Wohoush"
 __version__ = '0.9'
 
 import re

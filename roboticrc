@@ -1,9 +1,11 @@
 #!/bin/bash
+#
+# Initialize McGill Robotics aliases and setup ROS
 
-# DETERMINE SHELL
+# Determine shell
 SHELL_EXTENSION=${SHELL##*/}
 
-# ROS
+# Setup ROS
 if [[ -s /opt/ros/indigo/setup.${SHELL_EXTENSION} ]]; then
   source /opt/ros/indigo/setup.${SHELL_EXTENSION}
 fi
@@ -13,5 +15,5 @@ fi
 export ROS_WORKSPACE=${ROBOTIC_PATH}/${ROBOT}/catkin_ws
 export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}
 
-# CUSTOM ALIASES
+# Source custom aliases and functions
 source ${ROBOTIC_PATH}/compsys/aliases

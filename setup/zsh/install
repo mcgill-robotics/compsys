@@ -1,16 +1,17 @@
 #!/bin/bash
+#
+# Install Zsh and set up prezto
 
-echo 'Installing Zsh...'
+echo " * Installing Zsh..."
 sudo apt-get -y -qq install zsh
-echo
 
-echo 'Installing Prezto, configuration framework for Zsh...'
-if [[ ! -d ~/.zprezto ]]; then
-  git clone -q --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
+echo " * Installing Prezto, configuration framework for Zsh..."
+if [[ ! -d ${HOME}/.zprezto ]]; then
+  prezto_git=https://github.com/sorin-ionescu/prezto.git
+  git clone -q --recursive ${prezto_git} ~/.zprezto
 fi
-echo
 
-echo 'Setting up .zshrc...'
+echo " * Setting up .zshrc..."
 if [[ ! -f $HOME/.zshrc ]];then
   cp ${ROBOTIC_PATH}/compsys/setup/zsh/zshrc ${HOME}/.zshrc
 fi
@@ -19,23 +20,23 @@ if [[ ! -f ${HOME}/.zpreztorc ]]; then
   ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc ${HOME}/.zpreztorc
 fi
 
-if [[ ! -f ${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup ]]; then
-  ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/prompt_mcgill_setup ${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup
+mcgill_prompt=${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup
+if [[ ! -f ${mcgill_prompt} ]]; then
+  ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/prompt_mcgill_setup ${mcgill_prompt}
 fi
-echo
 
-echo 'Setting up Fasd...'
+echo " * Setting up Fasd..."
 if [[ ! -f /usr/bin/fasd ]]; then
-  sudo wget -q https://raw.githubusercontent.com/clvv/fasd/master/fasd -P /usr/bin
+  fasd_url=https://raw.githubusercontent.com/clvv/fasd/master/fasd
+  sudo wget -q ${fasd_url} -P /usr/bin
   sudo chmod +x /usr/bin/fasd
 fi
-echo
 
-echo 'Switching default login shell...'
-echo 'You need to logout and log back in to reflect the changes.'
-if [[ ${SHELL} != '/bin/zsh' ]]; then
+echo " * Switching default login shell..."
+if [[ ${SHELL} != "/bin/zsh" ]]; then
   chsh -s /bin/zsh
 fi
 
-echo 'Done.'
+echo "   Logout and log back in to reflect the changes."
+echo "   ...done."
 echo

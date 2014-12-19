@@ -1,10 +1,10 @@
-# COLOR OUTPUT
+# Color output
 zstyle ':prezto:*:*' color 'yes'
 
-# ZSH FUNCTIONS
+# Zsh functions
 zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 
-# PREZTO MODULES
+# Prezto modules
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
@@ -25,16 +25,16 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'prompt'
 
-# DOT EXPANSION
+# Dot expansion
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 
-# PROMPT THEME
+# Prompt theme
 zstyle ':prezto:module:prompt' theme 'mcgill'
 
-# SSH-AGENT
+# Ssh-agent
 zstyle ':prezto:module:ssh:load' identities 'id_rsa'
 
-# SYNTAX HIGHLIGHTING
+# Syntax highlighting
 zstyle ':prezto:module:syntax-highlighting' highlighters \
   'main' \
   'brackets' \
@@ -42,6 +42,5 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'cursor' \
   'root'
 
-# CASE SENSITIVITY
+# Case sensitivity
 zstyle ':prezto:*:*' case-sensitive 'no'
-
