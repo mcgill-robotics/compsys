@@ -16,7 +16,7 @@ echo "${header} Welcome to McGill Robotics ${reset}"
 echo
 
 # Disclaimer
-cat disclaimer
+cat DISCLAIMER
 echo
 
 # Ask for sudo privileges
