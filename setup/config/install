@@ -18,7 +18,6 @@ done
 echo " * Adding other configuration files..."
 for rcfile in "vimrc" "tmux.conf"; do
   if [[ ! -f ${HOME}/.${rcfile} ]]; then
-    echo "adding ${HOME}/.${rcfile}"
     ln -s ${ROBOTIC_PATH}/compsys/setup/config/${rcfile} ${HOME}/.${rcfile}
   fi
 done

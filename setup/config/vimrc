@@ -12,16 +12,17 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+" Quick access to vimrc
 nmap <silent> ,ev :e $MYVIMRC<cr>
 nmap <silent> ,sv :so $MYVIMRC<cr>
 
-" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" can be called correctly.
-set shellslash
+" Map up and down keys
+map j gj
+map k gk
 
+" Plugins
 if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
   filetype off
-  " set the runtime path to include Vundle and initialize
   set rtp+=~/.vim/bundle/Vundle.vim
   call vundle#begin()
 
@@ -44,64 +45,60 @@ if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
   Plugin 'davidhalter/jedi-vim'
   Plugin 'terryma/vim-multiple-cursors'
   Plugin 'scrooloose/syntastic'
-  Plugin 'chriskempson/base16-vim'
+  Plugin 'itchyny/lightline.vim'
+  Plugin 'cocopon/lightline-hybrid.vim'
 
-  " All of your Plugins must be added before the following line
-  call vundle#end()            " required
-  filetype plugin indent on    " required
+  call vundle#end()
+  filetype plugin indent on
 endif
 
-" Vim settings
-" Set the search scan to wrap around the file
-set wrapscan
 " Command line height
 set ch=1
-" Visual bell
-"set vb
+
 " Allow backspace over indent, eol, and start of insert
 set backspace=2
-" Status Line
-"set stl=%f\ %m\ %r\ Line:\ %l/%L[%p%%]\ Col:\ %c\ Buf:\ #%n\ [%b][0x%B]
 
-"Tell vim to put a status line
+" Status line
 set laststatus=2
 
 " Hide mouse while typing
 set mousehide
+
+" History and search
 set history=100
 set complete=.,w,b,t
+set wrapscan
 set incsearch
 
-" Set cursor line
+" Cursor line
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey40
 
-" Turn backup off
+" No backup files
 set nobackup
 set nowb
 set noswapfile
 
-" Use spaces instead of tabs
+" Tab behaviour
 set expandtab
 set smarttab
-set shiftwidth=2
-set tabstop=2
+set shiftwidth=4
+set tabstop=4
 set ai
 set si
 set wrap
 
-map j gj
-map k gk
-
-"set relativenumber
+" Ruler and line number
+set colorcolumn=80
 set number
+
+" Colorscheme
 set t_Co=256
-let g:rehash256 = 1
+colorscheme gruvbox
+set background=dark
 
-" Taglist Settings
+" Taglist
 noremap <silent> <Leader>t :TlistToggle<CR>
-
-" Taglist plugin config
 let Tlist_Use_Right_Window = 1
 let Tlist_Inc_Winwidth = 0
 let Tlist_WinWidth = 45
@@ -109,15 +106,19 @@ let Tlist_GainFocus_On_ToggleOpen= 1
 let Tlist_Ctags_Cmd = 'ctags'
 let Tlist_Show_One_File = 1
 
-" NERDTree settings
+" NERDTree
 :map <F5> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=0
 
-" Mouse Mode iterm2
+" Mouse
 set mouse=a
 
-" ctrlp hotkeys
+" CtrlP
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
+" Lightline
+let g:lightline = {}
+let g:lightline.colorscheme = 'hybrid'
