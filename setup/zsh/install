@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# Install Zsh and set up prezto
+# Install Zsh and set up Prezto
 
 echo " * Installing Zsh..."
 sudo apt-get -y -qq install zsh
 
-echo " * Installing Prezto, configuration framework for Zsh..."
+echo " * Installing Prezto..."
 if [[ ! -d ${HOME}/.zprezto ]]; then
   prezto_git=https://github.com/sorin-ionescu/prezto.git
   git clone -q --recursive ${prezto_git} ~/.zprezto
@@ -37,6 +37,5 @@ if [[ ${SHELL} != "/bin/zsh" ]]; then
   chsh -s /bin/zsh
 fi
 
-echo "   Logout and log back in to reflect the changes."
 echo "   ...done."
 echo

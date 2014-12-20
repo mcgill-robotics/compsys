@@ -5,25 +5,43 @@
 # Determine ROBOTIC_PATH
 export ROBOTIC_PATH=$(dirname ${PWD})
 
+# Colors
+header=$(tput setab 1; tput setaf 0)
+question=$(tput bold; tput setaf 3)
+reset=$(tput sgr0)
+
+# Header
+echo
+echo "${header} Welcome to McGill Robotics ${reset}"
+echo
+
+# Disclaimer
+cat disclaimer
+echo
+
+# Ask for sudo privileges
+sudo echo "Please answer the following questions truthfully:" || exit 1
+echo
+
 # Ask if robot
-echo "Are you a robot?"
-echo "If uncertain, select NO."
-select yn in "YES" "NO"; do
-  case "${yn}" in
-    YES )
-      export IAMROBOT=true
-      echo "E: ROBOT NOT YET SUPPORTED"
-      exit 1
-      break;;
-    NO )
-      export IAMROBOT=false
-      break;;
-  esac
-done
+ask="${question}Are you a robot? Probably not.${reset}"
+read -p "${ask} [y/N] (default no) " irobot
+case "${irobot}" in
+  y|Y )
+    export IAMROBOT=true
+    echo "E: ROBOT NOT YET SUPPORTED"
+    exit 1
+    ;;
+  * )
+    echo "Thought so."
+    export IAMROBOT=false
+    ;;
+esac
 echo
 
 # Select project
-echo "Which project are you working on?"
+ask="${question}Which project are you working on?${reset}"
+echo ${ask}
 select project in "AUV" "ROVER"; do
   case "${project}" in
     AUV )
@@ -34,36 +52,48 @@ select project in "AUV" "ROVER"; do
       break;;
   esac
 done
+echo "Welcome to ${project}!"
 echo
 
-# Ask to install Zsh
-echo "Would you like to switch from bash to Zsh?"
-echo "If uncertain, select NO."
-select yn in "YES" "NO"; do
-  case "${yn}" in
-    YES )
-      echo
-      ./setup/zsh/install
-      break;;
-    NO )
-      break;;
+# Ask to install Zsh if not installed
+if [[ ! ${SHELL##*/} = "zsh" ]]; then
+  ask="${question}Would you like to switch to Zsh? Here be dragons.${reset}"
+  read -p "${ask} [y/N] (default no) " zshpls
+  case "${zshpls}" in
+    y|Y )
+      echo "Zsh will be installed!"
+      echo "You may need to log out and log back in to reflect the changes"
+      export INSTALL_ZSH=true
+      ;;
+    * )
+      echo "You're missing out!"
+      echo "You can run ./setup/zsh/install if you change your mind later"
+      export INSTALL_ZSH=false
+      ;;
   esac
-done
+fi
 
 # Ask to install ROS if not installed
 if [[ -z ${ROS_DISTRO} ]]; then
-  echo "ROS is not installed! Would you like to install it?"
-  echo "This will take a while, select NO if you don't have time now."
-  select ros in "YES" "NO"; do
-    case "${ros}" in
-      YES )
-        ./setup/ros/install
-        break;;
-      NO )
-        break;;
-    esac
-  done
+  ask="${question}Would you like to install ROS? This takes a while.${reset}"
+  read -p "${ask} [Y/n] (default yes) " rosplz
+  case "${rosplz}" in
+    n|N )
+      echo "ROS will not be installed now!"
+      echo "You can run ./setup/ros/install if you change your mind later"
+      export INSTALL_ROS=false
+      break;;
+    * )
+      echo "ROS will be installed!"
+      export INSTALL_ROS=true
+      break;;
+  esac
 fi
+
+# Inform to wait
+echo
+echo "Thanks! Now sit back and relax: we'll take care of the rest."
+echo
 
 # Update and install packages
 echo " * Refreshing apt package list..."
@@ -84,3 +114,13 @@ source ${ROBOTIC_PATH}/compsys/setup/config/install
 
 # Setup git hook
 source ${ROBOTIC_PATH}/compsys/setup/hooks/install
+
+# Install zsh if requested
+[[ ${INSTALL_ZSH} = true ]] && ./setup/zsh/install
+
+# Install ROS if requested
+[[ ${INSTALL_ROS} = true ]] && ./setup/ros/install
+
+# Done
+echo "All done!"
+echo "You can start playing around in ${ROBOTIC_PATH}/${ROBOT}"
