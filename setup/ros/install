@@ -2,23 +2,22 @@
 #
 # Install ROS Indigo Igloo
 
-echo " * Adding ROS PPA..."
+echo "Adding ROS PPA..."
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" \
   > /etc/apt/sources.list.d/ros-latest.list'
 
-echo " * Getting ROS apt verification key..."
+echo "Getting ROS apt verification key..."
 wget -q https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - \
   | sudo apt-key add -
 
-echo " * Updating apt package list..."
+echo "Updating apt package list..."
 sudo apt-get -qq update
 
-echo " * Installing ROS..."
+echo "Installing ROS..."
 sudo apt-get -y install ros-indigo-desktop-full
 
-echo " * Setting up ROS dependencies..."
+echo "Setting up ROS dependencies..."
 sudo rosdep init
 rosdep update
 
-echo "   ...done."
-echo
+echo "Done."

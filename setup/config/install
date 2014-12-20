@@ -4,8 +4,8 @@
 
 for rcfile in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
   if [[ -f ${rcfile} ]]; then
-    echo " * Updating ${rcfile##*/}..."
     if [[ -z $(grep "export ROBOT=" ${rcfile}) ]]; then
+      echo "Updating ${rcfile##*/}..."
       sed -e "s@=\${ROBOT}@=${ROBOT}@" \
         -e "s@=\${IAMROBOT}@=${IAMROBOT}@" \
         -e "s@=\${ROBOTIC_PATH}@=${ROBOTIC_PATH//\//\/}@" \
@@ -17,16 +17,15 @@ done
 
 for rcfile in "vimrc" "tmux.conf"; do
   if [[ ! -f ${HOME}/.${rcfile} ]]; then
-    echo " * Adding .${rcfile}..."
+    echo "Adding .${rcfile}..."
     ln -s ${ROBOTIC_PATH}/compsys/setup/config/${rcfile} ${HOME}/.${rcfile}
   fi
 done
 
 if [[ ! -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
-  echo " * Setting up vim bundles..."
+  echo "Setting up vim bundles..."
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  vim +PluginInstall +qall
+  vim +PluginInstall +qall &> /dev/null
 fi
 
-echo "   ...done."
-echo
+echo "Done."

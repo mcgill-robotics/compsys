@@ -1,9 +1,3 @@
-Please make sure you have an internet connection and have properly set up your
-ssh key on GitHub before proceeding.
-
-------------
- DISCLAIMER
-------------
 Your sudo password will now be requested in order to install dependencies on
 your system. If you are concerned with this, you are free to look through what
 this script does.

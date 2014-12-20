@@ -7,7 +7,7 @@ export ROBOTIC_PATH=$(dirname ${PWD})
 
 # Colors
 header=$(tput setab 1; tput setaf 0)
-question=$(tput bold; tput setaf 3)
+question=$(tput bold; tput setaf 4)
 section=$(tput bold; tput setaf 2)
 reset=$(tput sgr0)
 
@@ -16,11 +16,20 @@ echo
 echo "${header} Welcome to McGill Robotics ${reset}"
 echo
 
+# Instructions
+cat <<END
+Please make sure you have an internet connection and have properly set up your
+ssh key on GitHub before proceeding.
+END
+
 # Disclaimer
+echo
+echo "$(tput bold; tput setaf 1)DISCLAIMER${reset}"
 cat DISCLAIMER
 echo
 
 # Ask for sudo privileges
+sudo -K
 sudo echo || exit 1
 echo "Please answer the following questions truthfully:"
 echo
@@ -99,34 +108,37 @@ echo "Thanks! Now sit back and relax: we'll take care of the rest."
 echo
 
 # Update and install packages
-echo "${section} DEPENDENCIES${reset}"
-echo " * Refreshing apt package list..."
-sudo apt-get -qq update
+echo "${section}Dependencies${reset}"
 source ${ROBOTIC_PATH}/compsys/update
+echo
 
 # Clone repository and setup git hook
-echo "${section} GIT${reset}"
+echo "${section}Git${reset}"
 robot_git=${ROBOTIC_PATH}/${ROBOT}
 if [[ ! -d ${robot_git} ]]; then
-  echo " * Cloning ${robot} git repository..."
+  echo "Cloning ${robot} git repository..."
   git clone git@github.com:mcgill-robotics/${ROBOT}.git ${robot_git}
 fi
 source ${ROBOTIC_PATH}/compsys/setup/hooks/install
+echo
 
 # Configure RC files
-echo "${section} RC CONFIGURATION${reset}"
+echo "${section}Configuration files${reset}"
 source ${ROBOTIC_PATH}/compsys/setup/config/install
+echo
 
 # Install zsh if requested
 if [[ ${INSTALL_ZSH} = true ]]; then
-  echo "${section} ZSH${reset}"
+  echo "${section}ZSH${reset}"
   ./setup/zsh/install
+  echo
 fi
 
 # Install ROS if requested
 if [[ ${INSTALL_ROS} = true ]]; then
-  echo "${section} ROS${reset}"
+  echo "${section}ROS${reset}"
   ./setup/ros/install
+  echo
 fi
 
 # Done
