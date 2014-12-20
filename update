@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Update apt, gem and pip dependencies
+# Update vim plugins and apt, gem and pip dependencies
 
 #########################################
 # Get dependencies from /packages
@@ -14,6 +14,11 @@ function get_dependencies () {
     cat ${ROBOTIC_PATH}/compsys/packages/$1 | awk 'BEGIN{ORS=" "}1'
   fi
 }
+
+if [[ -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
+  echo " * Updating vim plugins..."
+  vim +PluginInstall +qall
+fi
 
 echo " * Updating apt dependencies..."
 apt=$(get_dependencies apt)

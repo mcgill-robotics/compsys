@@ -2,7 +2,7 @@
 #
 # Install Zsh and set up Prezto
 
-echo " * Installing Zsh..."
+echo " * Installing zsh..."
 sudo apt-get -y -qq install zsh
 
 echo " * Installing Prezto..."

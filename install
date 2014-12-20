@@ -55,20 +55,20 @@ select project in "AUV" "ROVER"; do
 done
 echo "Welcome to ${project}!"
 
-# Ask to install Zsh if not installed
+# Ask to install zsh if not installed
 if [[ ! ${SHELL##*/} = "zsh" ]]; then
   echo
-  ask="${question}Would you like to switch to Zsh? Here be dragons.${reset}"
+  ask="${question}Would you like to switch to zsh? Here be dragons.${reset}"
   read -p "${ask} [y/N] (default no) " zshpls
   case "${zshpls}" in
     y|Y )
-      echo "Zsh will be installed!"
+      echo "zsh will be installed!"
       echo "You may need to log out and log back in to reflect the changes"
       export INSTALL_ZSH=true
       ;;
     * )
       echo "You're missing out!"
-      echo "You can run ./setup/zsh/install if you change your mind later"
+      echo "You can run ./setup/zsh/install if you change your mind"
       export INSTALL_ZSH=false
       ;;
   esac
@@ -81,8 +81,8 @@ if [[ -z ${ROS_DISTRO} ]]; then
   read -p "${ask} [Y/n] (default yes) " rosplz
   case "${rosplz}" in
     n|N )
-      echo "ROS will not be installed now!"
-      echo "You can run ./setup/ros/install if you change your mind later"
+      echo "ROS installation will be skipped!"
+      echo "Run ./setup/ros/install to install later"
       export INSTALL_ROS=false
       break;;
     * )
