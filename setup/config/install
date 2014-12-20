@@ -7,10 +7,10 @@ for rcfile in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
   if [[ -f ${rcfile} ]]; then
     if [[ -z `grep "export ROBOT=" ${rcfile}` ]]; then
       echo "updating ${rcfile}"
-      sed -e "s/=\${ROBOT}/=${ROBOT}/" \
-        -e "s/=\${IAMROBOT}/=${IAMROBOT}/" \
-        -e "s/=\${ROBOTIC_PATH}/=${ROBOTIC_PATH//\//\/}/" \
-        -e "s/\${rcfile}/~\/${rcfile##*/}/" rc >> ${rcfile}
+      sed -e "s@=\${ROBOT}@=${ROBOT}@" \
+        -e "s@=\${IAMROBOT}@=${IAMROBOT}@" \
+        -e "s@=\${ROBOTIC_PATH}@=${ROBOTIC_PATH//\//\/}@" \
+        -e "s@\${rcfile}@~\/${rcfile##*/}@" rc >> ${rcfile}
     fi
   fi
 done
