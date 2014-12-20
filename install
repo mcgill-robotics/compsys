@@ -9,6 +9,7 @@ export ROBOTIC_PATH=$(dirname ${PWD})
 header=$(tput setab 1; tput setaf 0)
 question=$(tput bold; tput setaf 4)
 section=$(tput bold; tput setaf 2)
+warning=$(tput bold; tput setaf 1)
 reset=$(tput sgr0)
 
 # Header
@@ -24,7 +25,7 @@ END
 
 # Disclaimer
 echo
-echo "$(tput bold; tput setaf 1)DISCLAIMER${reset}"
+echo "${warning}DISCLAIMER${reset}"
 cat DISCLAIMER
 echo
 
@@ -109,7 +110,7 @@ echo
 
 # Update and install packages
 echo "${section}Dependencies${reset}"
-source ${ROBOTIC_PATH}/compsys/update
+./update
 echo
 
 # Clone repository and setup git hook
@@ -119,7 +120,7 @@ if [[ ! -d ${robot_git} ]]; then
   echo "Cloning ${robot} git repository..."
   git clone git@github.com:mcgill-robotics/${ROBOT}.git ${robot_git}
 fi
-source ${ROBOTIC_PATH}/compsys/setup/hooks/install
+./setup/hooks/install
 echo
 
 # Configure RC files

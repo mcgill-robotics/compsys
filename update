@@ -17,15 +17,15 @@ function get_dependencies () {
 
 echo "Updating apt dependencies..."
 apt=$(get_dependencies apt)
-[[ -n "${apt}" ]] && sudo apt-get -y -qq install ${apt} || :
+[[ -n "${apt}" ]] && sudo apt-get -y -qq install ${apt}
 
 echo "Updating gem dependencies..."
 gem=$(get_dependencies gem)
-[[ -n "${gem}" ]] && sudo gem install -q ${gem} > /dev/null || :
+[[ -n "${gem}" ]] && sudo gem install --conservative ${gem} > /dev/null
 
 echo "Updating pip dependencies..."
 pip=$(get_dependencies pip)
-[[ -n "${pip}" ]] && sudo pip install --upgrade ${pip} > /dev/null || :
+[[ -n "${pip}" ]] && sudo pip install ${pip} > /dev/null
 
 if [[ -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   echo "Updating vim plugins..."
