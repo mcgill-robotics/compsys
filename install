@@ -20,7 +20,8 @@ cat disclaimer
 echo
 
 # Ask for sudo privileges
-sudo echo "Please answer the following questions truthfully:" || exit 1
+sudo -k echo -n || exit 1
+echo "Please answer the following questions truthfully:"
 echo
 
 # Ask if robot
@@ -53,10 +54,10 @@ select project in "AUV" "ROVER"; do
   esac
 done
 echo "Welcome to ${project}!"
-echo
 
 # Ask to install Zsh if not installed
 if [[ ! ${SHELL##*/} = "zsh" ]]; then
+  echo
   ask="${question}Would you like to switch to Zsh? Here be dragons.${reset}"
   read -p "${ask} [y/N] (default no) " zshpls
   case "${zshpls}" in
@@ -75,6 +76,7 @@ fi
 
 # Ask to install ROS if not installed
 if [[ -z ${ROS_DISTRO} ]]; then
+  echo
   ask="${question}Would you like to install ROS? This takes a while.${reset}"
   read -p "${ask} [Y/n] (default yes) " rosplz
   case "${rosplz}" in
