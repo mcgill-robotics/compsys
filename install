@@ -20,7 +20,7 @@ cat disclaimer
 echo
 
 # Ask for sudo privileges
-sudo -k echo -n || exit 1
+sudo -k echo || exit 1
 echo "Please answer the following questions truthfully:"
 echo
 
