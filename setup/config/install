@@ -5,12 +5,12 @@
 echo " * Updating shell rc files..."
 for rcfile in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
   if [[ -f ${rcfile} ]]; then
-    if [[ -z `grep "export ROBOT=" ${rcfile}` ]]; then
-      echo "updating ${rcfile}"
+    if [[ -z $(grep "export ROBOT=" ${rcfile}) ]]; then
       sed -e "s@=\${ROBOT}@=${ROBOT}@" \
         -e "s@=\${IAMROBOT}@=${IAMROBOT}@" \
         -e "s@=\${ROBOTIC_PATH}@=${ROBOTIC_PATH//\//\/}@" \
-        -e "s@\${rcfile}@~\/${rcfile##*/}@" rc >> ${rcfile}
+        -e "s@\${rcfile}@~\/${rcfile##*/}@" \
+        ${ROBOTIC_PATH}/compsys/setup/config/rc >> ${rcfile}
     fi
   fi
 done
