@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
-"""McGill Robotics' ROS Bagger.
+"""McGill Robotics ROS Bagger.
 
 This tool can:
 

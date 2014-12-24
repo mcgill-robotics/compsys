@@ -1,4 +1,4 @@
-# McGill Robotics' ROS Bagger
+# McGill Robotics ROS Bagger
 
 This tool is designed to simplify the ROS bagging process.
 For now, it can:

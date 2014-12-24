@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""McGill Robotics' ROS Bag Recorder.
+"""McGill Robotics ROS Bag Recorder.
 
 This tool records all the specified topics into 15 second bags to the
 specified directory. Press Ctrl+C to stop.

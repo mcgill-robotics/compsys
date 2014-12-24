@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""McGill Robotics' ROS Bag Merger.
+"""McGill Robotics ROS Bag Merger.
 
 This tool merges all bags in the specified directory that were split by
 `bag record`.
