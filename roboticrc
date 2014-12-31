@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Initialize McGill Robotics aliases and setup ROS
+# Initialize McGill Robotics customizations, ROS setup and paths
 
 # Determine shell
 _SHELL_PROCESS=$(ps -p $$ -oargs=)

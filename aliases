@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# Initialize McGill Robotics aliases and functions
 
 # Connecting to robot
 alias robot='mosh robotics@10.0.0.1'
@@ -10,3 +12,6 @@ alias bag='python -m bag.run'
 # Monitoring
 alias glances='glances -yet 5'
 alias main='tmux attach -t MAIN || tmux new -s MAIN'
+
+# Fasd
+[[ -n $(which fasd_cd) ]] && alias j='fasd_cd'
