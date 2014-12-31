@@ -3,7 +3,8 @@
 # Initialize McGill Robotics aliases and setup ROS
 
 # Determine shell
-SHELL_EXT=${0##-}
+_SHELL_PROCESS=$(ps -p $$ -oargs=)
+SHELL_EXT=${_SHELL_PROCESS##-}
 
 # Setup ROS
 if [[ -s /opt/ros/indigo/setup.${SHELL_EXT} ]]; then
