@@ -123,17 +123,17 @@ fi
 ./setup/hooks/install
 echo
 
-# Configure RC files
-echo "${section}Configuration files${reset}"
-source ${ROBOTIC_PATH}/compsys/setup/config/install
-echo
-
 # Install zsh if requested
 if [[ ${INSTALL_ZSH} = true ]]; then
   echo "${section}ZSH${reset}"
   ./setup/zsh/install
   echo
 fi
+
+# Configure RC files
+echo "${section}Configuration files${reset}"
+source ${ROBOTIC_PATH}/compsys/setup/config/install
+echo
 
 # Install ROS if requested
 if [[ ${INSTALL_ROS} = true ]]; then
