@@ -67,7 +67,7 @@ done
 echo "Welcome to ${project}!"
 
 # Ask to install zsh if not installed
-if [[ ! ${SHELL##*/} = "zsh" ]]; then
+if [[ ! ${SHELL} = "/bin/zsh" ]]; then
   echo
   ask="${question}Would you like to switch to zsh? Here be dragons.${reset}"
   read -p "${ask} [y/N] (default no) " zshpls
