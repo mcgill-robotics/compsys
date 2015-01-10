@@ -29,7 +29,7 @@ echo ${pip} | xargs sudo pip install --upgrade > /dev/null || :
 
 if [[ -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   echo "Updating vim plugins..."
-  vim +PluginInstall +qall &> /dev/null
+  vim +PluginInstall +qall
 fi
 
 echo "Done."
