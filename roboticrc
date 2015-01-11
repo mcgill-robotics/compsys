@@ -6,6 +6,11 @@
 _SHELL_PROCESS=$(ps -p $$ -oargs=)
 SHELL_EXT=${_SHELL_PROCESS##-}
 
+# Set CLOBBER option to properly source ROS on ZSH
+if [[ ${SHELL} = "/bin/zsh" ]]; then
+    setopt CLOBBER
+fi
+
 # Setup ROS
 if [[ -s /opt/ros/indigo/setup.${SHELL_EXT} ]]; then
   source /opt/ros/indigo/setup.${SHELL_EXT}
