@@ -95,11 +95,11 @@ if [[ -z ${ROS_DISTRO} ]]; then
       echo "ROS installation will be skipped!"
       echo "Run ./setup/ros/install to install later"
       export INSTALL_ROS=false
-      break;;
+      ;;
     * )
       echo "ROS will be installed!"
       export INSTALL_ROS=true
-      break;;
+      ;;
   esac
 fi
 

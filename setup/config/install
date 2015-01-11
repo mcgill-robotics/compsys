@@ -25,7 +25,7 @@ done
 if [[ ! -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   echo "Setting up vim bundles..."
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  vim +PluginInstall +qall &> /dev/null
+  vim +PluginInstall +qall
 fi
 
 echo "Done."
