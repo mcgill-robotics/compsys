@@ -7,7 +7,7 @@ _SHELL_PROCESS=$(ps -p $$ -oargs=)
 SHELL_EXT=${_SHELL_PROCESS##-}
 
 # Set CLOBBER option to properly source ROS on ZSH
-if [[ ${SHELL} = "/bin/zsh" ]]; then
+if [[ ${SHELL_EXT} = "zsh" ]]; then
     setopt CLOBBER
 fi
 
