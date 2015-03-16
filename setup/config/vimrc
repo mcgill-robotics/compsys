@@ -47,7 +47,7 @@ if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
   Plugin 'scrooloose/syntastic'
   Plugin 'itchyny/lightline.vim'
   Plugin 'cocopon/lightline-hybrid.vim'
-
+  Plugin 'fholgado/minibufexpl.vim' 
   call vundle#end()
   filetype plugin indent on
 endif
