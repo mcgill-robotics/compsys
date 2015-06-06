@@ -122,5 +122,5 @@ class Parser(object):
             if key != "cmd" and elem and
             type(elem) not in (bool, str, list)
         ]
-        if not self.enabled:
+        if len(self.enabled) == 0:
             self.enabled = self.original

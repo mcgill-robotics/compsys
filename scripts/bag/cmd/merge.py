@@ -42,7 +42,7 @@ class Merge(object):
             dir: Path to bags.
         """
         self.name = name
-        self.topics = ' '.join((' '.join(elem.topics) for elem in topics))
+        self.topics = [topic for elem in topics for topic in elem.topics]
         self.dir = dir
         self.bags = []
         self.output = None
