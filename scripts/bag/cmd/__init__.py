@@ -2,8 +2,9 @@
 
 """McGill Robotics ROS Bagger commands."""
 
-__author__ = "Anass Al-Wohoush"
-__version__ = "1.0"
-
-from record import Record
 from merge import Merge
+from record import Record
+
+__author__ = "Anass Al-Wohoush"
+
+__all__ = ["Merge", "Record"]

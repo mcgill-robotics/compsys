@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """McGill Robotics ROS Bagger.
 
@@ -15,11 +15,12 @@ recorded/merged if no arguments are specified. Otherwise, only the topics
 specified will be recorded/merged.
 """
 
-__author__ = "Anass Al-Wohoush"
-__version__ = "1.0"
-
 import sys
 from util import Parser, TopicList
+
+__author__ = "Anass Al-Wohoush"
+__version__ = "1.1"
+
 
 if __name__ == "__main__":
     try:
@@ -30,6 +31,9 @@ if __name__ == "__main__":
         sys.exit(2)
 
     args = Parser(topics, __doc__, __version__)
-    status = args.cmd(args.enabled, args.name, args.dir).run()
+    status = args.cmd(
+        topics=args.enabled, name=args.name,
+        dir=args.dir, args=args.raw
+    ).run()
 
     sys.exit(status)

@@ -2,12 +2,11 @@
 
 """Parse command line arguments for subcommands and shortcuts."""
 
-__author__ = "Anass Al-Wohoush"
-__version__ = "1.0"
-
 import sys
 import argparse
 from bag.cmd import record, merge
+
+__author__ = "Anass Al-Wohoush"
 
 
 class Help(argparse.Action):
@@ -72,7 +71,7 @@ class Parser(object):
             version="McGill Robotics' ROS Bagger {v}".format(v=self.version)
         )
 
-        # COMMANDS
+        # Add subparsers.
         subparsers = parser.add_subparsers(
             title="commands",
             help="valid subcommands"
@@ -80,9 +79,10 @@ class Parser(object):
         record_parser = subparsers.add_parser(
             "record", add_help=False, description=record.__doc__,
             formatter_class=argparse.RawDescriptionHelpFormatter,
-            help="record topics into 15 second bags"
+            help="record topics into split bags"
         )
         record_parser.set_defaults(cmd=record.Record)
+
         merge_parser = subparsers.add_parser(
             "merge", add_help=False, description=merge.__doc__,
             formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -91,7 +91,7 @@ class Parser(object):
         merge_parser.set_defaults(cmd=merge.Merge)
 
         for subparser in (record_parser, merge_parser):
-            # COMMON ARGUMENTS
+            # Add common arguments.
             subparser.add_argument(
                 "--help", nargs=0, action=Help,
                 help="show this help message and exit"
@@ -103,8 +103,12 @@ class Parser(object):
                 "dir", nargs='?', default='.',
                 help="default: current directory"
             )
+            subparser.add_argument(
+                "--split", nargs=1, default=15,
+                help="seconds per split (0: don't split)"
+            )
 
-            # CUSTOM SHORTCUTS
+            # Dynamically add custom shortcuts.
             for elem in self.original:
                 subparser.add_argument(
                     "-" + elem.shortcut,
@@ -112,13 +116,13 @@ class Parser(object):
                     help=elem.description,
                 )
 
-        # PARSE
-        args = parser.parse_args()
-        self.name = args.name[0] if args.name else None
-        self.dir = args.dir
-        self.cmd = args.cmd
+        # Parse arguments.
+        self.raw = parser.parse_args()
+        self.name = self.raw.name[0] if self.raw.name else None
+        self.dir = self.raw.dir
+        self.cmd = self.raw.cmd
         self.enabled = [
-            elem for key, elem in vars(args).iteritems()
+            elem for key, elem in vars(self.raw).iteritems()
             if key != "cmd" and elem and
             type(elem) not in (bool, str, list)
         ]

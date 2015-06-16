@@ -82,7 +82,7 @@ respectively.
 ### 2. I am an expert and want to know more
 Expertly run:
 ```bash
-bag -h
+bag --help
 ```
 
 ### 3. How do I configure my topics?
@@ -107,20 +107,9 @@ should be a brief phrase describing what this group of topics holds and the
 list of topics should be separated by new lines and aligned properly using
 spaces.*
 
-Moreover, the first line of a `topics` file should be as follows:
-
-```ini
-; updated: DATE
-```
-
-where `DATE` should be in the following format `YYYY-MM-DD`. **Also, note the
-`;` as it defines a comment.**
-
 A sample `topics` file would look like:
 
 ```ini
-; updated: 2014-12-24
-
 [battery]
 shortcut: b
 description: battery voltages
@@ -146,5 +135,7 @@ topics: status/temperature
 ```
 
 ## Version History
+**1.1** (June 15, 2015)
+* Add `--split` argument.
 **1.0** (December 24, 2014)
 * Initial release.

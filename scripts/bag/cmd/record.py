@@ -11,13 +11,12 @@ arguments are given. Otherwise, only the topics specified will be recorded.
 The generated bags can be later merged using the `bag merge` command.
 """
 
-__author__ = "Anass Al-Wohoush"
-__version__ = "1.0"
-
 import os
 from shlex import split
 from subprocess import Popen
 from datetime import datetime
+
+__author__ = "Anass Al-Wohoush"
 
 
 class Record(object):
@@ -31,20 +30,19 @@ class Record(object):
         process: Bagging subprocess.
     """
 
-    # Duration of each bag in seconds
-    DURATION = 15
-
-    def __init__(self, topics, name, dir):
+    def __init__(self, topics, name, dir, args):
         """Construct Record object.
 
         Args:
             topics: List of topics to bag.
             name: Name of bag.
             dir: Path to record bags to.
+            args: Additional arguments.
         """
         self.topics = topics
         self.name = name
         self.dir = dir
+        self.split = int(args.split[0])
         self.process = None
 
     def run(self):
@@ -61,8 +59,11 @@ class Record(object):
         if not os.path.exists(dir):
             os.makedirs(dir)
 
-        cmd = split("rosbag record --split --duration={} "
-                    "{} -O {}/split".format(Record.DURATION, topics, dir))
+        if self.split:
+            cmd = split("rosbag record --split --duration={} "
+                        "{} -O {}/split".format(self.split, topics, dir))
+        else:
+            cmd = split("rosbag record {} -O {}".format(topics, dir))
 
         print("recording to {dir}".format(dir=dir))
         print("ctrl+c to stop")

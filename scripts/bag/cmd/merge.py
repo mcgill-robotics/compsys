@@ -9,12 +9,11 @@ By default, all topics defined in your project's 'topics' will be merged if no
 arguments are given. Otherwise, only the topics specified will be merged.
 """
 
-__author__ = "Anass Al-Wohoush"
-__version__ = "1.0"
-
 import os
 import re
 import rosbag
+
+__author__ = "Anass Al-Wohoush"
 
 
 class Merge(object):
@@ -29,17 +28,18 @@ class Merge(object):
         output: Merged bag file.
     """
 
-    # PARSING CONDITIONS
+    # Parsing conditions.
     prefix = "split_"
     extension = ".bag"
 
-    def __init__(self, topics, name, dir):
+    def __init__(self, topics, name, dir, args):
         """Construct Merge object.
 
         Args:
             topics: List of topics to merge.
             name: Name of bag.
             dir: Path to bags.
+            args: Additional arguments.
         """
         self.name = name
         self.topics = [topic for elem in topics for topic in elem.topics]
@@ -101,10 +101,10 @@ class Merge(object):
 
     def run(self):
         """Merge all bags to output bag."""
-        # GET BAGS
+        # Get bags.
         self.bags = self.get_bags()
 
-        # CREATE AND NAME OUTPUT BAG
+        # Create and name output bag.
         name = self.name
         while not name:
             name = raw_input("name me: ")
@@ -117,7 +117,7 @@ class Merge(object):
 
         self.output = rosbag.Bag(path, 'w')
 
-        # MERGE AND CLOSE
+        # Merge and close.
         status = 0
         try:
             for bag in self.bags:

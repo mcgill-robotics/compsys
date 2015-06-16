@@ -2,11 +2,10 @@
 
 """Topics manager."""
 
-__author__ = "Anass Al-Wohoush"
-__version__ = "1.0"
-
 import os
 import ConfigParser
+
+__author__ = "Anass Al-Wohoush"
 
 
 class Topic(object):
