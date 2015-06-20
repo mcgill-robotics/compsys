@@ -82,6 +82,20 @@ class Parser(object):
             help="record topics into split bags"
         )
         record_parser.set_defaults(cmd=record.Record)
+        record_parser.add_argument(
+            "--no-split", action="store_true",
+            help="don't split bag"
+        )
+        record_parser.add_argument(
+            "--duration", default=15,
+            help="seconds per split (default: 15)"
+        )
+        record_parser.add_argument(
+            "--bz2", action="store_true", help="use BZ2 compression"
+        )
+        record_parser.add_argument(
+            "--lz4", action="store_true", help="use LZ4 compression"
+        )
 
         merge_parser = subparsers.add_parser(
             "merge", add_help=False, description=merge.__doc__,
@@ -103,10 +117,6 @@ class Parser(object):
                 "dir", nargs='?', default='.',
                 help="default: current directory"
             )
-            subparser.add_argument(
-                "--split", nargs=1, default=15,
-                help="seconds per split (0: don't split)"
-            )
 
             # Dynamically add custom shortcuts.
             for elem in self.original:
@@ -124,7 +134,7 @@ class Parser(object):
         self.enabled = [
             elem for key, elem in vars(self.raw).iteritems()
             if key != "cmd" and elem and
-            type(elem) not in (bool, str, list)
+            type(elem) not in (int, bool, str, list)
         ]
         if len(self.enabled) == 0:
             self.enabled = self.original

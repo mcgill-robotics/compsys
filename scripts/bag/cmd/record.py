@@ -42,8 +42,14 @@ class Record(object):
         self.topics = topics
         self.name = name
         self.dir = dir
-        self.split = int(args.split[0])
+        self.no_split = args.no_split
+        self.duration = int(args.duration)
         self.process = None
+        self.compression = ""
+        if args.bz2:
+            self.compression = "--bz2"
+        elif args.lz4:
+            self.compression = "--lz4"
 
     def run(self):
         """Bag topics to dir."""
@@ -56,14 +62,14 @@ class Record(object):
         dir = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + dir
         dir = os.path.join(self.dir, dir)
 
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-
-        if self.split:
-            cmd = split("rosbag record --split --duration={} "
-                        "{} -O {}/split".format(self.split, topics, dir))
+        if not self.no_split:
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            cmd = split("rosbag record --split --duration={} {} {} -O {}/split"
+                        .format(self.duration, self.compression, topics, dir))
         else:
-            cmd = split("rosbag record {} -O {}".format(topics, dir))
+            cmd = split("rosbag record {} {} -O {}"
+                        .format(topics, self.compression, dir))
 
         print("recording to {dir}".format(dir=dir))
         print("ctrl+c to stop")
@@ -85,5 +91,8 @@ class Record(object):
 
     def kill(self):
         """Kill bagging process."""
-        self.process.kill()
-        self.process.terminate()
+        try:
+            self.process.kill()
+            self.process.terminate()
+        except OSError:
+            pass
