@@ -1,1 +1,10 @@
 *.pyc
+
+//ftdi driver build files
+*.o
+*.ok
+*.order
+*.symvers
+*.mod
+*.cmd
+
