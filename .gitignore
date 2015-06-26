@@ -7,4 +7,5 @@
 *.symvers
 *.mod
 *.cmd
-
+*.ko
+*.mod.c
