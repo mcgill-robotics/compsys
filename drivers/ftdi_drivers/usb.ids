@@ -24,6 +24,7 @@
 	1001  Radio Receiver RS485
 	1002  Micron Sonar RS232
 	1003  x-io x-IMU UART
+	1005  LED strip controller
 0001  Fry's Electronics
 	142b  Arbiter Systems, Inc.
 	7778  Counterfeit flash drive [Kingston]
