@@ -12,8 +12,8 @@ if [[ ${SHELL_EXT} = "zsh" ]]; then
 fi
 
 # Setup ROS
-if [[ -s /opt/ros/indigo/setup.${SHELL_EXT} ]]; then
-  source /opt/ros/indigo/setup.${SHELL_EXT}
+if [[ -s /opt/ros/jade/setup.${SHELL_EXT} ]]; then
+  source /opt/ros/jade/setup.${SHELL_EXT}
 fi
 if [[ -s ${ROBOTIC_PATH}/${ROBOT}/catkin_ws/devel/setup.${SHELL_EXT} ]]; then
   source ${ROBOTIC_PATH}/${ROBOT}/catkin_ws/devel/setup.${SHELL_EXT}
