@@ -12,6 +12,12 @@ section=$(tput bold; tput setaf 2)
 warning=$(tput bold; tput setaf 1)
 reset=$(tput sgr0)
 
+# Verify running on Ubuntu 14.04
+if [[ $(lsb_release -sc) != "trusty" ]]; then
+    echo "${warning}CompSys only supports Ubuntu 14.04${reset}"
+    exit -1
+fi
+
 # Header
 echo
 echo "${header} Welcome to McGill Robotics ${reset}"
