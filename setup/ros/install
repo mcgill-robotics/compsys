@@ -16,6 +16,7 @@ sudo apt-get -qq update
 echo "Installing ROS..."
 sudo apt-get -y install ros-jade-desktop-full \
   ros-jade-rosserial \
+  ros-jade-rosserial-python \
   ros-jade-rosserial-arduino \
   python-rosinstall
 
