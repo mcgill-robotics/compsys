@@ -130,7 +130,7 @@ if [[ ! -d ${gitdir} ]]; then
   git clone --recursive git@github.com:mcgill-robotics/${ROBOT}.git ${gitdir}
   echo "Setting up robot remote repository..."
   pushd ${gitdir}
-  git remote add robot robotics@${ROBOT}/${ROBOT}.git
+  git remote add robot robotics@${ROBOT}:${ROBOT}.git
   popd
 fi
 echo "Done."
