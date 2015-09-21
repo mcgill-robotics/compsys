@@ -3,7 +3,7 @@
 # Install ROS Jade Turtle on Ubuntu 14.04 LTS
 
 echo "Adding ROS PPA..."
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main"
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" \
   > /etc/apt/sources.list.d/ros-latest.list'
 
 echo "Getting ROS apt verification key..."
