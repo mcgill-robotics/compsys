@@ -122,14 +122,14 @@ echo "${section}Dependencies${reset}"
 ./update
 echo
 
-# Clone repository and setup git hook
+# Clone repository and setup robot remote
 echo "${section}Git${reset}"
-robot_git=${ROBOTIC_PATH}/${ROBOT}
-if [[ ! -d ${robot_git} ]]; then
+gitdir=${ROBOTIC_PATH}/${ROBOT}
+if [[ ! -d ${gitdir} ]]; then
   echo "Cloning ${robot} git repository..."
-  git clone git@github.com:mcgill-robotics/${ROBOT}.git ${robot_git}
+  git clone --recursive git@github.com:mcgill-robotics/${ROBOT}.git ${gitdir}
   echo "Setting up robot remote repository..."
-  pushd ${robot_git}
+  pushd ${gitdir}
   git remote add robot robotics@${ROBOT}/${ROBOT}.git
   popd
 fi
