@@ -128,8 +128,12 @@ robot_git=${ROBOTIC_PATH}/${ROBOT}
 if [[ ! -d ${robot_git} ]]; then
   echo "Cloning ${robot} git repository..."
   git clone git@github.com:mcgill-robotics/${ROBOT}.git ${robot_git}
+  echo "Setting up robot remote repository..."
+  pushd ${robot_git}
+  git remote add robot robotics@${ROBOT}/${ROBOT}.git
+  popd
 fi
-./setup/hooks/install
+echo "Done."
 echo
 
 # Install zsh if requested

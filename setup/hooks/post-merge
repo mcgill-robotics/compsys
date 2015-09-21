@@ -1,5 +1,0 @@
-#!/bin/bash
-#
-# Post-merge git hook
-
-source ${ROBOTIC_PATH}/compsys/update
