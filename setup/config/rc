@@ -4,7 +4,7 @@
 #
 # The following can be modified.
 # EDITOR        Your text editor of choice.
-# ROBOT         Team you are working on ('auv' or 'rover').
+# ROBOT         Team you are working on ('auv', 'drone' or 'rover').
 # IAMROBOT      If computer runs robot ('true' or 'false')
 # ROBOTIC_PATH  Absolute path to directory containing the local
 #               McGill Robotics git repositories.
