@@ -130,7 +130,12 @@ echo "${section}Git${reset}"
 gitdir=${ROBOTIC_PATH}/${ROBOT}
 if [[ ! -d ${gitdir} ]]; then
   echo "Cloning ${robot} git repository..."
-  git clone --recursive git@github.com:mcgill-robotics/${ROBOT}.git ${gitdir}
+  url="mcgill-robotics/${ROBOT}.git"
+  git clone --recursive git@github.com:${url} ${gitdir} || {
+    echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
+    echo "${warning}Falling back to HTTPS for now...${reset}"
+    git clone --recursive https://github.com/${url} ${gitdir}
+  }
   echo "Setting up robot remote repository..."
   pushd ${gitdir}
   git remote add robot robotics@${ROBOT}:${ROBOT}.git
