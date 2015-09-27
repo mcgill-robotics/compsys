@@ -60,7 +60,7 @@ echo
 # Select project
 ask="${question}Which project are you working on?${reset}"
 echo ${ask}
-select project in "AUV" "DRONE" "ROVER"; do
+select project in "AUV" "DRONE" "ROVER"; "DEMO" do
   case "${project}" in
     AUV )
       export ROBOT=auv
@@ -70,6 +70,9 @@ select project in "AUV" "DRONE" "ROVER"; do
       break;;
     ROVER )
       export ROBOT=rover
+      break;;
+    DEMO )
+      export ROBOT=demo
       break;;
   esac
 done
@@ -157,4 +160,5 @@ fi
 
 # Done
 echo "All done!"
-echo "You can start playing around in ${ROBOTIC_PATH}/${ROBOT}"
+echo "Simply, open up a new terminal"
+echo "You can then start playing around in ${ROBOTIC_PATH}/${ROBOT}"
