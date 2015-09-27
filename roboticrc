@@ -15,11 +15,17 @@ fi
 if [[ -s /opt/ros/jade/setup.${SHELL_EXT} ]]; then
   source /opt/ros/jade/setup.${SHELL_EXT}
 fi
-if [[ -s ${ROBOTIC_PATH}/${ROBOT}/catkin_ws/devel/setup.${SHELL_EXT} ]]; then
-  source ${ROBOTIC_PATH}/${ROBOT}/catkin_ws/devel/setup.${SHELL_EXT}
-fi
-export ROS_WORKSPACE=${ROBOTIC_PATH}/${ROBOT}/catkin_ws
-export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}
+
+function rosworkon {
+  if [[ -s ${ROBOTIC_PATH}/${1}/catkin_ws/devel/setup.${SHELL_EXT} ]]; then
+    source ${ROBOTIC_PATH}/${1}/catkin_ws/devel/setup.${SHELL_EXT}
+  fi
+  export ROS_WORKSPACE=${ROBOTIC_PATH}/${1}/catkin_ws
+  export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}
+}
+
+# Set up default robot
+workon ${ROBOT}
 
 # Add compsys scripts to PYTHONPATH
 export PYTHONPATH=${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts
