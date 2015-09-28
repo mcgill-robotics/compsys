@@ -1,12 +1,17 @@
 # CompSys
 
-This package sets up the user's computer to accomodate McGill Robotics' development environment. This is optional, but **highly recommended**
-especially if you are interacting with the robot or the ROS bags in any way.
+This package sets up the user's computer to accommodate McGill Robotics'
+development environment. This is optional, but **highly recommended**
+especially if you are interacting with our robots or the ROS bags in any way.
+
+This will install ROS Jade Turtle on Ubuntu 14.04 along with a set of other
+software tools McGill Robotics uses.
 
 ## Installation
 
 ### 0. Pre-requisites
-Follow the [basic setup](http://mcgillrobotics.com/wiki/index.php/Basic_Setup)
+This package requires Ubuntu 14.04. You can follow the
+[basic setup](http://mcgillrobotics.com/wiki/index.php/Basic_Setup)
 instructions on the wiki. If you are not sure how to do it, ask any software
 section leader to help you. *Make sure you have
 [set up](https://help.github.com/articles/generating-ssh-keys/) your ssh keys
@@ -18,7 +23,7 @@ it from your terminal.
 This folder will become your `$ROBOTIC_PATH` and will contain both this
 `compsys` repository **and** your team repository.
 
-Run the following commmand:
+Run the following command:
 
 ```bash
 git clone git@github.com:mcgill-robotics/compsys.git
@@ -49,13 +54,28 @@ have not installed it yet, this tool will ask if you want to. The complete ROS
 package is quite large however, so we recommend you only install it when you
 have a stable network connection and about one to two hours to spare. If you
 can't install it right away, simply select no. You can install it later by
-runnning the following command:
+running the following command:
 
 ```bash
 cd $ROBOTIC_PATH/compsys/setup/ros && ./install
 ```
 
-### 4. Would I like to switch from `bash` to `zsh`?
+### 4. I am upgrading from ROS Indigo Igloo. How should I proceed?
+Simply, uninstall ROS Indigo Igloo as such:
+
+```bash
+sudo apt-get remove ros-indigo-desktop-full && sudo apt-get -y autoremove
+```
+
+and then install ROS Jade Turtle as follows:
+
+```bash
+cd $ROBOTIC_PATH/compsys
+git pull
+./setup/ros/install
+```
+
+### 5. Would I like to switch from `bash` to `zsh`?
 **Here be dragons.**  
 This gives you the option to switch your default shell from Ubuntu's default
 `bash` to the more feature-full `zsh` along with `prezto` framework. If you are
@@ -93,10 +113,11 @@ looks like this:
 We recommend the `monaco` or `menlo` fonts in combination with the
 [monokai](https://github.com/pricco/gnome-terminal-colors-monokai) colorscheme.
 
-### 4. I don't like *something*. Can I change it?
+### 6. I don't like *something*. Can I change it?
 **No.**  
 Remember that any change you make can and will change everybody else's
 environment. If you wish to make a change, you should be able to overwrite
 the option we set in your own `.bashrc` (or `.zshrc`).  
 If you think, your change can be beneficial to everyone or if you have any
-suggestions or feature requests, open an issue and we'll discuss the change.
+suggestions or feature requests, open an issue or a pull request and we'll
+discuss the change.
