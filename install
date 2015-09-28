@@ -60,7 +60,7 @@ echo
 # Select project
 ask="${question}Which project are you working on?${reset}"
 echo ${ask}
-select project in "AUV" "DRONE" "ROVER"; "DEMO" do
+select project in "AUV" "DRONE" "ROVER" "DEMO"; do
   case "${project}" in
     AUV )
       export ROBOT=auv
