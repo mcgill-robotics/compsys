@@ -25,7 +25,7 @@ function rosworkon {
 }
 
 # Set up default robot
-workon ${ROBOT}
+rosworkon ${ROBOT}
 
 # Add compsys scripts to PYTHONPATH
 export PYTHONPATH=${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts
