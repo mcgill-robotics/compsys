@@ -10,3 +10,5 @@ colordiff
 libsensors4
 tree
 libv4l-dev
+python-pygame
+pyqt4-dev-tools
