@@ -20,6 +20,7 @@ zstyle ':prezto:load' pmodule \
   'python' \
   'tmux' \
   'fasd' \
+  'archive' \
   'wakeonlan' \
   'syntax-highlighting' \
   'history-substring-search' \
