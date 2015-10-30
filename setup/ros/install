@@ -18,6 +18,7 @@ sudo apt-get -y install ros-jade-desktop-full \
   ros-jade-rosserial \
   ros-jade-rosserial-python \
   ros-jade-rosserial-arduino \
+  ros-jade-rosbridge-suite \
   python-rosinstall
 
 echo "Setting up ROS dependencies..."
