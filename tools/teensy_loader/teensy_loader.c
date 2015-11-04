@@ -32,14 +32,17 @@
 #include <stdarg.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <assert.h>
+#include <libudev.h>
+#include <usb.h>
 
 void usage(const char *err)
 {
 	if(err != NULL) fprintf(stderr, "%s\n\n", err);
 	fprintf(stderr,
-		"Usage: teensy_loader_cli --mcu=<MCU> [-w] [-h] [-n] [-v] <file.hex>\n"
+		"Usage: teensy_loader_cli --mcu=<MCU>  [--port=</dev/ttyACM0>][-w] [-h] [-n] [-v] <file.hex>\n"
 		"\t-w : Wait for device to appear\n"
-		"\t-r : Use hard reboot if device not online\n"
 		"\t-s : Use soft reboot if device not online (Teensy3.x only)\n"
 		"\t-n : No reboot after programming\n"
 		"\t-v : Verbose output\n"
@@ -54,7 +57,7 @@ int teensy_open(void);
 int teensy_write(void *buf, int len, double timeout);
 void teensy_close(void);
 int hard_reboot(void);
-int soft_reboot(void);
+int soft_reboot(const char * portname);
 
 // Intel Hex File Functions
 int read_intel_hex(const char *filename);
@@ -75,7 +78,10 @@ int soft_reboot_device = 0;
 int reboot_after_programming = 1;
 int verbose = 0;
 int code_size = 0, block_size = 0;
-const char *filename=NULL;
+const char *filename = NULL;
+const char *port = NULL;
+char serial_usb[128];
+const char * serial_udev= NULL;
 
 
 /****************************************************************/
@@ -89,62 +95,88 @@ int main(int argc, char **argv)
 	unsigned char buf[2048];
 	int num, addr, r, write_size=block_size+2;
 	int first_block=1, waited=0;
+	printf("\nCMD Teensy Loader, McGill Robotics Mod\n");
 
 	// parse command line arguments
 	parse_options(argc, argv);
+
 	if (!filename) {
-		usage("Filename must be specified");
+		usage("\tFilename must be specified");
 	}
 	if (!code_size) {
-		usage("MCU type must be specified");
+		usage("\tMCU type must be specified");
 	}
-	printf_verbose("Teensy Loader, Command Line, Version 2.0\n");
+
+	if(port){
+		if(block_size < 512){
+			usage("\tPort option selected, but MCU is not supported!\n");
+		} else {
+			printf("\tPort option selected, soft reset will be performed.\n");
+			printf_verbose("\tUploading Port: %s\n", port);
+			soft_reboot_device = 1;
+		}
+	}
+	printf("\n");
 
 	// read the intel hex file
 	// this is done first so any error is reported before using USB
+	printf("Reading Hex file: %s\n",filename);
 	num = read_intel_hex(filename);
-	if (num < 0) die("error reading intel hex file \"%s\"", filename);
-	printf_verbose("Read \"%s\": %d bytes, %.1f%% usage\n",
-		filename, num, (double)num / (double)code_size * 100.0);
+	if (num < 0) {
+		die("error reading intel hex file \"%s\"", filename);
+	}
+	printf("\tSize: %d bytes, %.1f%% usage\n\n",
+			num, (double)num / (double)code_size * 100.0);
 
 	// open the USB device
 	while (1) {
-		if (teensy_open()) break;
+		if (teensy_open()) {
+			printf_verbose("Successful connected to Teensy in bootloader mode...\n\n");
+			break;
+		}
+
 		if (hard_reboot_device) {
-			if (!hard_reboot()) die("Unable to find rebootor\n");
-			printf_verbose("Hard Reboot performed\n");
+			if (!hard_reboot()) {
+				die("Unable to find rebootor\n");
+			}
+			printf_verbose("\tHard Reboot performed...\n");
 			hard_reboot_device = 0; // only hard reboot once
 			wait_for_device_to_appear = 1;
 		}
+
 		if (soft_reboot_device) {
-			if (soft_reboot()) {
-				printf_verbose("Soft reboot performed\n");
+			if (soft_reboot(port)) {
+				printf_verbose("Soft reboot performed...\n");
 			}
 			soft_reboot_device = 0;
 			wait_for_device_to_appear = 1;
 		}
-		if (!wait_for_device_to_appear) die("Unable to open device\n");
+
+		if (!wait_for_device_to_appear) {
+			printf("Unable to find Teensy in bootloader mode.\n");
+			printf("Please put Teensy in bootloader mode by resetting it,");
+			die(" or use -w to wait for it to appear");
+			}
+
 		if (!waited) {
-			printf_verbose("Waiting for Teensy device...\n");
-			printf_verbose(" (hint: press the reset button)\n");
+			printf_verbose("\tWaiting for Teensy to reappear...\n\n");
 			waited = 1;
 		}
+
 		delay(0.25);
 	}
-	printf_verbose("Found HalfKay Bootloader\n");
 
 	// if we waited for the device, read the hex file again
 	// perhaps it changed while we were waiting?
 	if (waited) {
 		num = read_intel_hex(filename);
 		if (num < 0) die("error reading intel hex file \"%s\"", filename);
-		printf_verbose("Read \"%s\": %d bytes, %.1f%% usage\n",
-		 	filename, num, (double)num / (double)code_size * 100.0);
 	}
 
 	// program the data
-	printf_verbose("Programming");
+	printf_verbose("Programming\n");
 	fflush(stdout);
+
 	for (addr = 0; addr < code_size; addr += block_size) {
 		if (!first_block && !ihex_bytes_within_range(addr, addr + block_size - 1)) {
 			// don't waste time on blocks that are unused,
@@ -191,8 +223,71 @@ int main(int argc, char **argv)
 	teensy_close();
 	return 0;
 }
+/****************************************************************/
+/*                                                              */
+/*                   Get Serial Number by Port                  */
+/*                                                              */
+/****************************************************************/
 
+struct udev_device *find_device(struct udev *udev, const char *id) {
 
+    assert(udev);
+    assert(id);
+
+    struct stat statbuf;
+    char type;
+
+    if (stat(id, &statbuf) < 0) {
+    return NULL;
+    }
+
+    if (S_ISBLK(statbuf.st_mode)){
+        type = 'b';
+    }else if (S_ISCHR(statbuf.st_mode)) {
+        type = 'c';
+    } else {
+        return NULL;
+    }
+
+    return udev_device_new_from_devnum(udev, type, statbuf.st_rdev);
+}
+
+const char * get_serial(int vid, int pid, const char *pathname){
+	struct udev *udev;
+	struct udev_device *dev;
+	static char serial[128];
+	/* Create the udev object */
+	udev = udev_new();
+
+	if (!udev) {
+			die("Can not create udev instance\n");
+	}
+
+	// Device found from path does not have serial number as desctriptor
+	// You have to go up two level in udev hierchy to get serial number
+	// Hacky but works
+	dev = find_device(udev, pathname);
+	dev = udev_device_get_parent(dev);
+	dev = udev_device_get_parent(dev);
+
+	if (!dev) {
+		udev_unref(udev);
+		die("Can not find device with name %s \n", pathname);
+	} else {
+		//compare VID and PID
+		if(strtol(udev_device_get_sysattr_value(dev,"idProduct"),NULL,16) == pid &&
+					strtol(udev_device_get_sysattr_value(dev,"idVendor"),NULL,16) == vid){
+				strcpy(serial,udev_device_get_sysattr_value(dev, "serial"));
+				udev_device_unref(dev);
+				udev_unref(udev);
+			} else {
+				udev_device_unref(dev);
+				udev_unref(udev);
+				die("Find device at %s with wrong VID and PID",pathname);
+			}
+	}
+	return serial;
+}
 
 
 /****************************************************************/
@@ -201,12 +296,7 @@ int main(int argc, char **argv)
 /*                                                              */
 /****************************************************************/
 
-#if defined(USE_LIBUSB)
-
-// http://libusb.sourceforge.net/doc/index.html
-#include <usb.h>
-
-usb_dev_handle * open_usb_device(int vid, int pid)
+usb_dev_handle * open_usb_device(int vid, int pid,const char *port)
 {
 	struct usb_bus *bus;
 	struct usb_device *dev;
@@ -214,26 +304,61 @@ usb_dev_handle * open_usb_device(int vid, int pid)
 	char buf[128];
 	int r;
 
+	// Find serial port number if portname is given and reset operation will
+	// be performed.
+	if(port && soft_reboot_device){
+
+		// Loop up serial number if it points to NULL
+		if(!serial_udev){
+			printf_verbose("Port option selected, getting serial number...\n");
+			serial_udev = get_serial(vid, pid, port);
+
+			if(serial_udev){
+				printf("Find teensy at %s, serial number \"%s\"\n\n",
+						port, serial_udev);
+			} else {
+				die("Uable to find serial number of device at %s",port);
+			}
+		}
+	}
+
+	// Enumerate all devices on the USB bus to find teensy.
 	usb_init();
 	usb_find_busses();
 	usb_find_devices();
-	//printf_verbose("\nSearching for USB device:\n");
 	for (bus = usb_get_busses(); bus; bus = bus->next) {
 		for (dev = bus->devices; dev; dev = dev->next) {
-		    printf_verbose("bus \"%s\", device \"%s\" vid=%04X, pid=%04X\n",
-				bus->dirname, dev->filename,
-			    dev->descriptor.idVendor,
-			    dev->descriptor.idProduct
-            );
 			if (dev->descriptor.idVendor != vid) continue;
 			if (dev->descriptor.idProduct != pid) continue;
-            printf_verbose("device number: %02X\n",dev->devnum);
+
 			h = usb_open(dev);
+
+			// If port name is given and soft reboot is required, compare the
+			// serial number found by path using libudev and by using libsusb,
+			// to select device to reboot to bootloader.
+			if(port && soft_reboot_device){
+				printf_verbose("Find Teensy, getting serial number...\n");
+				usb_get_string_simple(h, dev->descriptor.iSerialNumber,serial_usb,
+						sizeof(serial_usb));
+				printf_verbose("Serial: %s\n", serial_usb);
+
+				if(!strcasecmp(serial_usb,serial_udev)) {
+					printf("\tFind Teensy with matching serial number...\n");
+				} else {
+					printf_verbose("\tSerial number mismatch, looking for %s", serial_udev);
+					printf_verbose(", found %s\n", serial_usb);
+					printf_verbose("\tPassing to next device...\n");
+					usb_close(h);
+					continue;
+				}
+			}
+
 			if (!h) {
-				printf_verbose("Found device but unable to open\n");
+				printf("Found device but unable to open\n");
 				continue;
 			}
-			#ifdef LIBUSB_HAS_GET_DRIVER_NP
+
+#ifdef LIBUSB_HAS_GET_DRIVER_NP
 			r = usb_get_driver_np(h, 0, buf, sizeof(buf));
 			if (r >= 0) {
 				r = usb_detach_kernel_driver_np(h, 0);
@@ -243,7 +368,7 @@ usb_dev_handle * open_usb_device(int vid, int pid)
 					continue;
 				}
 			}
-			#endif
+#endif
 			// Mac OS-X - removing this call to usb_claim_interface() might allow
 			// this to work, even though it is a clear misuse of the libusb API.
 			// normally Apple's IOKit should be used on Mac OS-X
@@ -264,7 +389,7 @@ static usb_dev_handle *libusb_teensy_handle = NULL;
 int teensy_open(void)
 {
 	teensy_close();
-	libusb_teensy_handle = open_usb_device(0x16C0, 0x0478);
+	libusb_teensy_handle = open_usb_device(0x16C0, 0x0478,NULL);
 	if (libusb_teensy_handle) return 1;
 	return 0;
 }
@@ -298,7 +423,7 @@ int hard_reboot(void)
 	usb_dev_handle *rebootor;
 	int r;
 
-	rebootor = open_usb_device(0x16C0, 0x0477);
+	rebootor = open_usb_device(0x16C0, 0x0477,NULL);
 	if (!rebootor) return 0;
 	r = usb_control_msg(rebootor, 0x21, 9, 0x0200, 0, "reboot", 6, 100);
 	usb_release_interface(rebootor, 0);
@@ -307,15 +432,13 @@ int hard_reboot(void)
 	return 1;
 }
 
-int soft_reboot(void)
+int soft_reboot(const char *port)
 {
 	usb_dev_handle *serial_handle = NULL;
 
-	serial_handle = open_usb_device(0x16C0, 0x0483);
+	serial_handle = open_usb_device(0x16C0, 0x0483, port);
 	if (!serial_handle) {
-		char *error = usb_strerror();
-		printf("Error opening USB device: %s\n", error);
-		return 0;
+		die("Unable to find Teensy to reset, aborting...\n");
 	}
 
 	char reboot_command = 134;
@@ -332,8 +455,6 @@ int soft_reboot(void)
 
 	return 1;
 }
-
-#endif
 
 /****************************************************************/
 /*                                                              */
@@ -531,11 +652,7 @@ int printf_verbose(const char *format, ...)
 
 void delay(double seconds)
 {
-	#ifdef WIN32
-	Sleep(seconds * 1000.0);
-	#else
 	usleep(seconds * 1000000.0);
-	#endif
 }
 
 void die(const char *str, ...)
@@ -548,11 +665,6 @@ void die(const char *str, ...)
 	exit(1);
 }
 
-#if defined(WIN32)
-#define strcasecmp stricmp
-#endif
-
-
 static const struct {
 	const char *name;
 	int code_size;
@@ -562,11 +674,9 @@ static const struct {
 	{"atmega32u4",   32256,   128},
 	{"at90usb646",   64512,   256},
 	{"at90usb1286", 130048,   256},
-#if defined(USE_LIBUSB) || defined(USE_APPLE_IOKIT)
     {"mkl26z64",     63488,   512},
 	{"mk20dx128",   131072,  1024},
 	{"mk20dx256",   262144,  1024},
-#endif
 	{NULL, 0, 0},
 };
 
@@ -650,6 +760,9 @@ void parse_options(int argc, char **argv)
 
 				if(strcasecmp(name, "help") == 0) usage(NULL);
 				else if(strcasecmp(name, "mcu") == 0) read_mcu(val);
+				else if(strcasecmp(name, "port") == 0){
+                    port = val;
+                }
 				else if(strcasecmp(name, "list-mcus") == 0) list_mcus();
 				else {
 					fprintf(stderr, "Unknown option \"%s\"\n\n", arg);
@@ -661,4 +774,3 @@ void parse_options(int argc, char **argv)
 		else filename = arg;
 	}
 }
-

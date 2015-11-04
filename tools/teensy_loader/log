@@ -1,2 +1,0 @@
-To get device info from path using udevadm source
-https://github.com/gentoo/eudev/blob/master/src/udev/udevadm-info.c
