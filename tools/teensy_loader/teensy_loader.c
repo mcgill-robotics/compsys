@@ -41,14 +41,13 @@ void usage(const char *err)
 {
 	if(err != NULL) fprintf(stderr, "%s\n\n", err);
 	fprintf(stderr,
-		"Usage: teensy_loader_cli --mcu=<MCU>  [--port=</dev/ttyACM0>][-w] [-h] [-n] [-v] <file.hex>\n"
+		"Usage: teensy_loader_cli --mcu=<MCU>  [--port=</dev/ttyACM0>] "
+		"[-w] [-h] [-n] [-v] <file.hex>\n"
 		"\t-w : Wait for device to appear\n"
 		"\t-s : Use soft reboot if device not online (Teensy3.x only)\n"
 		"\t-n : No reboot after programming\n"
 		"\t-v : Verbose output\n"
 		"\nUse `teensy_loader_cli --list-mcus` to list supported MCUs.\n"
-		"\nFor more information, please visit:\n"
-		"http://www.pjrc.com/teensy/loader_cli.html\n");
 	exit(1);
 }
 
@@ -95,7 +94,7 @@ int main(int argc, char **argv)
 	unsigned char buf[2048];
 	int num, addr, r, write_size=block_size+2;
 	int first_block=1, waited=0;
-	printf("\nCMD Teensy Loader, McGill Robotics Mod\n");
+	printf("Command Line Teensy Loader, McGill Robotics Mod\n");
 
 	// parse command line arguments
 	parse_options(argc, argv);
@@ -123,7 +122,7 @@ int main(int argc, char **argv)
 	printf("Reading Hex file: %s\n",filename);
 	num = read_intel_hex(filename);
 	if (num < 0) {
-		die("error reading intel hex file \"%s\"", filename);
+		die("error reading intel hex file \"%s\"'n", filename);
 	}
 	printf("\tSize: %d bytes, %.1f%% usage\n\n",
 			num, (double)num / (double)code_size * 100.0);
@@ -155,7 +154,7 @@ int main(int argc, char **argv)
 		if (!wait_for_device_to_appear) {
 			printf("Unable to find Teensy in bootloader mode.\n");
 			printf("Please put Teensy in bootloader mode by resetting it,");
-			die(" or use -w to wait for it to appear");
+			die(" or use -w to wait for it to appear\n");
 			}
 
 		if (!waited) {
@@ -174,7 +173,7 @@ int main(int argc, char **argv)
 	}
 
 	// program the data
-	printf_verbose("Programming\n");
+	printf("Programming Teensy...\n");
 	fflush(stdout);
 
 	for (addr = 0; addr < code_size; addr += block_size) {
@@ -209,18 +208,22 @@ int main(int argc, char **argv)
 		if (!r) die("error writing to Teensy\n");
 		first_block = 0;
 	}
+
 	printf_verbose("\n");
+	printf("\n");
 
 	// reboot to the user's new code
 	if (reboot_after_programming) {
-		printf_verbose("Booting\n");
+		printf_verbose("Rebooting...\n\n");
 		buf[0] = 0xFF;
 		buf[1] = 0xFF;
 		buf[2] = 0xFF;
 		memset(buf + 3, 0, sizeof(buf) - 3);
 		teensy_write(buf, write_size, 0.25);
 	}
+	printf("Done uploading!\n\n");
 	teensy_close();
+
 	return 0;
 }
 /****************************************************************/
@@ -283,7 +286,7 @@ const char * get_serial(int vid, int pid, const char *pathname){
 			} else {
 				udev_device_unref(dev);
 				udev_unref(udev);
-				die("Find device at %s with wrong VID and PID",pathname);
+				die("Find device at %s with wrong VID and PID\n",pathname);
 			}
 	}
 	return serial;
@@ -314,10 +317,10 @@ usb_dev_handle * open_usb_device(int vid, int pid,const char *port)
 			serial_udev = get_serial(vid, pid, port);
 
 			if(serial_udev){
-				printf("Find teensy at %s, serial number \"%s\"\n\n",
+				printf("\tFound Teensy at %s, serial number %s\n\n",
 						port, serial_udev);
 			} else {
-				die("Uable to find serial number of device at %s",port);
+				die("Uable to find serial number of device at %s\n",port);
 			}
 		}
 	}
@@ -337,16 +340,15 @@ usb_dev_handle * open_usb_device(int vid, int pid,const char *port)
 			// serial number found by path using libudev and by using libsusb,
 			// to select device to reboot to bootloader.
 			if(port && soft_reboot_device){
-				printf_verbose("Find Teensy, getting serial number...\n");
+				printf_verbose("Found Teensy on USB bus, getting serial number...\n");
 				usb_get_string_simple(h, dev->descriptor.iSerialNumber,serial_usb,
 						sizeof(serial_usb));
-				printf_verbose("Serial: %s\n", serial_usb);
+				printf_verbose("\tSerial: %s\n", serial_usb);
 
 				if(!strcasecmp(serial_usb,serial_udev)) {
-					printf("\tFind Teensy with matching serial number...\n");
+					printf("\tFind Teensy with matching serial number...\n\n");
 				} else {
-					printf_verbose("\tSerial number mismatch, looking for %s", serial_udev);
-					printf_verbose(", found %s\n", serial_usb);
+					printf_verbose("\tSerial number mismatch, found %s\n", serial_usb);
 					printf_verbose("\tPassing to next device...\n");
 					usb_close(h);
 					continue;
@@ -354,7 +356,7 @@ usb_dev_handle * open_usb_device(int vid, int pid,const char *port)
 			}
 
 			if (!h) {
-				printf("Found device but unable to open\n");
+				printf("Found device but unable to open\n\n");
 				continue;
 			}
 
@@ -438,7 +440,7 @@ int soft_reboot(const char *port)
 
 	serial_handle = open_usb_device(0x16C0, 0x0483, port);
 	if (!serial_handle) {
-		die("Unable to find Teensy to reset, aborting...\n");
+		die("Unable to to reset, aborting...\n");
 	}
 
 	char reboot_command = 134;
