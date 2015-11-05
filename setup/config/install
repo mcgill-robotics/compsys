@@ -22,6 +22,14 @@ for rcfile in "vimrc" "tmux.conf"; do
   fi
 done
 
+for file in ${ROBOTIC_PATH}/${ROBOT}/*.rules; do
+    if [[ ! -e /etc/udev/rules.d/${file} ]]; then
+        filename="${file##*/}"
+        echo "Adding udev symlink for ${filename}"
+        sudo ln -s ${file} /etc/udev/rules.d/${filename}
+    fi
+done
+
 if [[ ! -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   echo "Setting up vim bundles..."
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
