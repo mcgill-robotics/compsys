@@ -5,4 +5,4 @@ tclu: tclu.c
 	$(CC) $(CFLAGS) -s -DUSE_LIBUSB -o tclu tclu.c $(LIB)
 
 clean:
-	rm -f teensy_loader
+	rm -f tclu
