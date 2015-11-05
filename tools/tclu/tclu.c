@@ -25,6 +25,17 @@
  * http://www.pjrc.com/teensy/49-teensy.rules
  */
 
+/* Program modified and renamed Teensy Command Line Uploader
+ * by Bei Chen Liu (bei.liu@mail.mcgill.ca) for McGill Robotics
+ *
+ * Allowing resetting specific Teensy at given serial port.
+ * By first getting serial number from the port path using udev
+ * the code are copied from udevadm-info source.
+ *
+ * Then serial number is requested for Teensy with matching VIP
+ * and PID. If both serial number match, a reset is performed
+ * to put the Teensy into bootloader mode.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,13 +52,16 @@ void usage(const char *err)
 {
 	if(err != NULL) fprintf(stderr, "%s\n\n", err);
 	fprintf(stderr,
-		"Usage: teensy_loader_cli --mcu=<MCU>  [--port=</dev/ttyACM0>] "
-		"[-w] [-h] [-n] [-v] <file.hex>\n"
+		"Usage: tclu [--mcu=<MCU>] [--port=</dev/?>] "
+		"[-w] [-r] [-n] [-v] <file.hex>\n"
 		"\t-w : Wait for device to appear\n"
-		"\t-s : Use soft reboot if device not online (Teensy3.x only)\n"
+		"\t-r : Use hard reboot if device not online\n"
+		"\t-s : Use soft reboot if device not online (Teensy 3.0 and above)\n"
 		"\t-n : No reboot after programming\n"
 		"\t-v : Verbose output\n"
-		"\nUse `teensy_loader_cli --list-mcus` to list supported MCUs.\n"
+		"\t--mcu : Specify the MCU of Teensy, default: mk20dx256\n"
+		"\t--port : Port path of Teensy (Teensy 3.0 and above)\n"
+		"\nUse `tclu --list-mcus` to list supported MCUs.\n");
 	exit(1);
 }
 
@@ -94,35 +108,37 @@ int main(int argc, char **argv)
 	unsigned char buf[2048];
 	int num, addr, r, write_size=block_size+2;
 	int first_block=1, waited=0;
-	printf("Command Line Teensy Loader, McGill Robotics Mod\n");
+	printf("\nTeensy Command Line Uploader, McGill Robotics Mod\n\n");
 
 	// parse command line arguments
 	parse_options(argc, argv);
 
 	if (!filename) {
-		usage("\tFilename must be specified");
+		usage("tclu: Filename must be specified");
 	}
 	if (!code_size) {
-		usage("\tMCU type must be specified");
+		printf_verbose("tclu: MCU type not sepcified, used mk20dx256...\n\n");
+		code_size = 262144;
+		block_size = 1024;
 	}
 
 	if(port){
-		if(block_size < 512){
-			usage("\tPort option selected, but MCU is not supported!\n");
+		if(block_size < 1024){
+			usage("tclu: Port option selected, but MCU is not supported!\n");
 		} else {
-			printf("\tPort option selected, soft reset will be performed.\n");
+			printf_verbose("tclu: Port path given, soft reset will be performed...\n");
 			printf_verbose("\tUploading Port: %s\n", port);
 			soft_reboot_device = 1;
 		}
 	}
-	printf("\n");
+	printf_verbose("\n");
 
 	// read the intel hex file
 	// this is done first so any error is reported before using USB
-	printf("Reading Hex file: %s\n",filename);
+	printf("tclu: Reading Hex file: %s\n",filename);
 	num = read_intel_hex(filename);
 	if (num < 0) {
-		die("error reading intel hex file \"%s\"'n", filename);
+		die("tclu: Error reading intel hex file \"%s\"'n", filename);
 	}
 	printf("\tSize: %d bytes, %.1f%% usage\n\n",
 			num, (double)num / (double)code_size * 100.0);
@@ -130,35 +146,37 @@ int main(int argc, char **argv)
 	// open the USB device
 	while (1) {
 		if (teensy_open()) {
-			printf_verbose("Successful connected to Teensy in bootloader mode...\n\n");
+			printf_verbose("tclu: Successful connected to Teensy");
+			printf_verbose(" in bootloader mode...\n\n");
 			break;
 		}
 
 		if (hard_reboot_device) {
 			if (!hard_reboot()) {
-				die("Unable to find rebootor\n");
+				die("tclu: Unable to find rebootor\n");
 			}
-			printf_verbose("\tHard Reboot performed...\n");
+			printf("tclu: Hard Reboot performed...\n");
 			hard_reboot_device = 0; // only hard reboot once
 			wait_for_device_to_appear = 1;
 		}
 
 		if (soft_reboot_device) {
 			if (soft_reboot(port)) {
-				printf_verbose("Soft reboot performed...\n");
+				printf("tclu: Soft reboot performed...\n");
 			}
 			soft_reboot_device = 0;
 			wait_for_device_to_appear = 1;
 		}
 
 		if (!wait_for_device_to_appear) {
-			printf("Unable to find Teensy in bootloader mode.\n");
-			printf("Please put Teensy in bootloader mode by resetting it,");
-			die(" or use -w to wait for it to appear\n");
-			}
+			printf("tclu: Unable to find Teensy in bootloader mode.\n");
+			printf("Put Teensy in bootloader mode by resetting it,");
+			printf(" or use -w to wait for it to appear\n");
+			exit(1);
+		}
 
 		if (!waited) {
-			printf_verbose("\tWaiting for Teensy to reappear...\n\n");
+			printf("\tWaiting for Teensy to reappear...\n\n");
 			waited = 1;
 		}
 
@@ -169,11 +187,13 @@ int main(int argc, char **argv)
 	// perhaps it changed while we were waiting?
 	if (waited) {
 		num = read_intel_hex(filename);
-		if (num < 0) die("error reading intel hex file \"%s\"", filename);
+		if (num < 0) {
+			die("tclu: Error reading intel hex file \"%s\"", filename);
+		}
 	}
 
 	// program the data
-	printf("Programming Teensy...\n");
+	printf("tclu: Programming Teensy...\n");
 	fflush(stdout);
 
 	for (addr = 0; addr < code_size; addr += block_size) {
@@ -202,10 +222,12 @@ int main(int argc, char **argv)
 			ihex_get_data(addr, block_size, buf + 64);
 			write_size = block_size + 64;
 		} else {
-			die("Unknown code/block size\n");
+			die("tclu: Unknown code/block size\n");
 		}
 		r = teensy_write(buf, write_size, first_block ? 3.0 : 0.25);
-		if (!r) die("error writing to Teensy\n");
+		if (!r) {
+			die("tclu: Error writing to Teensy\n");
+		}
 		first_block = 0;
 	}
 
@@ -214,14 +236,14 @@ int main(int argc, char **argv)
 
 	// reboot to the user's new code
 	if (reboot_after_programming) {
-		printf_verbose("Rebooting...\n\n");
+		printf_verbose("tclu: Rebooting...\n\n");
 		buf[0] = 0xFF;
 		buf[1] = 0xFF;
 		buf[2] = 0xFF;
 		memset(buf + 3, 0, sizeof(buf) - 3);
 		teensy_write(buf, write_size, 0.25);
 	}
-	printf("Done uploading!\n\n");
+	printf("tclu done.  Thank you.\n\n"); // avrdude reference
 	teensy_close();
 
 	return 0;
@@ -263,7 +285,7 @@ const char * get_serial(int vid, int pid, const char *pathname){
 	udev = udev_new();
 
 	if (!udev) {
-			die("Can not create udev instance\n");
+			die("tclu: Can not create udev instance\n");
 	}
 
 	// Device found from path does not have serial number as desctriptor
@@ -275,7 +297,7 @@ const char * get_serial(int vid, int pid, const char *pathname){
 
 	if (!dev) {
 		udev_unref(udev);
-		die("Can not find device with name %s \n", pathname);
+		die("tclu: Can not find device with name %s \n", pathname);
 	} else {
 		//compare VID and PID
 		if(strtol(udev_device_get_sysattr_value(dev,"idProduct"),NULL,16) == pid &&
@@ -286,7 +308,7 @@ const char * get_serial(int vid, int pid, const char *pathname){
 			} else {
 				udev_device_unref(dev);
 				udev_unref(udev);
-				die("Find device at %s with wrong VID and PID\n",pathname);
+				die("tclu: Find device at %s with wrong VID and PID\n",pathname);
 			}
 	}
 	return serial;
@@ -313,14 +335,14 @@ usb_dev_handle * open_usb_device(int vid, int pid,const char *port)
 
 		// Loop up serial number if it points to NULL
 		if(!serial_udev){
-			printf_verbose("Port option selected, getting serial number...\n");
+			printf_verbose("tclu: Getting serial number by using device path...\n");
 			serial_udev = get_serial(vid, pid, port);
 
 			if(serial_udev){
-				printf("\tFound Teensy at %s, serial number %s\n\n",
+				printf_verbose("\tFound Teensy at %s, serial number %s\n\n",
 						port, serial_udev);
 			} else {
-				die("Uable to find serial number of device at %s\n",port);
+				die("\tUable to find serial number of device at %s\n",port);
 			}
 		}
 	}
@@ -339,25 +361,27 @@ usb_dev_handle * open_usb_device(int vid, int pid,const char *port)
 			// If port name is given and soft reboot is required, compare the
 			// serial number found by path using libudev and by using libsusb,
 			// to select device to reboot to bootloader.
+			if (!h) {
+				printf("tclu: Found device with matching PID & VID");
+				printf(" but unable to open, passing to next device...\n\n");
+				continue;
+			}
+
 			if(port && soft_reboot_device){
-				printf_verbose("Found Teensy on USB bus, getting serial number...\n");
+				printf_verbose("tclu: Found Teensy on USB bus\n");
+				printf_verbose("\tGetting serial number...\n");
 				usb_get_string_simple(h, dev->descriptor.iSerialNumber,serial_usb,
 						sizeof(serial_usb));
-				printf_verbose("\tSerial: %s\n", serial_usb);
+				printf_verbose("\tGot serial number: %s\n", serial_usb);
 
 				if(!strcasecmp(serial_usb,serial_udev)) {
-					printf("\tFind Teensy with matching serial number...\n\n");
+					printf_verbose("\tSerial number matched, proceeding...\n\n");
 				} else {
-					printf_verbose("\tSerial number mismatch, found %s\n", serial_usb);
-					printf_verbose("\tPassing to next device...\n");
+					printf_verbose("\tSerial number mismatch, need %s\n", serial_udev);
+					printf_verbose("\tPassing to next device...\n\n");
 					usb_close(h);
 					continue;
 				}
-			}
-
-			if (!h) {
-				printf("Found device but unable to open\n\n");
-				continue;
 			}
 
 #ifdef LIBUSB_HAS_GET_DRIVER_NP
@@ -366,7 +390,8 @@ usb_dev_handle * open_usb_device(int vid, int pid,const char *port)
 				r = usb_detach_kernel_driver_np(h, 0);
 				if (r < 0) {
 					usb_close(h);
-					printf_verbose("Device is in use by \"%s\" driver\n", buf);
+					printf_verbose("\tDevice is in use by \"%s\" driver\n", buf);
+					printf_verbose("\tPassing to next device...\n\n");
 					continue;
 				}
 			}
@@ -377,7 +402,8 @@ usb_dev_handle * open_usb_device(int vid, int pid,const char *port)
 			r = usb_claim_interface(h, 0);
 			if (r < 0) {
 				usb_close(h);
-				printf_verbose("Unable to claim interface, check USB permissions\n");
+				printf_verbose("\tUnable to claim interface\n");
+				printf_verbose("\tPassing to next device...\n\n");
 				continue;
 			}
 			return h;
@@ -440,7 +466,7 @@ int soft_reboot(const char *port)
 
 	serial_handle = open_usb_device(0x16C0, 0x0483, port);
 	if (!serial_handle) {
-		die("Unable to to reset, aborting...\n");
+		die("tclu: Unable to find device on USB bus, aborting...\n");
 	}
 
 	char reboot_command = 134;
@@ -451,7 +477,7 @@ int soft_reboot(const char *port)
 
 	if (response < 0) {
 		char *error = usb_strerror();
-		printf("Unable to soft reboot with USB error: %s\n", error);
+		printf("tclu: Unable to soft reboot with USB error: %s\n", error);
 		return 0;
 	}
 
@@ -501,7 +527,7 @@ int read_intel_hex(const char *filename)
 		lineno++;
 		if (*buf) {
 			if (parse_hex_line(buf) == 0) {
-				printf("Warning, HEX parse error line %d\n", lineno);
+				printf("tclu: Warning, HEX parse error line %d\n", lineno);
 				return -2;
 			}
 		}
@@ -676,7 +702,7 @@ static const struct {
 	{"atmega32u4",   32256,   128},
 	{"at90usb646",   64512,   256},
 	{"at90usb1286", 130048,   256},
-    {"mkl26z64",     63488,   512},
+  {"mkl26z64",     63488,   512},
 	{"mk20dx128",   131072,  1024},
 	{"mk20dx256",   262144,  1024},
 	{NULL, 0, 0},
