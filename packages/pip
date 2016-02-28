@@ -2,3 +2,4 @@ numpy
 bitstring
 pysensors
 pyqtgraph
+enum34
