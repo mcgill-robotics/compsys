@@ -137,7 +137,20 @@ cd /opt/ros/jade/lib/python2.7/dist-packages/catkin
 sudo cp /tmp/catkin/python/catkin/find_in_workspaces.py .
 ```
 
-### 7. I don't like *something*. Can I change it?
+### 7. I installed `zsh`, and I am missing modules. How do I update it?
+`compsys` uses the [prezto](https://github.com/sorin-ionescu/prezto)
+`zsh` configuration framework to make things easier. If you run into any
+issues (e.g. missing the `autosuggestions` module), you can simply update it.
+This will also give you access to other nice goodies :) To update, simply run:
+
+```bash
+cd ${HOME}/.zprezto
+git pull && git submodule update --init --recursive
+```
+
+and launch a new terminal.
+
+### 8. I don't like *something*. Can I change it?
 **No.**  
 Remember that any change you make can and will change everybody else's
 environment. If you wish to make a change, you should be able to overwrite
