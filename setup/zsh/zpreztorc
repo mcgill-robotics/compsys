@@ -24,6 +24,7 @@ zstyle ':prezto:load' pmodule \
   'wakeonlan' \
   'syntax-highlighting' \
   'history-substring-search' \
+  'autosuggestions' \
   'prompt'
 
 # Dot expansion
@@ -40,6 +41,7 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'main' \
   'brackets' \
   'pattern' \
+  'line' \
   'cursor' \
   'root'
 
