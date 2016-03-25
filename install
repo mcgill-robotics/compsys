@@ -139,6 +139,11 @@ if [[ ! -d ${gitdir} ]]; then
   echo "Setting up robot remote repository..."
   pushd ${gitdir}
   git remote add robot robotics@${ROBOT}:${ROBOT}.git
+  
+  if [[ -f install.sh ]]; then
+    echo "Installing robot dependencies..."
+    ./install.sh
+  fi
   popd
 fi
 echo "Done."
