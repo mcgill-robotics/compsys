@@ -2,6 +2,9 @@
 #
 # Install the McGill Robotics CompSys package
 
+# Fail on first error
+set -e
+
 # Determine ROBOTIC_PATH
 export ROBOTIC_PATH=$(dirname ${PWD})
 
