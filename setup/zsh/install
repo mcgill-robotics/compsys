@@ -12,7 +12,7 @@ if [[ ! -d ${HOME}/.zprezto ]]; then
 fi
 
 echo "Setting up .zshrc..."
-if [[ ! -f $HOME/.zshrc ]];then
+if [[ ! -f $HOME/.zshrc ]]; then
   cp ${ROBOTIC_PATH}/compsys/setup/zsh/zshrc ${HOME}/.zshrc
 fi
 
