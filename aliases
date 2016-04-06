@@ -11,7 +11,7 @@ alias bag='python -m bag.run'
 
 # Monitoring
 alias glances='glances -yet 5'
-alias main='tmux attach -t MAIN || tmux new -s MAIN'
+alias main='tmux new-session -t MAIN || tmux new -s MAIN'
 
 # Fasd
 [[ -n $(which fasd_cd) ]] && alias j='fasd_cd'
