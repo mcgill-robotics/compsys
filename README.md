@@ -10,12 +10,25 @@ other software tools McGill Robotics uses.
 ## Installation
 
 ### 0. Pre-requisites
-This package requires *Ubuntu 14.04*. You can follow the
-[basic setup](http://mcgillrobotics.com/wiki/index.php/Basic_Setup)
-instructions on the wiki. If you are not sure how to do it, ask any software
-section leader to help you. *Make sure you have
-[set up](https://help.github.com/articles/generating-ssh-keys/) your ssh keys
-correctly.*
+This package requires *Ubuntu 14.04*. The **.iso** can be found on the 
+[Ubuntu download page](http://www.ubuntu.com/download/desktop). You may choose 
+to install either directly on your machine with a bootable USB or by using a 
+Virtual Machine. If you are planning on using a VM, be sure you have a powerful
+enough computer to handle it. For both methods, there are plenty of quality 
+online instruction sets and guides for installing Ubuntu. 
+
+*Note that McGill students have access to free VMware licenses and downloads*.
+
+Once you have Ubuntu set up, you will need to install `git` and setup your 
+SSH keys. Open a terminal and issue the following commands to install git:
+```bash
+sudo apt-get update
+sudo apt-get install git
+```
+Set up your ssh keys for git by following this 
+[help article](https://help.github.com/articles/generating-an-ssh-key/). 
+*Make sure you set up your ssh keys correctly. Be sure to follow 
+the instructions for Linux.*
 
 ### 1. Setup
 Create a directory to contain all of your McGill Robotics files and `cd` into
