@@ -12,8 +12,8 @@ if [[ ${SHELL_EXT} = "zsh" ]]; then
 fi
 
 # Setup ROS
-if [[ -s /opt/ros/jade/setup.${SHELL_EXT} ]]; then
-  source /opt/ros/jade/setup.${SHELL_EXT}
+if [[ -s /opt/ros/kinetic/setup.${SHELL_EXT} ]]; then
+  source /opt/ros/kinetic/setup.${SHELL_EXT}
 fi
 
 function rosconnect {

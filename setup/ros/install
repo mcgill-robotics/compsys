@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Install ROS Jade Turtle on Ubuntu 14.04 LTS
+# Install ROS Kinetic Kane on Ubuntu 16.04 LTS
 
 echo "Adding ROS PPA..."
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" \
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" \
   > /etc/apt/sources.list.d/ros-latest.list'
 
 echo "Getting ROS apt verification key..."
@@ -14,12 +14,7 @@ echo "Updating apt package list..."
 sudo apt-get -qq update
 
 echo "Installing ROS..."
-sudo apt-get -y install ros-jade-desktop-full \
-  ros-jade-rosserial \
-  ros-jade-rosserial-python \
-  ros-jade-rosserial-arduino \
-  ros-jade-rosbridge-suite \
-  python-rosinstall
+sudo apt-get -y install ros-kinetic-desktop-full python-rosinstall
 
 echo "Setting up ROS dependencies..."
 sudo rosdep init
