@@ -4,13 +4,13 @@ This package sets up the user's computer to accommodate McGill Robotics'
 development environment. This is optional, but **highly recommended**
 especially if you are interacting with our robots or the ROS bags in any way.
 
-This will install **ROS Jade Turtle** on **Ubuntu 14.04** along with a set of
+This will install **ROS Kinetic Kane** on **Ubuntu 16.04** along with a set of
 other software tools McGill Robotics uses.
 
 ## Installation
 
 ### 0. Pre-requisites
-This package requires *Ubuntu 14.04*. The **.iso** can be found on the 
+This package requires *Ubuntu 16.04*. The **.iso** can be found on the 
 [Ubuntu download page](http://www.ubuntu.com/download/desktop). You may choose 
 to install either directly on your machine with a bootable USB or by using a 
 Virtual Machine. If you are planning on using a VM, be sure you have a powerful
@@ -21,10 +21,12 @@ online instruction sets and guides for installing Ubuntu.
 
 Once you have Ubuntu set up, you will need to install `git` and setup your 
 SSH keys. Open a terminal and issue the following commands to install git:
+
 ```bash
 sudo apt-get update
 sudo apt-get install git
 ```
+
 Set up your ssh keys for git by following this 
 [help article](https://help.github.com/articles/generating-an-ssh-key/). 
 *Make sure you set up your ssh keys correctly. Be sure to follow 
@@ -77,22 +79,7 @@ cd $ROBOTIC_PATH/compsys
 ./setup/ros/install
 ```
 
-### 4. I am upgrading from ROS Indigo Igloo. How should I proceed?
-Simply, uninstall ROS Indigo Igloo as such:
-
-```bash
-sudo apt-get remove ros-indigo-*
-```
-
-and then install ROS Jade Turtle as follows:
-
-```bash
-cd $ROBOTIC_PATH/compsys
-git pull
-./setup/ros/install
-```
-
-### 5. Would I like to switch from `bash` to `zsh`?
+### 4. Would I like to switch from `bash` to `zsh`?
 **Here be dragons.**  
 This gives you the option to switch your default shell from Ubuntu's default
 `bash` to the more feature-full `zsh` along with `prezto` framework. If you
@@ -139,18 +126,7 @@ chsh -s /bin/bash
 
 and restart.
 
-### 6. I installed `zsh`. Why does `rosrun` autocompletion not work?
-Unfortunately, this is a new bug that has been introduced in the latest
-versions of ROS. This issue has been fixed, but the fix has not been released
-yet. So, you will need to fix it manually, as such:
-
-```bash
-git clone -b indigo-devel git://github.com/ros/catkin.git /tmp/catkin
-cd /opt/ros/jade/lib/python2.7/dist-packages/catkin
-sudo cp /tmp/catkin/python/catkin/find_in_workspaces.py .
-```
-
-### 7. I installed `zsh`, and I am missing modules. How do I update it?
+### 5. I installed `zsh`, and I am missing modules. How do I update it?
 `compsys` uses the [prezto](https://github.com/sorin-ionescu/prezto)
 `zsh` configuration framework to make things easier. If you run into any
 issues (e.g. missing the `autosuggestions` module), you can simply update it.
@@ -163,7 +139,7 @@ git pull && git submodule update --init --recursive
 
 and launch a new terminal.
 
-### 8. I don't like *something*. Can I change it?
+### 6. I don't like *something*. Can I change it?
 **No.**  
 Remember that any change you make can and will change everybody else's
 environment. If you wish to make a change, you should be able to overwrite
