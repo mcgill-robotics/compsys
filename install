@@ -128,6 +128,25 @@ echo "${section}Dependencies${reset}"
 ./update
 echo
 
+# Install zsh if requested
+if [[ ${INSTALL_ZSH} = true ]]; then
+  echo "${section}ZSH${reset}"
+  ./setup/zsh/install
+  echo
+fi
+
+# Configure RC files
+echo "${section}Configuration files${reset}"
+./setup/config/install
+echo
+
+# Install ROS if requested
+if [[ ${INSTALL_ROS} = true ]]; then
+  echo "${section}ROS${reset}"
+  ./setup/ros/install
+  echo
+fi
+
 # Clone repository and setup robot remote
 echo "${section}Git${reset}"
 gitdir=${ROBOTIC_PATH}/${ROBOT}
@@ -151,25 +170,6 @@ if [[ ! -d ${gitdir} ]]; then
 fi
 echo "Done."
 echo
-
-# Install zsh if requested
-if [[ ${INSTALL_ZSH} = true ]]; then
-  echo "${section}ZSH${reset}"
-  ./setup/zsh/install
-  echo
-fi
-
-# Configure RC files
-echo "${section}Configuration files${reset}"
-./setup/config/install
-echo
-
-# Install ROS if requested
-if [[ ${INSTALL_ROS} = true ]]; then
-  echo "${section}ROS${reset}"
-  ./setup/ros/install
-  echo
-fi
 
 # Done
 echo "All done!"
