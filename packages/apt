@@ -1,5 +1,6 @@
 git
 python-pip
+python3-pip
 vim
 tmux
 mosh
