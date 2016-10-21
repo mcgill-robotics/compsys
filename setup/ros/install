@@ -14,11 +14,7 @@ echo "Updating apt package list..."
 sudo apt-get -qq update
 
 echo "Installing ROS..."
-sudo apt-get -y install ros-kinetic-desktop-full \
-    ros-kinetic-rosserial \
-    ros-kinetic-rosserial-arduino \
-    ros-kinetic-rosserial-python \
-    python-rosinstall
+sudo apt-get -y install ros-kinetic-desktop-full python-rosinstall
 
 echo "Setting up ROS dependencies..."
 sudo rosdep init
