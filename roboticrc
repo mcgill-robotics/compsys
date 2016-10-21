@@ -28,9 +28,15 @@ function rosconnect {
 
 function rosworkon {
   if [[ -n "${1}" ]]; then
+    # Reset package path from previous workspace
+    export ROS_PACKAGE_PATH=/opt/ros/kinetic/share
+
+    # Source the new workspace
     if [[ -s ${ROBOTIC_PATH}/${1}/catkin_ws/devel/setup.${SHELL_EXT} ]]; then
       source ${ROBOTIC_PATH}/${1}/catkin_ws/devel/setup.${SHELL_EXT}
     fi
+
+    # Set environment variables
     export ROS_WORKSPACE=${ROBOTIC_PATH}/${1}/catkin_ws
     export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}
   else
