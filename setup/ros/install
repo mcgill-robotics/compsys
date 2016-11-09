@@ -20,4 +20,7 @@ echo "Setting up ROS dependencies..."
 sudo rosdep init
 rosdep update
 
+echo "Sourcing ROS..."
+source ${ROBOTIC_PATH}/compsys/roboticrc
+
 echo "Done."
