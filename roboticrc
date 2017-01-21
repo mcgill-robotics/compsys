@@ -28,11 +28,18 @@ function rosconnect {
 
 function rosworkon {
   if [[ -n "${1}" ]]; then
+    export ROBOT=${1}
+
     if [[ -s ${ROBOTIC_PATH}/${1}/catkin_ws/devel/setup.${SHELL_EXT} ]]; then
       source ${ROBOTIC_PATH}/${1}/catkin_ws/devel/setup.${SHELL_EXT}
     fi
+
     export ROS_WORKSPACE=${ROBOTIC_PATH}/${1}/catkin_ws
     export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}
+
+    if [[ -f ${ROBOTIC_PATH}/${ROBOT}/robotrc ]]; then
+      source ${ROBOTIC_PATH}/${ROBOT}/robotrc
+    fi
   else
     echo "usage: rosworkon <ROBOT>"
     return 1
