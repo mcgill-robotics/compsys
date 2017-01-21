@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Install ROS Kinetic Kane on Ubuntu 16.04 LTS
+# Install ROS Kinetic Kame on Ubuntu 16.04 LTS
 
 echo "Adding ROS PPA..."
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" \

@@ -1,7 +1,4 @@
 pip
 numpy
 bitstring
-pysensors
 pyqtgraph
-enum34
-catkin_tools
