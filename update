@@ -16,6 +16,7 @@ function get_dependencies () {
 }
 
 echo "Updating apt dependencies..."
+sudo apt-get update
 get_dependencies apt | xargs sudo apt-get -y -qq install || :
 
 echo "Updating gem dependencies..."
