@@ -16,7 +16,9 @@ function get_dependencies () {
 }
 
 echo "Updating apt dependencies..."
-get_dependencies apt | xargs sudo apt-get -y -qq install || :
+# -qq implies -y
+sudo apt-get -qq update
+get_dependencies apt | xargs sudo apt-get -qq install || :
 
 echo "Updating gem dependencies..."
 get_dependencies gem | xargs sudo gem install --conservative > /dev/null || :
