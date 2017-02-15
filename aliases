@@ -10,7 +10,7 @@ alias robotx='ssh -Y robotics@10.0.0.1'
 alias bag='python -m bag.run'
 
 # Monitoring
-alias glances='glances -yet 5'
+alias glances='glances -t 5'
 alias main='tmux new-session -t MAIN || tmux new -s MAIN'
 
 # Fasd
