@@ -3,8 +3,7 @@
 # Initialize McGill Robotics customizations, ROS setup and paths
 
 # Determine shell
-_SHELL_PROCESS=$(ps -p $$ -oargs=)
-SHELL_EXT=${_SHELL_PROCESS##-}
+SHELL_EXT="$(basename $(readlink /proc/$$/exe))"
 
 # Set CLOBBER option to properly source ROS on ZSH
 if [[ ${SHELL_EXT} = "zsh" ]]; then
