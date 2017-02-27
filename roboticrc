@@ -1,10 +1,10 @@
-#!/bin/bash
-#
 # Initialize McGill Robotics customizations, ROS setup and paths
 
 # Determine shell
-_SHELL_PROCESS=$(ps -p $$ -oargs=)
-SHELL_EXT=${_SHELL_PROCESS##-}
+SHELL_EXT=$(
+  ([ -n "${ZSH_VERSION}" ] && echo zsh) ||
+  ([ -n "${BASH_VERSION}" ] && echo bash)
+)
 
 # Set CLOBBER option to properly source ROS on ZSH
 if [[ ${SHELL_EXT} = "zsh" ]]; then
