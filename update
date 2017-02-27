@@ -24,16 +24,10 @@ echo "Updating gem dependencies..."
 get_dependencies gem | xargs sudo gem install --conservative > /dev/null || :
 
 echo "Updating pip dependencies..."
-pip=$(comm -12 --nocheck-order \
-  <(pip freeze --local | grep -v '^\-e' | cut -d = -f 1) \
-  <(get_dependencies pip))
-echo ${pip} | xargs sudo pip install --upgrade > /dev/null || :
+get_dependencies pip | xargs sudo -H pip install --upgrade > /dev/null || :
 
 echo "Updating pip3 dependencies..."
-pip3=$(comm -12 --nocheck-order \
-  <(pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1) \
-  <(get_dependencies pip3))
-echo ${pip3} | xargs sudo pip3 install --upgrade > /dev/null || :
+get_dependencies pip3 | xargs sudo -H pip3 install --upgrade > /dev/null || :
 
 if [[ -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   echo "Updating vim plugins..."
