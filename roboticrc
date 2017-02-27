@@ -8,7 +8,7 @@ SHELL_EXT=$(
 
 # Set CLOBBER option to properly source ROS on ZSH
 if [[ ${SHELL_EXT} = "zsh" ]]; then
-    setopt CLOBBER
+  setopt CLOBBER
 fi
 
 # Setup ROS
