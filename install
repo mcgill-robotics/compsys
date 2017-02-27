@@ -158,13 +158,17 @@ if [[ ! -d ${gitdir} ]]; then
     echo "${warning}Falling back to HTTPS for now...${reset}"
     git clone --recursive https://github.com/${url} ${gitdir}
   }
+
   echo "Setting up robot remote repository..."
   pushd ${gitdir}
   git remote add robot robotics@${ROBOT}:${ROBOT}.git
-  
+
   if [[ -f setup.sh ]]; then
+    echo "Sourcing roboticrc..."
+    source ${ROBOTIC_PATH}/compsys/roboticrc
+
     echo "Setting up robot dependencies..."
-    ./setup.sh
+    source setup.sh
   fi
   popd
 fi
