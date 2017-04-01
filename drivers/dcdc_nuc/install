@@ -8,7 +8,6 @@ set -e
 
 # Colors
 header=$(tput setab 1; tput setaf 0)
-question=$(tput bold; tput setaf 4)
 section=$(tput bold; tput setaf 2)
 warning=$(tput bold; tput setaf 1)
 reset=$(tput sgr0)
@@ -19,7 +18,7 @@ ker_ver_base="${ker_ver_full:0:5}"
 
 # Header
 echo
-echo "${header}   DCDC NUC Kernel Patch   ${reset}"
+echo "${header} DCDC NUC Kernel Patch ${reset}"
 echo
 
 cat <<END
@@ -42,7 +41,7 @@ sudo tar -xf linux-source-${ker_ver_base}.tar.bz2
 echo "${section}Patching kernel source... ${reset}"
 pushd linux-source-${ker_ver_base}/drivers/hid
 sudo sed -iv 's/global.report_size > 128/global.report_size > 255/g' \
-    hid-core.c
+  hid-core.c
 popd
 
 echo "${section}Configuring source... ${reset}"
@@ -51,7 +50,7 @@ sudo make -s mrproper
 sudo cp -v /usr/src/linux-headers-$(uname -r)/.config ./
 sudo cp -v /usr/src/linux-headers-$(uname -r)/Module.symvers ./
 
-echo "${section}Compling hid driver module... ${reset}"
+echo "${section}Compiling hid driver module... ${reset}"
 sudo make -s prepare
 sudo make -s scripts
 sudo make M=drivers/hid
@@ -63,6 +62,4 @@ popd
 popd
 
 echo "${section}All done...${reset}"
-echo "${warning}Please restart for the driver to take effect.${reset}"
-
-
+echo "${warning}Please reboot for the driver to take effect.${reset}"
