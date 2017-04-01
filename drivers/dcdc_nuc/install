@@ -1,0 +1,68 @@
+#!/bin/bash
+#
+# Compile and update the HID module to be able to use DCDC NUC power supply
+# USB communication.
+
+# Fail on first error
+set -e
+
+# Colors
+header=$(tput setab 1; tput setaf 0)
+question=$(tput bold; tput setaf 4)
+section=$(tput bold; tput setaf 2)
+warning=$(tput bold; tput setaf 1)
+reset=$(tput sgr0)
+
+
+ker_ver_full=$(uname -r)
+ker_ver_base="${ker_ver_full:0:5}"
+
+# Header
+echo
+echo "${header}   DCDC NUC Kernel Patch   ${reset}"
+echo
+
+cat <<END
+Please make sure you have an internet connection, this script will only patch
+your current kernel and you need to re-run this every time you update your
+kernel to a newer version.
+END
+
+echo "${section}Update apt-get... ${reset}"
+sudo apt-get -qq update
+
+echo "${section}Installing kernel source ${ker_ver_base}... ${reset}"
+sudo apt-get install -y -q "linux-headers-${ker_ver_full}"
+sudo apt-get install -y -q "linux-source-${ker_ver_base}"
+
+echo "${section}Extracting kernel source ${ker_ver_base}... ${reset}"
+pushd /usr/src/linux-source-${ker_ver_base}
+sudo tar -xf linux-source-${ker_ver_base}.tar.bz2
+
+echo "${section}Patching kernel source... ${reset}"
+pushd linux-source-${ker_ver_base}/drivers/hid
+sudo sed -iv 's/global.report_size > 128/global.report_size > 255/g' \
+    hid-core.c
+popd
+
+echo "${section}Configuring source... ${reset}"
+pushd linux-source-${ker_ver_base}
+sudo make -s mrproper
+sudo cp -v /usr/src/linux-headers-$(uname -r)/.config ./
+sudo cp -v /usr/src/linux-headers-$(uname -r)/Module.symvers ./
+
+echo "${section}Compling hid driver module... ${reset}"
+sudo make -s prepare
+sudo make -s scripts
+sudo make M=drivers/hid
+
+echo "${section}Installing hid driver module... ${reset}"
+sudo cp -vf drivers/hid/hid.ko /lib/modules/${ker_ver_full}/kernel/drivers/hid/
+sudo update-initramfs -c -k $(uname -r)
+popd
+popd
+
+echo "${section}All done...${reset}"
+echo "${warning}Please restart for the driver to take effect.${reset}"
+
+
