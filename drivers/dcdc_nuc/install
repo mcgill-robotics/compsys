@@ -27,7 +27,7 @@ your current kernel and you need to re-run this every time you update your
 kernel to a newer version.
 END
 
-echo "${section}Update apt-get... ${reset}"
+echo "${section}Updating apt-get... ${reset}"
 sudo apt-get -qq update
 
 echo "${section}Installing kernel source ${ker_ver_base}... ${reset}"
@@ -59,6 +59,7 @@ echo "${section}Installing hid driver module... ${reset}"
 sudo cp -vf drivers/hid/hid.ko /lib/modules/${ker_ver_full}/kernel/drivers/hid/
 sudo update-initramfs -c -k $(uname -r)
 popd
+sudo rm -rf linux-source-${ker_ver_base}
 popd
 
 echo "${section}All done...${reset}"
