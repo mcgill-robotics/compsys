@@ -8,7 +8,7 @@ SHELL_EXT=${_SHELL_PROCESS##-}
 
 # Set CLOBBER option to properly source ROS on ZSH
 if [[ ${SHELL_EXT} = "zsh" ]]; then
-    setopt CLOBBER
+  setopt CLOBBER
 fi
 
 # Setup ROS
@@ -61,8 +61,8 @@ export PYTHONPATH=${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts
 
 # Add TivaWare path and lm4flash path
 if [[ -d ${ROBOTIC_PATH}/tivaware ]]; then
-    export TIVA_WARE_PATH=${ROBOTIC_PATH}/tivaware
-    export TIVA_FLASH_EXECUTABLE=lm4flash
+  export TIVA_WARE_PATH=${ROBOTIC_PATH}/tivaware
+  export TIVA_FLASH_EXECUTABLE=lm4flash
 fi
 
 # Source custom aliases and functions
