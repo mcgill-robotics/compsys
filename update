@@ -27,10 +27,12 @@ echo "Updating pip3 dependencies..."
 get_dependencies pip3 | xargs sudo -H pip3 install --upgrade > /dev/null || :
 
 echo "Updating pip2 dependencies..."
+# pip2 needs to be installed after pip3 in order to be set as default
 get_dependencies pip | xargs sudo -H pip2 install --upgrade > /dev/null || :
 
 if [[ $(pip --version) != $(pip2 --version) ]]; then
   echo "Found mismatch in default pip. Correcting..."
+  # This will set the default pip to pip2 as expected
   PIP_PATH=$(which pip)
   PIP2_PATH=$(which pip2)
   sudo rm -f ${PIP_PATH}
