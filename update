@@ -23,11 +23,11 @@ get_dependencies apt | xargs sudo apt-get -qq install || :
 echo "Updating gem dependencies..."
 get_dependencies gem | xargs sudo gem install --conservative > /dev/null || :
 
-echo "Updating pip dependencies..."
-get_dependencies pip | xargs sudo -H pip install --upgrade > /dev/null || :
-
 echo "Updating pip3 dependencies..."
 get_dependencies pip3 | xargs sudo -H pip3 install --upgrade > /dev/null || :
+
+echo "Updating pip2 dependencies..."
+get_dependencies pip | xargs sudo -H pip2 install --upgrade > /dev/null || :
 
 if [[ -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   echo "Updating vim plugins..."
