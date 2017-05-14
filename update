@@ -29,6 +29,14 @@ get_dependencies pip3 | xargs sudo -H pip3 install --upgrade > /dev/null || :
 echo "Updating pip2 dependencies..."
 get_dependencies pip | xargs sudo -H pip2 install --upgrade > /dev/null || :
 
+if [[ $(pip --version) != $(pip2 --version) ]]; then
+  echo "Found mismatch in default pip. Correcting..."
+  PIP_PATH=$(which pip)
+  PIP2_PATH=$(which pip2)
+  sudo rm -f ${PIP_PATH}
+  sudo ln -s ${PIP2_PATH} ${PIP_PATH}
+fi
+
 if [[ -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   echo "Updating vim plugins..."
   vim +PluginInstall +qall
