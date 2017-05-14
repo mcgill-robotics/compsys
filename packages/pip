@@ -1,6 +1,6 @@
 pip
 numpy
-bitstring
+ipython
 pysensors
 pyqtgraph
 enum34
