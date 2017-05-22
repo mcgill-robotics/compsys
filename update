@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Update vim plugins and apt, gem and pip dependencies
+# Update vim plugins, and apt and pip dependencies
 
 #########################################
 # Get dependencies from /packages
@@ -16,12 +16,8 @@ function get_dependencies () {
 }
 
 echo "Updating apt dependencies..."
-# -qq implies -y
 sudo apt-get -qq update
 get_dependencies apt | xargs sudo apt-get -qq install || :
-
-echo "Updating gem dependencies..."
-get_dependencies gem | xargs sudo gem install --conservative > /dev/null || :
 
 echo "Updating pip3 dependencies..."
 get_dependencies pip3 | xargs sudo -H pip3 install --upgrade > /dev/null || :
