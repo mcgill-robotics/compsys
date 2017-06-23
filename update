@@ -9,22 +9,26 @@
 # Returns:
 #   Space separated list of dependencies
 #########################################
+
+section=$(tput bold; tput setaf 2)
+reset=$(tput sgr0)
+
 function get_dependencies () {
   if [[ -s ${ROBOTIC_PATH}/compsys/packages/$1 ]]; then
     cat ${ROBOTIC_PATH}/compsys/packages/$1
   fi
 }
 
-echo "Updating apt dependencies..."
+echo "${section}Updating apt dependencies...${reset}"
 sudo apt-get -qq update
-get_dependencies apt | xargs sudo apt-get -qq install || :
+get_dependencies apt | xargs sudo apt-get -y install || :
 
-echo "Updating pip3 dependencies..."
-get_dependencies pip3 | xargs sudo -H pip3 install --upgrade > /dev/null || :
+echo "${section}Updating pip3 dependencies...${reset}"
+get_dependencies pip3 | xargs sudo -H pip3 install --upgrade || :
 
-echo "Updating pip2 dependencies..."
+echo "${section}Updating pip2 dependencies...${reset}"
 # pip2 needs to be installed after pip3 in order to be set as default
-get_dependencies pip | xargs sudo -H pip2 install --upgrade > /dev/null || :
+get_dependencies pip | xargs sudo -H pip2 install --upgrade || :
 
 if [[ $(sudo -H pip --version) != $(sudo -H pip2 --version) ]]; then
   echo "Found mismatch in default pip. Correcting..."
