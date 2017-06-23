@@ -45,7 +45,7 @@ echo "Please answer the following questions truthfully:"
 echo
 
 # Ask if robot
-ask="${question}Are you a robot? Probably not.${reset}"
+echo -n "${question}Are you a robot? Probably not.${reset}"
 read -p "${ask} [y/N] (default no) " irobot
 case "${irobot}" in
   y|Y )
@@ -60,25 +60,47 @@ esac
 echo
 
 # Select project
-ask="${question}Which project are you working on?${reset}"
-echo ${ask}
-select project in "AUV" "DRONE" "ROVER" "DEMO"; do
+echo "${question}Which project are you working on?${reset}"
+GIT_BASE_URL="mcgill-robotics"
+select project in "AUV" "DRONE" "ROVER" "DEMO" "OTHER" "CUSTOM"; do
   case "${project}" in
     AUV )
       export ROBOT=auv
+      GIT_URL="${GIT_BASE_URL}/${ROBOT}.git"
       break;;
     DRONE )
       export ROBOT=drone
+      GIT_URL="${GIT_BASE_URL}/${ROBOT}.git"
       break;;
     ROVER )
       export ROBOT=rover
+      GIT_URL="${GIT_BASE_URL}/${ROBOT}.git"
       break;;
     DEMO )
       export ROBOT=demo
+      GIT_URL="${GIT_BASE_URL}/${ROBOT}.git"
+      break;;
+    OTHER )
+      echo -n "Enter the repository name: https://github.com/mcgill-robotics/"
+      read ROBOT
+      GIT_URL="${GIT_BASE_URL}/${ROBOT}.git"
+      break;;
+    CUSTOM )
+      echo -n "Enter the project's name: "
+      read ROBOT
+      echo -n "Enter the repository's URL: https://github.com/"
+      read GIT_URL
       break;;
   esac
 done
-echo "Welcome to ${project}!"
+if [[ -z "${ROBOT// }" ]]; then
+  echo "Project name cannot be empty"
+  exit -1
+elif [[ -z "${GIT_URL// }" ]]; then
+  echo "Repository URL cannot be empty"
+  exit -1
+fi
+echo "Welcome to ${ROBOT}!"
 
 # Ask to install zsh if not installed
 if [[ ! ${SHELL##*/} = "zsh" ]]; then
@@ -133,7 +155,7 @@ if [[ ${IAMROBOT} = true ]]; then
   git config --global url."https://github.com/".insteadOf 'git@github.com:'
   git config --global credential.helper 'cache --timeout=1800'
   git config --global user.name "McGill Robotics"
-  git config --global user.email "dev@mcgillrobotics.com" 
+  git config --global user.email "dev@mcgillrobotics.com"
   git config --global push.default simple
   sudo apt-get install -y openssh-server
   echo
@@ -163,11 +185,10 @@ echo "${section}Git${reset}"
 gitdir=${ROBOTIC_PATH}/${ROBOT}
 if [[ ! -d ${gitdir} ]]; then
   echo "Cloning ${robot} git repository..."
-  url="mcgill-robotics/${ROBOT}.git"
-  git clone --recursive git@github.com:${url} ${gitdir} || {
+  git clone --recursive git@github.com:${GIT_URL} ${gitdir} || {
     echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
     echo "${warning}Falling back to HTTPS for now...${reset}"
-    git clone --recursive https://github.com/${url} ${gitdir}
+    git clone --recursive https://github.com/${GIT_URL} ${gitdir}
   }
 
   echo "Setting up robot remote repository..."
