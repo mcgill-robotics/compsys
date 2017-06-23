@@ -135,6 +135,7 @@ if [[ ${IAMROBOT} = true ]]; then
   git config --global user.name "McGill Robotics"
   git config --global user.email "team@mcgillrobotics.com" 
   git config --global push.default simple
+  echo
 fi
 
 # Install zsh if requested
