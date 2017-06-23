@@ -28,8 +28,8 @@ echo
 
 # Instructions
 cat <<END
-Please make sure you have an internet connection and have properly set up your
-ssh key on GitHub before proceeding.
+Please make sure you have properly set up your ssh key on GitHubi, unless you are setting
+up a robot computer; and have an internet connection before proceeding.
 END
 
 # Disclaimer
@@ -101,6 +101,25 @@ elif [[ -z "${GIT_URL// }" ]]; then
   exit -1
 fi
 echo "Welcome to ${ROBOT}!"
+echo
+
+# Ask drone specific configuration
+if [[ "${ROBOT}" = "drone" ]]; then
+  echo "${question}Please select install type for drone repository:${reset}"
+  echo "Select minimal if you are unsure."
+  select install_type in "MINIMAL" "FULL"; do
+    case "${install_type}" in
+      MINIMAL )
+        export INSTALL_TYPE=minimal
+        break;;
+      FULL )
+        export INSTALL_TYPE=full
+	break;;
+    esac
+  done
+fi
+echo "Install type for drone repository is ${INSTALL_TYPE}."
+echo
 
 # Ask to install zsh if not installed
 if [[ ! ${SHELL##*/} = "zsh" ]]; then
