@@ -135,6 +135,7 @@ if [[ ${IAMROBOT} = true ]]; then
   git config --global user.name "McGill Robotics"
   git config --global user.email "team@mcgillrobotics.com" 
   git config --global push.default simple
+  sudo apt-get install -y openssh-server
   echo
 fi
 
