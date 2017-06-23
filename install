@@ -49,9 +49,8 @@ ask="${question}Are you a robot? Probably not.${reset}"
 read -p "${ask} [y/N] (default no) " irobot
 case "${irobot}" in
   y|Y )
+    echo "Beep boop..."
     export IAMROBOT=true
-    echo "E: ROBOT NOT YET SUPPORTED"
-    exit 1
     ;;
   * )
     echo "Thought so."
@@ -85,8 +84,8 @@ echo "Welcome to ${project}!"
 if [[ ! ${SHELL##*/} = "zsh" ]]; then
   echo
   ask="${question}Would you like to switch to zsh? Here be dragons.${reset}"
-  read -p "${ask} [y/N] (default no) " zshpls
-  case "${zshpls}" in
+  read -p "${ask} [y/N] (default no) " zshplz
+  case "${zshplz}" in
     y|Y )
       echo "zsh will be installed!"
       echo "You may need to log out and log back in to reflect the changes"
@@ -127,6 +126,16 @@ echo
 echo "${section}Dependencies${reset}"
 ./update
 echo
+
+# Change setting for robot
+if [[ ${IAMROBOT} = true ]]; then
+  echo "${section}Robot Setup${reset}"
+  git config --global url."https://github.com/".insteadOf 'git@github.com:'
+  git config --global credential.helper 'cache --timeout=1800'
+  git config --global user.name "McGill Robotics"
+  git config --global user.email "team@mcgillrobotics.com" 
+  git config --global push.default simple
+fi
 
 # Install zsh if requested
 if [[ ${INSTALL_ZSH} = true ]]; then
