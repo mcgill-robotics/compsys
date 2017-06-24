@@ -5,3 +5,4 @@ pysensors
 pyqtgraph
 enum34
 catkin_tools
+catkin_lint
