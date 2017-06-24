@@ -67,3 +67,8 @@ fi
 
 # Source custom aliases and functions
 source ${ROBOTIC_PATH}/compsys/aliases
+
+# Source catkin-tools shell verbs
+if [[ -x $(command -v catkin) ]]; then
+  source $(catkin locate --shell-verbs)
+fi
