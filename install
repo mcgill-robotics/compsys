@@ -185,17 +185,16 @@ echo "${section}Git${reset}"
 gitdir=${ROBOTIC_PATH}/${ROBOT}
 if [[ ! -d ${gitdir} ]]; then
   echo "Cloning ${robot} git repository..."
-  url="mcgill-robotics/${ROBOT}.git"
   
   if [[ ${GIT_BRANCH} ]]; then
     gitcmd="-b ${GIT_BRANCH}"
   fi
 
-  git clone --recursive git@github.com:${url} ${gitdir} ${gitcmd} || {
+  git clone --recursive git@github.com:${GIT_URL} ${gitdir} ${gitcmd} || {
     echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
     echo "${warning}Falling back to HTTPS for now...${reset}"
 
-    git clone --recursive https://github.com/${url} ${gitdir} ${gitcmd}
+    git clone --recursive https://github.com/${GIT_URL} ${gitdir} ${gitcmd}
   }
 
   pushd ${gitdir}
