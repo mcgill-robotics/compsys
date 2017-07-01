@@ -196,7 +196,6 @@ if [[ ! -d ${gitdir} ]]; then
     echo "${warning}Falling back to HTTPS for now...${reset}"
 
     git clone --recursive https://github.com/${url} ${gitdir} ${gitcmd}
-  fi
   }
 
   pushd ${gitdir}
