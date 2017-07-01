@@ -55,6 +55,21 @@ case "${irobot}" in
   * )
     echo "Thought so."
     export IAMROBOT=false
+    if [[ -z "$(git config --global user.name)" ]]; then
+      echo "Your git user.name is not set..."
+      echo "${ask}Please enter your full name:${reset}"
+      read GIT_USER_NAME
+      git config --global user.name "${GIT_USER_NAME}"
+      echo
+    fi 
+
+    if [[ -z "$(git config --global user.email)" ]]; then
+      echo "Your git user.email is not set..."
+      echo "${ask}Please enter your email registerd for GitHub:${reset}"
+      read GIT_USER_EMAIL
+      git config --global user.email "${GIT_USER_EMAIL}"
+      echo
+    fi
     ;;
 esac
 echo
@@ -156,10 +171,10 @@ if [[ ${IAMROBOT} = true ]]; then
   git config --global credential.helper 'cache --timeout=1800'
   git config --global user.name "McGill Robotics"
   git config --global user.email "dev@mcgillrobotics.com"
-  git config --global push.default simple
   sudo apt-get install -y openssh-server
   echo
 fi
+git config --global push.default simple
 
 # Install zsh if requested
 if [[ ${INSTALL_ZSH} = true ]]; then
