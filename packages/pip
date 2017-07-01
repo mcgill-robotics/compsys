@@ -1,6 +1,6 @@
 pip
 numpy
-ipython==5.4.1
+ipython<6.0
 pysensors
 pyqtgraph
 enum34
