@@ -159,8 +159,14 @@ if [[ ! -d ${gitdir} ]]; then
     git clone --recursive https://github.com/${url} ${gitdir}
   }
 
-  echo "Setting up robot remote repository..."
   pushd ${gitdir}
+
+  if [[ ${GIT_BRANCH} ]]; then
+    echo "Checkout to a specific branch..."
+    git checkout ${GIT_BRANCH}
+  fi
+
+  echo "Setting up robot remote repository..."
   git remote add robot robotics@${ROBOT}:${ROBOT}.git
 
   if [[ -f setup.sh ]]; then

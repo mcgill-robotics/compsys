@@ -49,6 +49,23 @@ cd compsys
 and follow the on-screen instructions.
 **This may ask for your user's password several times.**
 
+#### git branch for robot specific setup
+
+The install script will invoke the setup script in the robot repository and 
+setup robot specific settings.
+
+If you would like to checkout to a specific branch of the robot repository,
+you can do so by adding `GIT_BRANCH=branch_name` before `./install` such as:
+
+```bash
+GIT_BRANCH=branch_name ./install
+```
+
+**Note: This only works if the robot repository is not clone yet. If the robot
+repository exists when the script runs, the robot specific setup will not run,
+and you will need to `cd` to the robot repository, optionally checkout to a
+branch, and run `./setup.sh` to settup robot specific settings.**
+
 ## FAQs
 
 ### 1. Am I a robot?
