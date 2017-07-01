@@ -7,8 +7,17 @@ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" \
   > /etc/apt/sources.list.d/ros-latest.list'
 
 echo "Getting ROS apt verification key..."
-sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net \
-  --recv-key 0xB01FA116
+servers=(
+  "hkp://ha.pool.sks-keyservers.net:80"
+  "hkp://pgp.mit.edu:80"
+  "hkp://keyserver.ubuntu.com:80"
+)
+for server in "${servers[@]}"; do
+  # Try each valid keyserver until the first succeeds
+  sudo apt-key adv --keyserver ${server} \
+    --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116 \
+    && break
+done
 
 echo "Updating apt package list..."
 sudo apt-get -qq update
