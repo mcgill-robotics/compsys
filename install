@@ -153,18 +153,20 @@ gitdir=${ROBOTIC_PATH}/${ROBOT}
 if [[ ! -d ${gitdir} ]]; then
   echo "Cloning ${robot} git repository..."
   url="mcgill-robotics/${ROBOT}.git"
-  git clone --recursive git@github.com:${url} ${gitdir} || {
+  
+  if [[ ${GIT_BRANCH} ]]; then
+    gitcmd="-b ${GIT_BRANCH}"
+  fi
+
+  git clone --recursive git@github.com:${url} ${gitdir} ${gitcmd} || {
     echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
     echo "${warning}Falling back to HTTPS for now...${reset}"
-    git clone --recursive https://github.com/${url} ${gitdir}
+
+    git clone --recursive https://github.com/${url} ${gitdir} ${gitcmd}
+  fi
   }
 
   pushd ${gitdir}
-
-  if [[ ${GIT_BRANCH} ]]; then
-    echo "Checkout to a specific branch..."
-    git checkout ${GIT_BRANCH}
-  fi
 
   echo "Setting up robot remote repository..."
   git remote add robot robotics@${ROBOT}:${ROBOT}.git

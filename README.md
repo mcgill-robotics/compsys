@@ -55,16 +55,16 @@ The install script will invoke the setup script in the robot repository and
 setup robot specific settings.
 
 If you would like to checkout to a specific branch of the robot repository,
-you can do so by adding `GIT_BRANCH=branch_name` before `./install` such as:
+you can do so by adding `GIT_BRANCH=branch_name` before `./install` as follows:
 
 ```bash
 GIT_BRANCH=branch_name ./install
 ```
 
-**Note: This only works if the robot repository is not clone yet. If the robot
+**Note: This only works if the robot repository is not cloned yet. If the robot
 repository exists when the script runs, the robot specific setup will not run,
 and you will need to `cd` to the robot repository, optionally checkout to a
-branch, and run `./setup.sh` to settup robot specific settings.**
+branch, and run `./setup.sh` to setup robot specific settings.**
 
 ## FAQs
 
