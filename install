@@ -65,7 +65,7 @@ case "${irobot}" in
 
     if [[ -z "$(git config --global user.email)" ]]; then
       echo "Your git user.email is not set..."
-      echo "${ask}Please enter your email registerd for GitHub:${reset}"
+      echo "${ask}Please enter your GitHub email:${reset}"
       read GIT_USER_EMAIL
       git config --global user.email "${GIT_USER_EMAIL}"
       echo
