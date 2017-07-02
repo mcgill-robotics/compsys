@@ -17,8 +17,14 @@ reset=$(tput sgr0)
 
 # Verify running on Ubuntu 16.04
 if [[ $(lsb_release -sc) != "xenial" ]]; then
-    echo "${warning}CompSys only supports Ubuntu 16.04${reset}"
-    exit -1
+  echo "${warning}CompSys only supports Ubuntu 16.04${reset}"
+  exit -1
+fi
+
+# Check if run as root
+if [[ "${EUID}" -eq 0 ]]; then
+  echo "${warning}Please DO NOT run this script as root${reset}"
+  exit -1
 fi
 
 # Header
