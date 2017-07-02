@@ -34,7 +34,8 @@ fi
 
 echo "Switching default login shell..."
 if [[ ${SHELL##*/} != "zsh" ]]; then
-  chsh -s $(which zsh)
+  sudo sed -i -e "s/${whoami}:\/bin\/bash/${whoami}:\/usr\/bin\/zsh/" \
+    /etc/passwd
 fi
 
 echo "Done."
