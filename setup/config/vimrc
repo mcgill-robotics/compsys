@@ -48,6 +48,8 @@ if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
   Plugin 'itchyny/lightline.vim'
   Plugin 'cocopon/lightline-hybrid.vim'
   Plugin 'fholgado/minibufexpl.vim'
+  Plugin 'bronson/vim-trailing-whitespace'
+
   call vundle#end()
   filetype plugin indent on
 endif
