@@ -237,7 +237,7 @@ fi
 if [[ ${IAMROBOT} = true ]]; then
   if [[ ! -d ${gitdir}.git ]]; then
     echo "Cloning ${robot}.git bare git repository"
-    git clone --recursive --bare git@github.com:${GIT_URL} ${gitdir}
+    git clone --recursive --bare git@github.com:${GIT_URL} ${gitdir}.git
   fi
 fi
 echo "Done."
