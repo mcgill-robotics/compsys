@@ -67,7 +67,7 @@ case "${irobot}" in
       read GIT_USER_NAME
       git config --global user.name "${GIT_USER_NAME}"
       echo
-    fi 
+    fi
 
     if [[ -z "$(git config --global user.email)" ]]; then
       echo "Your git user.email is not set..."
@@ -206,7 +206,7 @@ echo "${section}Git${reset}"
 gitdir=${ROBOTIC_PATH}/${ROBOT}
 if [[ ! -d ${gitdir} ]]; then
   echo "Cloning ${robot} git repository..."
-  
+
   if [[ ${GIT_BRANCH} ]]; then
     gitcmd="-b ${GIT_BRANCH}"
   fi
@@ -231,6 +231,14 @@ if [[ ! -d ${gitdir} ]]; then
     source setup.sh
   fi
   popd
+fi
+
+# Clone bare repository for robot
+if [[ ${IAMROBOT} = true ]]; then
+  if [[ ! -d ${gitdir}.git ]]; then
+    echo "Cloning ${robot}.git bare git repository"
+    git clone --recursive --bare git@github.com:${GIT_URL} ${gitdir}.git
+  fi
 fi
 echo "Done."
 echo
