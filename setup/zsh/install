@@ -17,11 +17,17 @@ if [[ ! -f $HOME/.zshrc ]]; then
 fi
 
 if [[ ! -f ${HOME}/.zpreztorc ]]; then
+  if [[ -L ${HOME}/.zpreztorc ]]; then
+    rm -f ${HOME}/.zpreztorc
+  fi
   ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc ${HOME}/.zpreztorc
 fi
 
 mcgill_prompt=${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup
 if [[ ! -f ${mcgill_prompt} ]]; then
+  if [[ -L ${mcgill_prompt} ]]; then
+    rm -f ${mcgill_prompt}
+  fi
   ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/prompt_mcgill_setup ${mcgill_prompt}
 fi
 
