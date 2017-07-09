@@ -233,6 +233,11 @@ if [[ ! -d ${gitdir} ]]; then
   popd
 fi
 
+# Add robot to the hosts file
+if [[ -z "$(cat /etc/hosts | grep ${ROBOT})" ]]; then
+  sudo sed -i "1i10.0.0.10\t${ROBOT}" /etc/hosts
+fi
+
 # Clone bare repository for robot
 if [[ ${IAMROBOT} = true ]]; then
   if [[ ! -d ${gitdir}.git ]]; then
