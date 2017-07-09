@@ -220,9 +220,6 @@ if [[ ! -d ${gitdir} ]]; then
 
   pushd ${gitdir}
 
-  echo "Setting up robot remote repository..."
-  git remote add robot robotics@${ROBOT}:${ROBOT}.git
-
   if [[ -f setup.sh ]]; then
     echo "Sourcing roboticrc..."
     source ${ROBOTIC_PATH}/compsys/roboticrc
