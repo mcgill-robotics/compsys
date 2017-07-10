@@ -11,13 +11,10 @@ alias bag='python -m bag.run'
 
 # Monitoring
 alias glances='glances -t 5'
+
+# Tmux
 alias main='tmux new-session -t MAIN || tmux new -s MAIN'
+alias killmain='tmux kill-session -t MAIN'
 
 # Fasd
 [[ -n $(which fasd_cd) ]] && alias j='fasd_cd'
-
-# Make Arduino ROS libraries
-function make_arduino_lib {
-    rm -rf ~/sketchbook/libraries/ros_lib
-    rosrun rosserial_arduino make_libraries.py ~/sketchbook/libraries
-}
