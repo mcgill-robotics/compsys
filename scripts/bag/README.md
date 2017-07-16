@@ -86,8 +86,13 @@ bag --help
 ```
 
 ### 3. How do I configure my topics?
-This tool determines the topics to look from a `topics` file located in your
-project's root repository (i.e. `$ROBOTIC_PATH/$ROBOT/topics`).
+This tool determines the topics to look from a `topics` file located in
+`$TOPICS_PATH`. For convenience, `compsys` by default sets `$TOPIC_PATH`
+to `$ROBOTIC_PATH/$ROBOT/topics`. You may override the defaults as follows:
+
+```bash
+TOPICS_PATH=path/to/topics/file bag --help
+```
 
 The `topics` file is formatted like an `ini` file. It consists of a list of
 topic groups defined as such:
