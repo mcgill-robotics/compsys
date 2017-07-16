@@ -50,7 +50,7 @@ class Parser(object):
             version: Version of the executable.
         """
         self.arg = sys.argv[1:]
-        self.original = original
+        self.original = original.topics
         self.name = None
         self.description = description
         self.version = version
@@ -68,7 +68,7 @@ class Parser(object):
 
         parser.add_argument(
             "--version", action="version",
-            version="McGill Robotics' ROS Bagger {v}".format(v=self.version)
+            version="v{}".format(self.version)
         )
 
         # Add subparsers.

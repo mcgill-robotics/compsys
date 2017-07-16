@@ -41,17 +41,13 @@ class TopicList(object):
         topics: List of Topics parsed from 'topics' file.
     """
 
-    def __init__(self):
+    def __init__(self, path):
         """Construct TopicList object.
 
-        The topics configuration file should be placed in the root of the
-        project's git repository (i.e. ${ROBOTIC_PATH}/${ROBOT}/topics).
-
-        Raises:
-            KeyError: ROBOTIC_PATH and/or ROBOT environment variables not set.
+        Args:
+            path: Path to topics configuration file.
         """
-        robot = os.path.join(os.environ["ROBOTIC_PATH"], os.environ["ROBOT"])
-        self.filename = os.path.join(robot, "topics")
+        self.filename = path
         self.topics = []
 
         self._config = ConfigParser.ConfigParser()

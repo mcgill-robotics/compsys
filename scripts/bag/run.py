@@ -15,20 +15,22 @@ recorded/merged if no arguments are specified. Otherwise, only the topics
 specified will be recorded/merged.
 """
 
+import os
 import sys
 from util import Parser, TopicList
 
 __author__ = "Anass Al-Wohoush"
-__version__ = "1.1"
+__version__ = "1.2.0"
 
 
 if __name__ == "__main__":
     try:
-        topics = TopicList().topics
+        topics_path = os.environ["TOPICS_PATH"]
     except KeyError:
-        print("E: ROBOTIC_PATH and/or ROBOT environment variables not set.")
-        print("did you install the 'compsys' package correctly?")
+        print("E: TOPICS_PATH environment variable not set")
         sys.exit(2)
+
+    topics = TopicList(topics_path)
 
     args = Parser(topics, __doc__, __version__)
     status = args.cmd(
