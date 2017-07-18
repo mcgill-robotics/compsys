@@ -28,30 +28,66 @@ function rosconnect {
 
 function rosworkon {
   if [[ -n "${1}" ]]; then
+    if [[ ! -d "${ROBOTIC_PATH}/${1}" ]]; then
+      echo "Could not find robot repository named ${1} in ${ROBOTIC_PATH}!"
+      return 1
+    fi
     # Reset ROBOT
     export ROBOT=${1}
-
-    # Reset TOPICS_PATH for bagging
-    export TOPICS_PATH=${ROBOTIC_PATH}/${ROBOT}/topics
-
+    unset CATKIN_PROFILE
+    repo_path=${ROBOTIC_PATH}/${ROBOT}
     # Reset package path from previous workspace
     export ROS_PACKAGE_PATH=/opt/ros/kinetic/share
 
     # Source the new workspace
-    if [[ -s ${ROBOTIC_PATH}/${1}/catkin_ws/devel/setup.${SHELL_EXT} ]]; then
-      source ${ROBOTIC_PATH}/${1}/catkin_ws/devel/setup.${SHELL_EXT}
+    if [[ -s ${repo_path}/catkin_ws/devel/setup.${SHELL_EXT} ]]; then
+      source ${repo_path}/catkin_ws/devel/setup.${SHELL_EXT}
     fi
 
     # Set environment variables
-    export ROS_WORKSPACE=${ROBOTIC_PATH}/${1}/catkin_ws
+    export ROS_WORKSPACE=${repo_path}/catkin_ws
     export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}
 
     # Source robot-specific configuration
-    if [[ -f ${ROBOTIC_PATH}/${ROBOT}/robotrc ]]; then
-      source ${ROBOTIC_PATH}/${ROBOT}/robotrc
+    if [[ -f ${repo_path}/robotrc ]]; then
+      source ${repo_path}/robotrc
     fi
+
+    if [[ -n ${2} ]]; then
+      # When second parameter is set, change profile and export TOPICS_PATH
+      profile_path=${ROS_WORKSPACE}/.catkin_tools/profiles/${2}
+      if [[ ! -d ${profile_path} ]]; then
+        echo "Could not find profile at ${profile_path}"
+        return 1
+      else
+        export CATKIN_PROFILE=${2}
+        pushd ${ROS_WORKSPACE}
+        catkin profile set ${CATKIN_PROFILE} > /dev/null
+        popd
+      fi
+    else
+      # When the second parameter is not set, find the current active profile
+      active_profile=${ROS_WORKSPACE}/.catkin_tools/profiles/profiles.yaml
+      if [[ -e ${active_profile} ]]; then
+        active_profile=$(head -n 1 ${active_profile})
+        export CATKIN_PROFILE=${active_profile:8}
+        profile_path=${ROS_WORKSPACE}/.catkin_tools/profiles/${CATKIN_PROFILE}
+        unset active_profile
+      fi
+    fi
+
+    # Set TOPICS_PATH for bagging
+    if [[ -z "${CATKIN_PROFILE}" ]] ||
+      [[ "${CATKIN_PROFILE}" == "default" ]]
+      [[ ! -e ${profile_path}/topics ]]; then
+      export TOPICS_PATH=${ROBOTIC_PATH}/${ROBOT}/topics
+    else
+      export TOPICS_PATH=${profile_path}/topics
+    fi
+    unset profile_path
+    unset repo_path
   else
-    echo "usage: rosworkon <ROBOT>"
+    echo "usage: rosworkon <ROBOT> [PROFILE]"
     return 1
   fi
 }

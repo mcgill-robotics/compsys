@@ -51,7 +51,7 @@ and follow the on-screen instructions.
 
 #### git branch for robot specific setup
 
-The install script will invoke the setup script in the robot repository and 
+The install script will invoke the setup script in the robot repository and
 setup robot specific settings.
 
 If you would like to checkout to a specific branch of the robot repository,
@@ -65,6 +65,32 @@ GIT_BRANCH=branch_name ./install
 repository exists when the script runs, the robot specific setup will not run,
 and you will need to `cd` to the robot repository, optionally checkout to a
 branch, and run `./setup.sh` to setup robot specific settings.**
+
+## Functions
+### rosworkon
+To switch between projects, you can use the function `rosworkon`:
+
+```bash
+rosworkon <project> [profile]
+```
+
+#### Parameters:
+- `<project>`: name of the project you wish to switch to (ex. auv). This
+parameter is required.
+- `[profile]`: catkin profile of the project you wish to switch to. This
+parameter is not required. Leave it empty if you don't know the profile to
+use.
+
+### rosconnect
+To connect to a remote ROS master, you can use the function `rosconnect`:
+
+```bash
+rosconnect [host_name]
+```
+#### Parameter:
+- `[host_name]`: the name of the host you wish to connect to, the host must be
+present in your `/etc/hosts` file. This parameter is not required. Leave it
+empty to set the roscore to your local host.
 
 ## FAQs
 
