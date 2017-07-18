@@ -78,7 +78,7 @@ rosworkon <project> [profile]
 - `<project>`: name of the project you wish to switch to (ex. auv). This
 parameter is required.
 - `[profile]`: catkin profile of the project you wish to switch to. This
-parameter is nor required. Leave it empty if you don't know the profile to
+parameter is not required. Leave it empty if you don't know the profile to
 use.
 
 ### rosconnect
@@ -89,7 +89,7 @@ rosconnect [host_name]
 ```
 #### Parameter:
 - `[host_name]`: the name of the host you wish to connect to, the host must be
-present in your `/etc/hosts` file. This parameter is not required, leave it
+present in your `/etc/hosts` file. This parameter is not required. Leave it
 empty to set the roscore to your local host.
 
 ## FAQs
