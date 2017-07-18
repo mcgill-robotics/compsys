@@ -82,7 +82,7 @@ parameter is nor required. Leave it empty if you don't know the profile to
 use.
 
 ### rosconnect
-To use a remote rosmaster, you can use the function `rosconnect`:
+To connect to a remote ROS master, you can use the function `rosconnect`:
 
 ```bash
 rosconnect [host_name]
