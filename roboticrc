@@ -34,7 +34,7 @@ function rosworkon {
     fi
     # Reset ROBOT
     export ROBOT=${1}
-    unset PROFILE
+    unset CATKIN_PROFILE
     repo_path=${ROBOTIC_PATH}/${ROBOT}
     # Reset package path from previous workspace
     export ROS_PACKAGE_PATH=/opt/ros/kinetic/share
@@ -60,9 +60,9 @@ function rosworkon {
         echo "Could not find profile at ${profile_path}"
         return 1
       else
-        export PROFILE=${2}
+        export CATKIN_PROFILE=${2}
         pushd ${ROS_WORKSPACE}
-        catkin profile set ${PROFILE} > /dev/null
+        catkin profile set ${CATKIN_PROFILE} > /dev/null
         popd
       fi
     else
@@ -70,22 +70,22 @@ function rosworkon {
       active_profile=${ROS_WORKSPACE}/.catkin_tools/profiles/profiles.yaml
       if [[ -e ${active_profile} ]]; then
         active_profile=$(head -n 1 ${active_profile})
-        export PROFILE=${active_profile:8}
-        profile_path=${ROS_WORKSPACE}/.catkin_tools/profiles/${PROFILE}
+        export CATKIN_PROFILE=${active_profile:8}
+        profile_path=${ROS_WORKSPACE}/.catkin_tools/profiles/${CATKIN_PROFILE}
         unset active_profile
       fi
     fi
 
     # Set TOPICS_PATH for bagging
-    if [[ -z "${PROFILE}" ]] || [[ "${PROFILE}" == "default" ]]; then
-      export TOPICS_PATH=${ROBOTIC_PATH}/${ROBOT}/topics
-    elif [[ ! -e ${profile_path}/topics ]]; then
-      echo -e "Profile selected does not have a \"topics\" file"
-      echo "Falling back to default topics..."
+    if [[ -z "${CATKIN_PROFILE}" ]] ||
+      [[ "${CATKIN_PROFILE}" == "default" ]]
+      [[ ! -e ${profile_path}/topics ]]; then
       export TOPICS_PATH=${ROBOTIC_PATH}/${ROBOT}/topics
     else
       export TOPICS_PATH=${profile_path}/topics
     fi
+    unset profile_path
+    unset repo_path
   else
     echo "usage: rosworkon <ROBOT> [PROFILE]"
     return 1
