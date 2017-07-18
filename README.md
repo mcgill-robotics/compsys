@@ -89,7 +89,8 @@ rosconnect [host_name]
 ```
 #### Parameter:
 - `[host_name]`: the name of the host you wish to connect to, the host must be
-present in your `/etc/hosts` file.
+present in your `/etc/hosts` file. This parameter is not required, leave it
+empty to set the roscore to your local host.
 
 ## FAQs
 
