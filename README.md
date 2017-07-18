@@ -68,7 +68,7 @@ branch, and run `./setup.sh` to setup robot specific settings.**
 
 ## Functions
 ### rosworkon
-To switch between project, you can use the function `rosworkon`:
+To switch between projects, you can use the function `rosworkon`:
 
 ```bash
 rosworkon <project> [profile]
@@ -78,11 +78,11 @@ rosworkon <project> [profile]
 - `<project>`: name of the project you wish to switch to (ex. auv). This
 parameter is required.
 - `[profile]`: catkin profile of the project you wish to switch to. This
-parameter is nor required, leave it empty if you don't know the profile to
+parameter is nor required. Leave it empty if you don't know the profile to
 use.
 
 ### rosconnect
-To use a remote rosmaster, you can used the function `rosconnect`:
+To use a remote rosmaster, you can use the function `rosconnect`:
 
 ```bash
 rosconnect [host_name]
