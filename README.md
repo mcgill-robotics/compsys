@@ -92,6 +92,116 @@ rosconnect [host_name]
 present in your `/etc/hosts` file. This parameter is not required. Leave it
 empty to set the roscore to your local host.
 
+## Tmux
+CompSys installs and configures [tmux](https://github.com/tmux/tmux/wiki), a
+terminator multiplexer, to switch easily between several programs in one
+terminal, to detach them (they keep running in the background), and to
+reattach them to a different terminal.
+
+tmux is also used in junction with [tmuxinator](https://github.com/tmuxinator/tmuxinator)
+to automatically or quickly launches complex tmux sessions.
+
+### Cheat Sheet
+#### tmux basics
+- Start new session: `tmux`
+- Start new session with name: `tmux new -s <name>`
+- List all sessions:`tmux ls`
+- Reattach most recent disattached session: `tmux a`
+- Reattach a specific session: `tmux a -t <name>`
+`<name>` can be found by `tmux ls` and can be both string or integer.
+- Kill specific session: `tmux kill-session -t <name>`
+- kill all sessions: `tmux kill-session -a`
+
+#### Key-bindings
+The key-bining prefix is changed from `ctrl-b` to `ctrl-a`.
+
+To use a key-bind shortcut, first hit the prefix `ctrl-a` then hit a specific
+character.
+- sessions:
+```
+s             List and switch sessions
+$             Rename current session
+```
+- windows (tabs)
+```
+c             Create new window
+w             List and switch windows
+l             Go back to last window
+n             Go to next window
+p             Go to previous window
+,             Rename window
+&             Kill window and all pane in that window
+1-9           Go to window number 1-9
+
+ctrl-o        retate window
+```
+
+- pane
+```
+|             Split pane vertically
+-             Split pane horizontally
+!             Move pane into new window
+x             Kill pane
+SPACE         Toggle between defualt layouts
+
+# Use the arrow key to navigate between panes
+# Mutiple keys can be enter in a quick succession
+UP            Move to pane on top of the current pane
+DOWN          Move to pane below of the current pane
+LEFT          Move to pane on the left of the current pane
+RIGHT         Move to pane on the right of the current pane
+
+# Use the ctrl + arrow key to navigate between panes
+# Subtitute ctrl by alt to move much more
+# Mutiple keys can be enter in a quick succession
+ctrl-UP       Resize pane up
+ctrl-DOWN     Resize pane down
+ctrl-LEFT     Resize pane left
+ctrl-RIGHT    Resize pane right
+
+```
+
+- misc
+```
+d             Detach from current session
+t             Show current time, press any key to exit
+?             List all shortcuts
+[             Enter copy mode
+]             Paste the last buffer of copy mode
+=             List and paste from copy mode buffer, press ctrl-c to exit
+ctrl-c        Put the last copy buffer into the system clipboard
+```
+
+#### Copy Mode
+You can enter copy mode by either hitting the prefix key (`ctrl-a`) then `[`
+or use mouse wheel up. Copy mode is indicated by the yellow line number
+indicator on the top right.
+
+You can exit the copy mode by pressing `ESC` or `ctrl-c`.
+
+Once in the copy mode, you can use the arrow keys to navigate and use the
+following commands directly.
+```
+ctrl-u       Move page up
+ctrl-d       Move page down
+0            Go to start of line
+$            Go to end of line
+SPACE        Start selection
+ENTER        End selection and put selected section into copy mode buffer
+ESC          Cancel selection
+```
+
+#### Mouse Mode
+You can use mouse to accelerate tasks:
+- Click on a pane to select it
+- Drag a pane boarder to resize it.
+- Click on a window from the buttom bar to change to that window
+- Mouse whell up and down in the bottom bar to cycle between windows
+- Mouse wheel up to enter copy mode and scroll up in copy mode.
+- Mouse wheel down to scroll down in copy mode. Exit copy mode when scrolled
+down to last line.
+- Highlight text to put it into copy mode buffer.
+
 ## FAQs
 
 ### 1. Am I a robot?
