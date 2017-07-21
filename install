@@ -2,18 +2,23 @@
 #
 # Install the McGill Robotics CompSys package
 
-# Fail on first error
-set -e
-
-# Determine ROBOTIC_PATH
-export ROBOTIC_PATH=$(dirname ${PWD})
-
 # Colors
 header=$(tput setab 1; tput setaf 0)
 question=$(tput bold; tput setaf 4)
 section=$(tput bold; tput setaf 2)
 warning=$(tput bold; tput setaf 1)
 reset=$(tput sgr0)
+# Fail on first error
+set -e
+
+# Print err message when failed
+function onerr {
+echo "${warning}Script failed to compelete due to subprocess error...${reset}"
+}
+trap onerr ERR
+
+# Determine ROBOTIC_PATH
+export ROBOTIC_PATH=$(dirname ${PWD})
 
 # Verify running on Ubuntu 16.04
 if [[ $(lsb_release -sc) != "xenial" ]]; then
