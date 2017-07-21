@@ -9,6 +9,7 @@
 # Returns:
 #   Space separated list of dependencies
 #########################################
+set -e
 
 section=$(tput bold; tput setaf 2)
 reset=$(tput sgr0)
