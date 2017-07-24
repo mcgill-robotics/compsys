@@ -222,18 +222,14 @@ if [[ ! -d ${gitdir} ]]; then
 
     git clone --recursive https://github.com/${GIT_URL} ${gitdir} ${gitcmd}
   }
-
-  pushd ${gitdir}
-
-  if [[ -f setup.sh ]]; then
-    echo "Sourcing roboticrc..."
-    source ${ROBOTIC_PATH}/compsys/roboticrc
-
-    echo "Setting up robot dependencies..."
-    source setup.sh
-  fi
-  popd
 fi
+pushd ${gitdir}
+
+if [[ -f setup.sh ]]; then
+  echo "Setting up robot dependencies..."
+  source setup.sh
+fi
+popd
 
 # Clone bare repository for robot
 if [[ ${IAMROBOT} = true ]]; then
