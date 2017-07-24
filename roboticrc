@@ -1,4 +1,3 @@
-#!/bin/bash
 # Initialize McGill Robotics customizations, ROS setup and paths
 
 # Determine shell
