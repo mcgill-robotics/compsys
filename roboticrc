@@ -6,9 +6,13 @@ SHELL_EXT=$(
   ([ -n "${BASH_VERSION}" ] && echo bash)
 )
 
-# Set CLOBBER option to properly source ROS on ZSH
+# ZSH-specific settings
 if [[ ${SHELL_EXT} = "zsh" ]]; then
+  # Set CLOBBER option to properly source ROS
   setopt CLOBBER
+
+  # Allow for duplicate paths in the stack
+  unsetopt PUSHD_IGNORE_DUPS
 fi
 
 # Setup ROS
