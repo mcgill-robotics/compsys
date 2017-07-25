@@ -36,6 +36,7 @@ function rosworkon {
     export ROBOT=${1}
     unset CATKIN_PROFILE
     repo_path=${ROBOTIC_PATH}/${ROBOT}
+
     # Reset package path from previous workspace
     export ROS_PACKAGE_PATH=/opt/ros/kinetic/share
 
@@ -46,7 +47,6 @@ function rosworkon {
 
     # Set environment variables
     export ROS_WORKSPACE=${repo_path}/catkin_ws
-    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}
 
     # Source robot-specific configuration
     if [[ -f ${repo_path}/robotrc ]]; then
