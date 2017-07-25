@@ -226,7 +226,7 @@ fi
 pushd ${gitdir}
 
 if [[ -f /opt/ros/kinetic/setup.bash ]]; then
-  echo "Sourcing ros setup script..."
+  echo "Sourcing ROS setup script..."
   source /opt/ros/kinetic/setup.bash
 fi
 
