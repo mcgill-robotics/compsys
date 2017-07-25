@@ -46,7 +46,7 @@ function rosworkon {
 
     # Set environment variables
     export ROS_WORKSPACE=${repo_path}/catkin_ws
-    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}/src
+    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${ROS_WORKSPACE}
 
     # Source robot-specific configuration
     if [[ -f ${repo_path}/robotrc ]]; then
