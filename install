@@ -231,7 +231,9 @@ fi
 
 if [[ -f ${gitdir}/setup.sh ]]; then
   echo "Setting up robot dependencies..."
-  source ${gitdir}/setup.sh
+  pushd ${gitdir}
+  source setup.sh
+  popd
 fi
 
 # Clone bare repository for robot
