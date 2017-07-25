@@ -222,17 +222,16 @@ if [[ ! -d ${gitdir} ]]; then
 
     git clone --recursive https://github.com/${GIT_URL} ${gitdir} ${gitcmd}
   }
+fi
 
-  pushd ${gitdir}
+if [[ -f /opt/ros/kinetic/setup.bash ]]; then
+  echo "Sourcing ROS setup script..."
+  source /opt/ros/kinetic/setup.bash
+fi
 
-  if [[ -f setup.sh ]]; then
-    echo "Sourcing roboticrc..."
-    source ${ROBOTIC_PATH}/compsys/roboticrc
-
-    echo "Setting up robot dependencies..."
-    source setup.sh
-  fi
-  popd
+if [[ -f ${gitdir}/setup.sh ]]; then
+  echo "Setting up robot dependencies..."
+  source ${gitdir}/setup.sh
 fi
 
 # Clone bare repository for robot

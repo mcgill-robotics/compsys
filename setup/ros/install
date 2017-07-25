@@ -27,7 +27,9 @@ echo "Installing ROS..."
 sudo apt-get -y install ros-kinetic-desktop-full python-rosinstall
 
 echo "Setting up ROS dependencies..."
-sudo rosdep init
+if [[ ! -e /etc/ros/rosdep/sources.list.d/20-default.list ]]; then
+  sudo rosdep init
+fi
 rosdep update
 
 echo "Done."
