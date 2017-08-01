@@ -14,7 +14,7 @@ reset=$(tput sgr0)
 
 # Print err message when failed
 function onerr {
-echo "${warning}Script failed to compelete due to subprocess error...${reset}"
+  echo "${warning}Script failed to compelete due to subprocess error...${reset}"
 }
 trap onerr ERR
 
