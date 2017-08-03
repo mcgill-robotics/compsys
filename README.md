@@ -98,7 +98,7 @@ terminator multiplexer, to switch easily between several programs in one
 terminal, to detach them (they keep running in the background), and to
 reattach them to a different terminal.
 
-### tmux basics
+### Basics
 - Start new session: `tmux`
 - Start new session with name: `tmux new -s <name>`
 - List all sessions:`tmux ls`
@@ -119,6 +119,7 @@ character.
 s             List and switch sessions
 $             Rename current session
 ```
+
 #### Windows (tabs)
 ```
 c             Create new window
@@ -129,8 +130,7 @@ p             Go to previous window
 ,             Rename window
 &             Kill window and all pane in that window
 1-9           Go to window number 1-9
-
-ctrl-o        retate window
+ctrl-o        Rotate window
 ```
 
 #### Pane
@@ -140,25 +140,28 @@ ctrl-o        retate window
 !             Move pane into new window
 x             Kill pane
 SPACE         Toggle between defualt layouts
+```
 
-# Use the arrow key to navigate between panes
-# Mutiple keys can be enter in a quick succession
+Use the `arrow` key to navigate between panes.
+Mutiple keys can be enter in quick succession.
+```
 UP            Move to pane on top of the current pane
 DOWN          Move to pane below of the current pane
 LEFT          Move to pane on the left of the current pane
 RIGHT         Move to pane on the right of the current pane
+```
 
-# Use the ctrl + arrow key to navigate between panes
-# Subtitute ctrl by alt to move much more
-# Mutiple keys can be enter in a quick succession
+Use the `ctrl + arrow` keys to navigate between panes.
+Subtitute `ctrl` with `alt` to move much more.
+Mutiple keys can be enter in quick succession.
+```
 ctrl-UP       Resize pane up
 ctrl-DOWN     Resize pane down
 ctrl-LEFT     Resize pane left
 ctrl-RIGHT    Resize pane right
-
 ```
 
-#### misc
+#### Miscellaneous
 ```
 d             Detach from current session
 t             Show current time, press any key to exit
@@ -172,9 +175,9 @@ ctrl-c        Put the last copy buffer into the system clipboard
 ### Copy Mode
 You can enter copy mode by either hitting the prefix key (`ctrl-a`) then `[`
 or use mouse wheel up. Copy mode is indicated by the yellow line number
-indicator on the top right.
+indicator in the top right.
 
-You can exit the copy mode by pressing `ESC` or `ctrl-c`.
+You can exit copy mode by pressing `ESC` or `ctrl-c`.
 
 Once in the copy mode, you can use the arrow keys to navigate and use the
 following commands directly.
@@ -189,14 +192,14 @@ ESC          Cancel selection
 ```
 
 ### Mouse Mode
-You can use mouse to accelerate tasks:
-- Click on a pane to select it
-- Drag a pane boarder to resize it.
-- Click on a window from the buttom bar to change to that window
-- Mouse whell up and down in the bottom bar to cycle between windows
-- Mouse wheel up on a pane to enter copy mode and scroll up in copy mode.
-- Mouse wheel down on a paneto scroll down in copy mode. Exit copy mode when
-scrolled down pass the last line.
+You can use the mouse to accelerate certain tasks:
+- Click on a pane to select it.
+- Drag a pane border to resize it.
+- Click on a window from the bottom bar to switch to that window.
+- Mouse wheel up and down in the bottom bar to cycle between windows.
+- Mouse wheel up on a pane to enter copy mode and scroll up in copy mode
+- Mouse wheel down on a pane to scroll down in copy mode. Exit copy mode when
+  scrolled down pass the last line.
 - Highlight text to put it into copy mode buffer.
 
 ## tmuxinator
