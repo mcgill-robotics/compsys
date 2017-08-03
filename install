@@ -2,18 +2,19 @@
 #
 # Install the McGill Robotics CompSys package
 
+# Fail on first error
+set -e
+
 # Colors
 header=$(tput setab 1; tput setaf 0)
 question=$(tput bold; tput setaf 4)
 section=$(tput bold; tput setaf 2)
 warning=$(tput bold; tput setaf 1)
 reset=$(tput sgr0)
-# Fail on first error
-set -e
 
 # Print err message when failed
 function onerr {
-echo "${warning}Script failed to compelete due to subprocess error...${reset}"
+  echo "${warning}Script failed to compelete due to subprocess error...${reset}"
 }
 trap onerr ERR
 
