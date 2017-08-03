@@ -2,6 +2,11 @@
 #
 # Update vim plugins, and apt and pip dependencies
 
+set -e
+
+section=$(tput bold; tput setaf 2)
+reset=$(tput sgr0)
+
 #########################################
 # Get dependencies from /packages
 # Arguments:
@@ -9,11 +14,6 @@
 # Returns:
 #   Space separated list of dependencies
 #########################################
-set -e
-
-section=$(tput bold; tput setaf 2)
-reset=$(tput sgr0)
-
 function get_dependencies () {
   if [[ -s ${ROBOTIC_PATH}/compsys/packages/$1 ]]; then
     cat ${ROBOTIC_PATH}/compsys/packages/$1
