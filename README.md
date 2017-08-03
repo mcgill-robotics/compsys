@@ -92,6 +92,167 @@ rosconnect [host_name]
 present in your `/etc/hosts` file. This parameter is not required. Leave it
 empty to set the roscore to your local host.
 
+## Tmux
+CompSys installs and configures [tmux](https://github.com/tmux/tmux/wiki), a
+terminator multiplexer, to switch easily between several programs in one
+terminal, to detach them (they keep running in the background), and to
+reattach them to a different terminal.
+
+### Basics
+- Start new session: `tmux`
+- Start new session with name: `tmux new -s <name>`
+- List all sessions:`tmux ls`
+- Reattach most recent disattached session: `tmux a`
+- Reattach a specific session: `tmux a -t <name>`, `<name>` can be found by
+`tmux ls` and can be either string or integer.
+- Kill specific session: `tmux kill-session -t <name>`
+- kill all sessions: `tmux kill-session -a`
+
+### Key-bindings
+The key-bining prefix is changed from `ctrl-b` to `ctrl-a`.
+
+To use a key-bind shortcut, first hit the prefix `ctrl-a` then hit a specific
+character.
+
+#### Sessions:
+```
+s             List and switch sessions
+$             Rename current session
+```
+
+#### Windows (tabs)
+```
+c             Create new window
+w             List and switch windows
+l             Go back to last window
+n             Go to next window
+p             Go to previous window
+,             Rename window
+&             Kill window and all pane in that window
+1-9           Go to window number 1-9
+ctrl-o        Rotate window
+```
+
+#### Pane
+```
+|             Split pane vertically
+-             Split pane horizontally
+!             Move pane into new window
+x             Kill pane
+SPACE         Toggle between defualt layouts
+```
+
+Use the `arrow` key to navigate between panes.
+Mutiple keys can be enter in quick succession.
+```
+UP            Move to pane on top of the current pane
+DOWN          Move to pane below of the current pane
+LEFT          Move to pane on the left of the current pane
+RIGHT         Move to pane on the right of the current pane
+```
+
+Use the `ctrl + arrow` keys to navigate between panes.
+Subtitute `ctrl` with `alt` to move much more.
+Mutiple keys can be enter in quick succession.
+```
+ctrl-UP       Resize pane up
+ctrl-DOWN     Resize pane down
+ctrl-LEFT     Resize pane left
+ctrl-RIGHT    Resize pane right
+```
+
+#### Miscellaneous
+```
+d             Detach from current session
+t             Show current time, press any key to exit
+?             List all shortcuts
+[             Enter copy mode
+]             Paste the last buffer of copy mode
+=             List and paste from copy mode buffer, press ctrl-c to exit
+ctrl-c        Put the last copy buffer into the system clipboard
+```
+
+### Copy Mode
+You can enter copy mode by either hitting the prefix key (`ctrl-a`) then `[`
+or use mouse wheel up. Copy mode is indicated by the yellow line number
+indicator in the top right.
+
+You can exit copy mode by pressing `ESC` or `ctrl-c`.
+
+Once in the copy mode, you can use the arrow keys to navigate and use the
+following commands directly.
+```
+ctrl-u       Move page up
+ctrl-d       Move page down
+0            Go to start of line
+$            Go to end of line
+SPACE        Start selection
+ENTER        End selection and put selected section into copy mode buffer
+ESC          Cancel selection
+```
+
+### Mouse Mode
+You can use the mouse to accelerate certain tasks:
+- Click on a pane to select it.
+- Drag a pane border to resize it.
+- Click on a window from the bottom bar to switch to that window.
+- Mouse wheel up and down in the bottom bar to cycle between windows.
+- Mouse wheel up on a pane to enter copy mode and scroll up in copy mode
+- Mouse wheel down on a pane to scroll down in copy mode. Exit copy mode when
+  scrolled down pass the last line.
+- Highlight text to put it into copy mode buffer.
+
+## tmuxinator
+[tmuxinator](https://github.com/tmuxinator/tmuxinator) is used to quickly
+launch complex tmux sessions, either on robot bootup, or by user invocation.
+
+`tmuxinator` uses yaml profiles stored in `~/.tmuxinator/` to configure the
+layout. Proifiles are, by convention, stored in robot repository and symlinked
+into `~/.tmuxinator/`.
+
+To symlink a profile, run:
+```
+ln -s <absolute_path_to_profile>/<profile_name>.yml ${HOME}/.tmuxinator
+```
+
+To launch a profile, run `mux start <profile_name>` where `profile_name` is
+the profile file name without `.yml`, the session might be created and
+dettached, so you would need to attach to it by using `tmux a -t <name>`,
+where `<name>` is the `name:` tag in the yml file. If the the `name:` is set
+to `MAIN` then you can simply run `main` to attach to the session.
+
+To autorun a profile on bootup, run `crontab -e`, and add:
+```
+@reboot bash -c '. <init_file> && /usr/bin/mux start obc'
+```
+Where `<init_file>` is an executable bash script that initializes important
+environment variables. **Note:** Avoid using user environment variables in the
+`<init_file>` or path for `<init_file>` as they might not be set yet.
+
+Here is a example for `<init_file>`:
+
+```
+#!/bin/bash
+
+# If user has zsh installed and uses zsh as default shell
+if [[ -e "/bin/zsh" ]] &&
+  [[ $(grep ${USER} /etc/passwd | grep "zsh") ]]; then
+  # Attempt to fix corrupted .zhistory
+  mv -f ~/.zhistory ~/.zhistory.old
+  strings ~/.zhistory.old > ~/.zhistory
+  rm -f .zhistory.old
+
+  # use zsh for tmux
+  export SHELL=/bin/zsh
+else
+  # use bash for tmux
+  export SHELL=/bin/bash
+fi
+
+# Export executable search path
+export PATH=/usr/local/sbin/:/usr/local/bin/:/usr/sbin:${PATH}:/sbin
+```
+
 ## FAQs
 
 ### 1. Am I a robot?
