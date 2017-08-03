@@ -211,7 +211,7 @@ fi
 echo "${section}Git${reset}"
 gitdir=${ROBOTIC_PATH}/${ROBOT}
 if [[ ! -d ${gitdir} ]]; then
-  echo "Cloning ${robot} git repository..."
+  echo "Cloning ${ROBOT} git repository..."
 
   if [[ ${GIT_BRANCH} ]]; then
     gitcmd="-b ${GIT_BRANCH}"
