@@ -206,7 +206,7 @@ You can use the mouse to accelerate certain tasks:
 [tmuxinator](https://github.com/tmuxinator/tmuxinator) is used to quickly
 launch complex tmux sessions, either on robot bootup, or by user invocation.
 
-tmuxinator uses yaml profiles stored in `~/.tmuxinator/` to create tmux
+`tmuxinator` uses yaml profiles stored in `~/.tmuxinator/` to configure the
 layout. Proifiles are, by convention, stored in robot repository and symlinked
 into `~/.tmuxinator/`.
 
@@ -216,16 +216,16 @@ ln -s <absolute_path_to_profile>/<profile_name>.yml ${HOME}/.tmuxinator
 ```
 
 To launch a profile, run `mux start <profile_name>` where `profile_name` is
-the profile file name without `.yml`, the session might be created dettached,
-so you would need to attach it by using `tmux a -t <name>`, where `<name>` is
-the `name:` tag in the yml file. If the the `name:` is set to `MAIN` then you
-can simply run `main` to attach to the session.
+the profile file name without `.yml`, the session might be created and
+dettached, so you would need to attach to it by using `tmux a -t <name>`,
+where `<name>` is the `name:` tag in the yml file. If the the `name:` is set
+to `MAIN` then you can simply run `main` to attach to the session.
 
 To autorun a profile on bootup, run `crontab -e`, and add:
 ```
 @reboot bash -c '. <init_file> && /usr/bin/mux start obc'
 ```
-Where `<init_file>` is an executable bash script that initialize important
+Where `<init_file>` is an executable bash script that initializes important
 environment variables. **Note:** Avoid using user environment variables in the
 `<init_file>` or path for `<init_file>` as they might not be set yet.
 
@@ -234,10 +234,10 @@ Here is a example for `<init_file>`:
 ```
 #!/bin/bash
 
-# If user have zsh installed and uses zsh as default shell
+# If user has zsh installed and uses zsh as default shell
 if [[ -e "/bin/zsh" ]] &&
   [[ $(grep ${USER} /etc/passwd | grep "zsh") ]]; then
-  # Attempt to fix corropted zhistory
+  # Attempt to fix corrupted .zhistory
   mv -f ~/.zhistory ~/.zhistory.old
   strings ~/.zhistory.old > ~/.zhistory
   rm -f .zhistory.old
