@@ -36,10 +36,10 @@ function rosworkon {
       echo "Could not find robot repository named ${1} in ${ROBOTIC_PATH}!"
       return 1
     fi
+
     # Reset ROBOT
     export ROBOT=${1}
-    unset CATKIN_PROFILE
-    repo_path=${ROBOTIC_PATH}/${ROBOT}
+    local repo_path="${ROBOTIC_PATH}/${ROBOT}"
 
     # Reset package path from previous workspace
     export ROS_PACKAGE_PATH=/opt/ros/kinetic/share
@@ -50,33 +50,35 @@ function rosworkon {
     fi
 
     # Set environment variables
-    export ROS_WORKSPACE=${repo_path}/catkin_ws
+    export ROS_WORKSPACE="${repo_path}/catkin_ws"
 
     # Source robot-specific configuration
     if [[ -f ${repo_path}/robotrc ]]; then
       source ${repo_path}/robotrc
     fi
 
+    # Determine CATKIN_PROFILE
+    unset CATKIN_PROFILE
+    local catkin_profiles_root="${ROS_WORKSPACE}/.catkin_tools/profiles"
     if [[ -n ${2} ]]; then
       # When second parameter is set, change profile and export TOPICS_PATH
-      profile_path=${ROS_WORKSPACE}/.catkin_tools/profiles/${2}
-      if [[ ! -d ${profile_path} ]]; then
+      local profile_path="${catkin_profiles_root}/${2}"
+      if [[ ! -d "${profile_path}" ]]; then
         echo "Could not find profile at ${profile_path}"
         return 1
       else
-        export CATKIN_PROFILE=${2}
+        export CATKIN_PROFILE="${2}"
         pushd ${ROS_WORKSPACE}
         catkin profile set ${CATKIN_PROFILE} > /dev/null
         popd
       fi
     else
       # When the second parameter is not set, find the current active profile
-      active_profile=${ROS_WORKSPACE}/.catkin_tools/profiles/profiles.yaml
-      if [[ -e ${active_profile} ]]; then
-        active_profile=$(head -n 1 ${active_profile})
-        export CATKIN_PROFILE=${active_profile:8}
-        profile_path=${ROS_WORKSPACE}/.catkin_tools/profiles/${CATKIN_PROFILE}
-        unset active_profile
+      if [[ -e "${catkin_profiles_root}/profiles.yaml" ]]; then
+        local active_profile=$(
+          head -n 1 "${catkin_profiles_root}/profiles.yaml" | cut -d' ' -f2)
+        export CATKIN_PROFILE="${active_profile}"
+        local profile_path="${catkin_profiles_root}/${CATKIN_PROFILE}"
       fi
     fi
 
@@ -84,12 +86,10 @@ function rosworkon {
     if [[ -z "${CATKIN_PROFILE}" ]] ||
       [[ "${CATKIN_PROFILE}" == "default" ]]
       [[ ! -e ${profile_path}/topics ]]; then
-      export TOPICS_PATH=${ROBOTIC_PATH}/${ROBOT}/topics
+      export TOPICS_PATH="${ROBOTIC_PATH}/${ROBOT}/topics"
     else
-      export TOPICS_PATH=${profile_path}/topics
+      export TOPICS_PATH="${profile_path}/topics"
     fi
-    unset profile_path
-    unset repo_path
   else
     echo "usage: rosworkon <ROBOT> [PROFILE]"
     return 1
