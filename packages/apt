@@ -14,3 +14,4 @@ libv4l-dev
 python-pygame
 pyqt4-dev-tools
 curl
+clang-format
