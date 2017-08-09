@@ -128,6 +128,9 @@ elif [[ -z "${GIT_URL// }" ]]; then
   exit -1
 fi
 echo "Welcome to ${ROBOT}!"
+if [[ "${GIT_BRANCH}" ]]; then
+    echo "Your robot repository will be set to \'${GIT_BRANCH}\'!"
+fi
 
 # Ask to install zsh if not installed
 if [[ ! ${SHELL##*/} = "zsh" ]]; then
