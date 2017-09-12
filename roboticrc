@@ -22,11 +22,10 @@ fi
 
 function rosconnect {
   if [[ -n "${1}" ]]; then
-    export ROS_HOSTNAME=${1}
     export ROS_MASTER_URI=http://${1}:11311
   else
-    export ROS_HOSTNAME=
-    export ROS_MASTER_URI=http://localhost:11311
+    # Default is cancelling previous behaviour by setting master to localhost.
+    rosconnect localhost
   fi
 }
 
