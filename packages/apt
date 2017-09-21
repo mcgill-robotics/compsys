@@ -1,4 +1,5 @@
 git
+wget
 python-pip
 python3-pip
 vim
