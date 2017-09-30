@@ -19,7 +19,7 @@ function onerr {
 trap onerr ERR
 
 # Determine ROBOTIC_PATH
-export ROBOTIC_PATH=$(dirname ${PWD})
+export ROBOTIC_PATH=$(dirname "${PWD}")
 
 # Verify running on Ubuntu 16.04
 if [[ $(lsb_release -sc) != "xenial" ]]; then
