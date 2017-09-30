@@ -15,8 +15,8 @@ reset=$(tput sgr0)
 #   Space separated list of dependencies
 #########################################
 function get_dependencies () {
-  if [[ -s ${ROBOTIC_PATH}/compsys/packages/$1 ]]; then
-    cat ${ROBOTIC_PATH}/compsys/packages/$1
+  if [[ -s "${ROBOTIC_PATH}/compsys/packages/$1" ]]; then
+    cat "${ROBOTIC_PATH}/compsys/packages/$1"
   fi
 }
 
