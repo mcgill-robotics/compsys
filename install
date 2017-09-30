@@ -19,7 +19,7 @@ function onerr {
 trap onerr ERR
 
 # Determine ROBOTIC_PATH
-export ROBOTIC_PATH=$(dirname ${PWD})
+export ROBOTIC_PATH=$(dirname "${PWD}")
 
 # Verify running on Ubuntu 16.04
 if [[ $(lsb_release -sc) != "xenial" ]]; then
@@ -212,7 +212,7 @@ fi
 
 # Clone repository and setup robot remote
 echo "${section}Git${reset}"
-gitdir=${ROBOTIC_PATH}/${ROBOT}
+gitdir="${ROBOTIC_PATH}/${ROBOT}"
 if [[ ! -d ${gitdir} ]]; then
   echo "Cloning ${ROBOT} git repository..."
 
@@ -220,11 +220,11 @@ if [[ ! -d ${gitdir} ]]; then
     gitcmd="-b ${GIT_BRANCH}"
   fi
 
-  git clone --recursive git@github.com:${GIT_URL} ${gitdir} ${gitcmd} || {
+  git clone --recursive git@github.com:${GIT_URL} "${gitdir}" ${gitcmd} || {
     echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
     echo "${warning}Falling back to HTTPS for now...${reset}"
 
-    git clone --recursive https://github.com/${GIT_URL} ${gitdir} ${gitcmd}
+    git clone --recursive https://github.com/${GIT_URL} "${gitdir}" ${gitcmd}
   }
 fi
 
@@ -233,18 +233,18 @@ if [[ -f /opt/ros/kinetic/setup.bash ]]; then
   source /opt/ros/kinetic/setup.bash
 fi
 
-if [[ -f ${gitdir}/setup.sh ]]; then
+if [[ -f "${gitdir}/setup.sh" ]]; then
   echo "Setting up robot dependencies..."
-  pushd ${gitdir}
+  pushd "${gitdir}"
   source setup.sh
   popd
 fi
 
 # Clone bare repository for robot
 if [[ ${IAMROBOT} = true ]]; then
-  if [[ ! -d ${gitdir}.git ]]; then
+  if [[ ! -d "${gitdir}.git" ]]; then
     echo "Cloning ${ROBOT}.git bare git repository"
-    git clone --recursive --bare git@github.com:${GIT_URL} ${gitdir}.git
+    git clone --recursive --bare git@github.com:${GIT_URL} "${gitdir}.git"
   fi
 fi
 echo "Done."
