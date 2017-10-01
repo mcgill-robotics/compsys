@@ -58,7 +58,7 @@ echo
 
 # Ask if robot
 echo -n "${question}Are you a robot? Probably not.${reset}"
-read -p "${ask} [y/N] (default no) " irobot
+read -p " [y/N] (default no) " irobot
 case "${irobot}" in
   y|Y )
     echo "Beep boop..."
@@ -69,7 +69,7 @@ case "${irobot}" in
     export IAMROBOT=false
     if [[ -z "$(git config --global user.name)" ]]; then
       echo "Your git user.name is not set..."
-      echo "${ask}Please enter your full name:${reset}"
+      echo "${question}Please enter your full name:${reset}"
       read GIT_USER_NAME
       git config --global user.name "${GIT_USER_NAME}"
       echo
@@ -77,7 +77,7 @@ case "${irobot}" in
 
     if [[ -z "$(git config --global user.email)" ]]; then
       echo "Your git user.email is not set..."
-      echo "${ask}Please enter your GitHub email:${reset}"
+      echo "${question}Please enter your GitHub email:${reset}"
       read GIT_USER_EMAIL
       git config --global user.email "${GIT_USER_EMAIL}"
       echo
