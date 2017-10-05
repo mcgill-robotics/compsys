@@ -321,6 +321,28 @@ looks like this:
 ![GitHub Logo](/setup/zsh/mcgill_theme.png)
 *Colors and font may vary depending on your terminal settings.*
 
+The path on the far left is a shortened path to your current working
+directory.
+
+The following blue string only appears if you're in a `git` directory and
+denotes your current checked-out branch.
+
+The `$` simply delimits where your command starts. The symbol is green
+when the previous command succeeded and red if it failed.
+
+Whenever you have changes to your local repository that are not on remote,
+you will see some symbols on the right. The most common ones are:
+
+- `+`: there are staged changes that aren't committed
+- `☼`: there are unstaged changes to tracked files
+- `■`: there are untracked changes
+- `⌘`: there are stashed changes
+- `×`: tracked files were deleted
+- `▲`: local repository is ahead (i.e. commits weren't pushed)
+- `▼`: local repository is behind (i.e. commits weren't pulled)
+
+More details can be found [here](setup/zsh/prompt_mcgill_setup).
+
 #### I don't like it. Please take me back!
 Don't sweat, simply run:
 
