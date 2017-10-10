@@ -23,7 +23,7 @@ class Help(argparse.Action):
             option_string: Option string used to invole this action. Not used.
         """
         parser.print_help()
-        exit()
+        sys.exit()
 
 
 class Parser(object):
