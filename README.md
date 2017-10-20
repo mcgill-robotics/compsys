@@ -54,8 +54,8 @@ and follow the on-screen instructions.
 The install script will invoke the setup script in the robot repository and
 setup robot specific settings.
 
-If you would like to checkout to a specific branch of the robot repository,
-you can do so by adding `GIT_BRANCH=branch_name` before `./install` as follows:
+If you would like to checkout a specific branch of the robot repository, you
+can do so by adding `GIT_BRANCH=branch_name` before `./install` as follows:
 
 ```bash
 GIT_BRANCH=branch_name ./install
@@ -65,6 +65,20 @@ GIT_BRANCH=branch_name ./install
 repository exists when the script runs, the robot specific setup will not run,
 and you will need to `cd` to the robot repository, optionally checkout to a
 branch, and run `./setup.sh` to setup robot specific settings.**
+
+#### robot hostnames
+
+Some aliases - e.g. `robotx`, `robotsh` - rely on the existence of a hostname
+matching the robot. In other words, when networking with a robot, make sure it
+has an entry in your `/etc/hosts` file.
+
+```
+# /etc/hosts
+
+10.10.10.10 auv
+10.0.0.1    drone
+...
+```
 
 ## Functions
 ### rosworkon
