@@ -95,6 +95,10 @@ set wrap
 set colorcolumn=80
 set number
 
+" Spell checker
+set spell
+set spelllang=en
+
 " Colorscheme
 set t_Co=256
 if filereadable($HOME.'/.vim/bundle/vim-colorschemes/colors/gruvbox.vim')
