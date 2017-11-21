@@ -1,35 +1,26 @@
 #!/bin/bash
 #
-# Update vim plugins, and apt and pip dependencies
+# Update apt, pip, and pip3 dependencies. Update vim plugins.
 
 set -e
 
 section=$(tput bold; tput setaf 2)
 reset=$(tput sgr0)
 
-#########################################
-# Get dependencies from /packages
-# Arguments:
-#   File in /packages
-# Returns:
-#   Space separated list of dependencies
-#########################################
-function get_dependencies () {
-  if [[ -s "${ROBOTIC_PATH}/compsys/packages/$1" ]]; then
-    cat "${ROBOTIC_PATH}/compsys/packages/$1"
-  fi
-}
-
 echo "${section}Updating apt dependencies...${reset}"
 sudo apt-get -qq update
-get_dependencies apt | xargs sudo apt-get -y install || :
+# Filter out all comments in the apt requirements file using sed before
+# piping the contents of the requirements list into xargs.
+sed 's/#.*//' "${ROBOTIC_PATH}/compsys/packages/apt" | xargs sudo apt-get install -y
 
 echo "${section}Updating pip3 dependencies...${reset}"
-get_dependencies pip3 | xargs sudo -H pip3 install --upgrade || :
+sudo -H pip3 install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pip3"
 
 echo "${section}Updating pip2 dependencies...${reset}"
-# pip2 needs to be installed after pip3 in order to be set as default
-get_dependencies pip | xargs sudo -H pip2 install --upgrade || :
+# The pip package listed in the pip requirements file needs to be installed
+# after the pip listed in the pip3 requirements file in order for pip2 to
+# be set as the default `pip`.
+sudo -H pip2 install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pip"
 
 if [[ $(sudo -H pip --version) != $(sudo -H pip2 --version) ]]; then
   echo "Found mismatch in default pip. Correcting..."
