@@ -14,14 +14,14 @@ fi
 
 echo "Setting up .zshrc..."
 if [[ ! -f $HOME/.zshrc ]]; then
-  cp ${ROBOTIC_PATH}/compsys/setup/zsh/zshrc ${HOME}/.zshrc
+  cp "${ROBOTIC_PATH}/compsys/setup/zsh/zshrc" ${HOME}/.zshrc
 fi
 
 if [[ ! -f ${HOME}/.zpreztorc ]]; then
   if [[ -L ${HOME}/.zpreztorc ]]; then
     rm -f ${HOME}/.zpreztorc
   fi
-  ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc ${HOME}/.zpreztorc
+  ln -s "${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc" ${HOME}/.zpreztorc
 fi
 
 mcgill_prompt=${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup
@@ -29,7 +29,7 @@ if [[ ! -f ${mcgill_prompt} ]]; then
   if [[ -L ${mcgill_prompt} ]]; then
     rm -f ${mcgill_prompt}
   fi
-  ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/prompt_mcgill_setup ${mcgill_prompt}
+  ln -s "${ROBOTIC_PATH}/compsys/setup/zsh/prompt_mcgill_setup" ${mcgill_prompt}
 fi
 
 echo "Setting up Fasd..."
