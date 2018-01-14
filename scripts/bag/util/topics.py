@@ -2,7 +2,6 @@
 
 """Topics manager."""
 
-import os
 import ConfigParser
 
 __author__ = "Anass Al-Wohoush"
