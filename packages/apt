@@ -2,6 +2,10 @@ git
 wget
 python-pip
 python3-pip
+python-numpy
+python3-numpy
+python-pyqtgraph
+python3-pyqtgraph
 vim
 tmux
 tmuxinator

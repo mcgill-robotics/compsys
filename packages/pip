@@ -1,7 +1,5 @@
-numpy
 ipython<6.0
 pysensors
-pyqtgraph
 enum34
 catkin_tools
 catkin_lint
