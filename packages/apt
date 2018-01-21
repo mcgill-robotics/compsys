@@ -14,7 +14,7 @@ tree
 libv4l-dev
 python-pygame
 pyqt4-dev-tools
-software-properties-common 
+software-properties-common
 python-software-properties
 curl
 clang-format
