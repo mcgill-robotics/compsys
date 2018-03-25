@@ -2,7 +2,7 @@ ipython<6.0
 pysensors
 enum34
 catkin_tools
-catkin_lint
+catkin_lint==1.4.20
 virtualenvwrapper
 yapf==0.20.2
 futures
