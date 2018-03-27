@@ -99,10 +99,13 @@ function rosworkon {
 rosworkon ${ROBOT}
 
 # Add compsys scripts to PYTHONPATH
-export PYTHONPATH=${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts
+export PYTHONPATH="${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts"
+
+# Add tools.sh to PATH
+export PATH="${ROBOTIC_PATH}/tools.sh:${PATH}"
 
 # Source custom aliases and functions
-source ${ROBOTIC_PATH}/compsys/aliases
+source "${ROBOTIC_PATH}/compsys/aliases"
 
 # Source catkin-tools shell verbs
 if [[ -x $(command -v catkin) ]]; then

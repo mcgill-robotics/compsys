@@ -24,4 +24,9 @@ if [[ -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
   vim +PluginInstall +qall
 fi
 
+# Update tools.sh repository.
+pushd "${ROBOTIC_PATH}/tools.sh"
+./update_repo.sh
+popd
+
 echo "Done."
