@@ -221,6 +221,7 @@ if [[ ! -d "${gitdir}" ]]; then
 
     git clone --recursive https://github.com/mcgill-robotics/tools.sh "${gitdir}"
   }
+  export PATH="${ROBOTIC_PATH}/tools.sh:${PATH}"
   echo
 fi
 
