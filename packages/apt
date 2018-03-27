@@ -22,3 +22,4 @@ software-properties-common
 python-software-properties
 curl
 clang-format
+shellcheck
