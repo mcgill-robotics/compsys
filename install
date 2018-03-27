@@ -210,10 +210,24 @@ if [[ ${INSTALL_ROS} = true ]]; then
   echo
 fi
 
+# Clone tools.sh repository
+echo "${section}tools.sh repository${reset}"
+gitdir="${ROBOTIC_PATH}/tools.sh"
+if [[ ! -d "${gitdir}" ]]; then
+  echo "Cloning tools.sh git repository..."
+  git clone --recursive git@github.com:mcgill-robotics/tools.sh "${gitdir}" || {
+    echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
+    echo "${warning}Falling back to HTTPS for now...${reset}"
+
+    git clone --recursive https://github.com/mcgill-robotics/tools.sh "${gitdir}"
+  }
+  echo
+fi
+
 # Clone repository and setup robot remote
-echo "${section}Git${reset}"
+echo "${section}${ROBOT} repository${reset}"
 gitdir="${ROBOTIC_PATH}/${ROBOT}"
-if [[ ! -d ${gitdir} ]]; then
+if [[ ! -d "${gitdir}" ]]; then
   echo "Cloning ${ROBOT} git repository..."
 
   if [[ ${GIT_BRANCH} ]]; then
