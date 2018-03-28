@@ -19,14 +19,16 @@ sudo -H pip install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pi
 echo "${section}Updating pip3 dependencies...${reset}"
 sudo -H pip3 install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pip3"
 
-if [[ -d ${HOME}/.vim/bundle/Vundle.vim ]]; then
+if [[ -d "${HOME}/.vim/bundle/Vundle.vim" ]]; then
   echo "Updating vim plugins..."
   vim +PluginInstall +qall
 fi
 
 # Update tools.sh repository.
-pushd "${ROBOTIC_PATH}/tools.sh"
-./update_repo.sh
-popd
+if [[ -d "${ROBOTIC_PATH}/tools.sh" ]]; then
+  pushd "${ROBOTIC_PATH}/tools.sh"
+  ./update_repo.sh
+  popd
+fi
 
 echo "Done."
