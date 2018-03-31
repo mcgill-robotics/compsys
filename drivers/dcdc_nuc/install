@@ -14,7 +14,7 @@ reset=$(tput sgr0)
 
 
 ker_ver_full=$(uname -r)
-ker_ver_base="${ker_ver_full:0:5}"
+ker_ver_base=$(uname -r | cut -d'-' -f 1) 
 
 # Header
 echo
@@ -56,8 +56,8 @@ sudo make -s scripts
 sudo make M=drivers/hid
 
 echo "${section}Installing hid driver module... ${reset}"
-sudo mv -vf /iib/modules/${ker_ver_full}/kernel/drivers/hid/hid.ko \
-    /lib/modules/${ker_ver_full}/kerneel/drivers/hid/hid.ko.backup
+sudo mv -vf /lib/modules/${ker_ver_full}/kernel/drivers/hid/hid.ko \
+    /lib/modules/${ker_ver_full}/kernel/drivers/hid/hid.ko.backup
 sudo cp -vf drivers/hid/hid.ko /lib/modules/${ker_ver_full}/kernel/drivers/hid/
 sudo update-initramfs -c -k $(uname -r)
 popd
