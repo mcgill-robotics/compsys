@@ -255,16 +255,6 @@ if [[ -f "${gitdir}/setup.sh" ]]; then
   popd
 fi
 
-# Clone bare repository for robot
-if [[ ${IAMROBOT} = true ]]; then
-  if [[ ! -d "${gitdir}.git" ]]; then
-    echo "Cloning ${ROBOT}.git bare git repository"
-    git clone --recursive --bare git@github.com:${GIT_URL} "${gitdir}.git"
-  fi
-fi
-echo "Done."
-echo
-
 # Done
 echo "All done!"
 echo "Simply, open up a new terminal"
