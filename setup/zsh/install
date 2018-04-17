@@ -24,14 +24,6 @@ if [[ ! -f ${HOME}/.zpreztorc ]]; then
   ln -s "${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc" ${HOME}/.zpreztorc
 fi
 
-mcgill_prompt=${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup
-if [[ ! -f ${mcgill_prompt} ]]; then
-  if [[ -L ${mcgill_prompt} ]]; then
-    rm -f ${mcgill_prompt}
-  fi
-  ln -s "${ROBOTIC_PATH}/compsys/setup/zsh/prompt_mcgill_setup" ${mcgill_prompt}
-fi
-
 echo "Setting up Fasd..."
 if [[ ! -f /usr/bin/fasd ]]; then
   fasd_url=https://raw.githubusercontent.com/clvv/fasd/master/fasd
