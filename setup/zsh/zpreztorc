@@ -31,7 +31,7 @@ zstyle ':prezto:load' pmodule \
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 
 # Prompt theme
-zstyle ':prezto:module:prompt' theme 'mcgill'
+zstyle ':prezto:module:prompt' theme 'sorin'
 
 # Ssh-agent
 zstyle ':prezto:module:ssh:load' identities 'id_rsa'

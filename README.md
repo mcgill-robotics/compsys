@@ -279,7 +279,7 @@ can't install it right away, simply select no. You can install it later by
 running the following command:
 
 ```bash
-cd $ROBOTIC_PATH/compsys
+cd "${ROBOTIC_PATH}/compsys"
 ./setup/ros/install
 ```
 
@@ -291,7 +291,7 @@ are still unsure after reading this, simply say no; you can always change your
 mind later by installing it manually as such:
 
 ```bash
-cd $ROBOTIC_PATH/compsys
+cd "${ROBOTIC_PATH}/compsys"
 ./setup/zsh/install
 ./setup/config/install
 ```
@@ -316,32 +316,36 @@ Two things to note though:
   necessarily vice-versa. So be warned.
 
 #### What will my shell look like?
-By setting this option, you will be using the custom `mcgill` prompt which
+By setting this option, you will be using the default `sorin` prompt which
 looks like this:
-![GitHub Logo](/setup/zsh/mcgill_theme.png)
+![GitHub Logo](/setup/zsh/zsh.png)
 *Colors and font may vary depending on your terminal settings.*
 
-The path on the far left is a shortened path to your current working
-directory.
-
-The following blue string only appears if you're in a `git` directory and
-denotes your current checked-out branch.
-
-The `$` simply delimits where your command starts. The symbol is green
-when the previous command succeeded and red if it failed.
+- The path on the far left is a shortened path to your current working
+  directory.
+- The green string on the right only appears if you're in a `git` directory and
+  denotes your current checked-out branch.
+- The `❯❯❯` simply delimits where your command starts.
+- The red `✘` is shown when the previous command failed and is followed by the
+  exit code.
 
 Whenever you have changes to your local repository that are not on remote,
-you will see some symbols on the right. The most common ones are:
+you will see some symbols on the right of your branch name. The most common ones
+are:
 
-- `+`: there are staged changes that aren't committed
-- `☼`: there are unstaged changes to tracked files
-- `■`: there are untracked changes
-- `⌘`: there are stashed changes
-- `×`: tracked files were deleted
-- `▲`: local repository is ahead (i.e. commits weren't pushed)
-- `▼`: local repository is behind (i.e. commits weren't pulled)
+- `✚`: there are staged changes that aren't committed
+- `✱`: there are unstaged changes to tracked files
+- `◼`: there are untracked changes
+- `✭`: there are stashed changes
+- `✖`: tracked files were deleted
+- `⬆`: local repository is ahead (i.e. commits weren't pushed)
+- `⬇`: local repository is behind (i.e. commits weren't pulled)
 
-More details can be found [here](setup/zsh/prompt_mcgill_setup).
+Note that other prompt themes are available and can be previewed with:
+
+```bash
+prompt -p
+``` 
 
 #### I don't like it. Please take me back!
 Don't sweat, simply run:
@@ -359,7 +363,7 @@ issues (e.g. missing the `autosuggestions` module), you can simply update it.
 This will also give you access to other nice goodies :) To update, simply run:
 
 ```bash
-cd ${HOME}/.zprezto
+cd "${HOME}/.zprezto"
 git pull && git submodule update --init --recursive
 ```
 
