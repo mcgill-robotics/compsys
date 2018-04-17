@@ -14,12 +14,20 @@ sudo apt-get -qq update
 sed 's/#.*//' "${ROBOTIC_PATH}/compsys/packages/apt" | xargs sudo apt-get install -y
 
 # Suppress pip version checks.
-if [[ ! -f "${HOME}/.config/pip/pip.conf" ]]; then
-  echo "${section}Suppressing future pip update warnings...${reset}"
-  mkdir -p "${HOME}/.config/pip/"
-  PIP_CONF="${HOME}/.config/pip/pip.conf"
-  echo "[global]" > "${PIP_CONF}"
-  echo "disable-pip-version-check = True" >> "${PIP_CONF}"
+ROBOTICS_PIP_CONF="${ROBOTIC_PATH}/compsys/setup/config/pip.conf"
+USER_PIP_DIR="${HOME}/.config/pip"
+USER_PIP_CONF="${USER_PIP_DIR}/pip.conf"
+if [[ ! -f "${USER_PIP_CONF}" ]]; then
+  echo "${section}Disabling user pip version checks...${reset}"
+  mkdir -p "${USER_PIP_DIR}"
+  cp "${ROBOTICS_PIP_CONF}" "${USER_PIP_CONF}"
+fi
+ROOT_PIP_DIR="/root/.config/pip"
+ROOT_PIP_CONF="${ROOT_PIP_DIR}/pip.conf"
+if [[ ! -f "${ROOT_PIP_CONF}" ]]; then
+  echo "${section}Disabling root pip version checks...${reset}"
+  sudo mkdir -p "${ROOT_PIP_DIR}"
+  sudo cp "${ROBOTICS_PIP_CONF}" "${ROOT_PIP_CONF}"
 fi
 
 echo "${section}Updating pip dependencies...${reset}"
