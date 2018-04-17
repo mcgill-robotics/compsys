@@ -19,7 +19,8 @@ function onerr {
 trap onerr ERR
 
 # Determine ROBOTIC_PATH
-export ROBOTIC_PATH=$(dirname "${PWD}")
+export ROBOTIC_PATH
+ROBOTIC_PATH=$(dirname "${PWD}")
 
 # Verify running on Ubuntu 16.04
 if [[ $(lsb_release -sc) != "xenial" ]]; then
@@ -58,7 +59,7 @@ echo
 
 # Ask if robot
 echo -n "${question}Are you a robot? Probably not.${reset}"
-read -p " [y/N] (default no) " irobot
+read -r -p " [y/N] (default no) " irobot
 case "${irobot}" in
   y|Y )
     echo "Beep boop..."
@@ -70,7 +71,7 @@ case "${irobot}" in
     if [[ -z "$(git config --global user.name)" ]]; then
       echo "Your git user.name is not set..."
       echo "${question}Please enter your full name:${reset}"
-      read GIT_USER_NAME
+      read -r GIT_USER_NAME
       git config --global user.name "${GIT_USER_NAME}"
       echo
     fi
@@ -78,7 +79,7 @@ case "${irobot}" in
     if [[ -z "$(git config --global user.email)" ]]; then
       echo "Your git user.email is not set..."
       echo "${question}Please enter your GitHub email:${reset}"
-      read GIT_USER_EMAIL
+      read -r GIT_USER_EMAIL
       git config --global user.email "${GIT_USER_EMAIL}"
       echo
     fi
@@ -109,14 +110,14 @@ select project in "AUV" "DRONE" "ROVER" "DEMO" "OTHER" "CUSTOM"; do
       break;;
     OTHER )
       echo -n "Enter the repository name: https://github.com/mcgill-robotics/"
-      read ROBOT
+      read -r ROBOT
       GIT_URL="${GIT_BASE_URL}/${ROBOT}.git"
       break;;
     CUSTOM )
       echo -n "Enter the project's name: "
-      read ROBOT
+      read -r ROBOT
       echo -n "Enter the repository's URL: https://github.com/"
-      read GIT_URL
+      read -r GIT_URL
       break;;
   esac
 done
@@ -129,14 +130,14 @@ elif [[ -z "${GIT_URL// }" ]]; then
 fi
 echo "Welcome to ${ROBOT}!"
 if [[ "${GIT_BRANCH}" ]]; then
-  echo "Your robot repository will be set to \'${GIT_BRANCH}\'!"
+  echo "Your robot repository will be set to '${GIT_BRANCH}'"
 fi
 
 # Ask to install zsh if not installed
 if [[ ! ${SHELL##*/} = "zsh" ]]; then
   echo
   ask="${question}Would you like to switch to zsh? Here be dragons.${reset}"
-  read -p "${ask} [y/N] (default no) " zshplz
+  read -r -p "${ask} [y/N] (default no) " zshplz
   case "${zshplz}" in
     y|Y )
       echo "zsh will be installed!"
@@ -155,7 +156,7 @@ fi
 if [[ -z ${ROS_DISTRO} ]]; then
   echo
   ask="${question}Would you like to install ROS? This takes a while.${reset}"
-  read -p "${ask} [Y/n] (default yes) " rosplz
+  read -r -p "${ask} [Y/n] (default yes) " rosplz
   case "${rosplz}" in
     n|N )
       echo "ROS installation will be skipped!"
@@ -232,14 +233,14 @@ if [[ ! -d "${gitdir}" ]]; then
   echo "Cloning ${ROBOT} git repository..."
 
   if [[ ${GIT_BRANCH} ]]; then
-    gitcmd="-b ${GIT_BRANCH}"
+    gitcmd="-b${GIT_BRANCH}"
   fi
 
-  git clone --recursive git@github.com:${GIT_URL} "${gitdir}" ${gitcmd} || {
+  git clone --recursive "git@github.com:${GIT_URL}" "${gitdir}" "${gitcmd}" || {
     echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
     echo "${warning}Falling back to HTTPS for now...${reset}"
 
-    git clone --recursive https://github.com/${GIT_URL} "${gitdir}" ${gitcmd}
+    git clone --recursive "https://github.com/${GIT_URL}" "${gitdir}" "${gitcmd}"
   }
 fi
 

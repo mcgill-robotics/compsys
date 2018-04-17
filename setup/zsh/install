@@ -7,21 +7,21 @@ echo "Installing zsh..."
 sudo apt-get -y -qq install zsh
 
 echo "Installing Prezto..."
-if [[ ! -d ${HOME}/.zprezto ]]; then
+if [[ ! -d "${HOME}/.zprezto" ]]; then
   prezto_git=https://github.com/sorin-ionescu/prezto.git
-  git clone -q --recursive ${prezto_git} ~/.zprezto
+  git clone -q --recursive "${prezto_git}" ~/.zprezto
 fi
 
 echo "Setting up .zshrc..."
-if [[ ! -f $HOME/.zshrc ]]; then
-  cp "${ROBOTIC_PATH}/compsys/setup/zsh/zshrc" ${HOME}/.zshrc
+if [[ ! -f "${HOME}/.zshrc" ]]; then
+  cp "${ROBOTIC_PATH}/compsys/setup/zsh/zshrc" "${HOME}/.zshrc"
 fi
 
-if [[ ! -f ${HOME}/.zpreztorc ]]; then
-  if [[ -L ${HOME}/.zpreztorc ]]; then
-    rm -f ${HOME}/.zpreztorc
+if [[ ! -f "${HOME}/.zpreztorc" ]]; then
+  if [[ -L "${HOME}/.zpreztorc" ]]; then
+    rm -f "${HOME}/.zpreztorc"
   fi
-  ln -s "${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc" ${HOME}/.zpreztorc
+  ln -s "${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc" "${HOME}/.zpreztorc"
 fi
 
 echo "Setting up Fasd..."
@@ -33,7 +33,7 @@ fi
 
 echo "Switching default login shell..."
 if [[ ${SHELL##*/} != "zsh" ]]; then
-  sudo sed -i -e "s/$(whoami):\/bin\/bash/$(whoami):\/usr\/bin\/zsh/" \
+  sudo sed -i -e "s/$(whoami):\\/bin\\/bash/$(whoami):\\/usr\\/bin\\/zsh/" \
     /etc/passwd
 fi
 
