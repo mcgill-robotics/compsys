@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Sanity Check') {
+    stage('Shellcheck') {
       parallel {
         stage('install') {
           steps {
@@ -42,6 +42,12 @@ pipeline {
             sh 'shellcheck -s bash --exclude=SC1090 setup/zsh/zshrc'
           }
         }
+      }
+    }
+    stage('YAPF') {
+      steps {
+        sh 'yapf --version'
+        sh '[ -z "$(yapf --recursive --parallel --diff .)" ]'
       }
     }
   }

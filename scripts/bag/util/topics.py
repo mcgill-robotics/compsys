@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 """Topics manager."""
 
 import ConfigParser
@@ -61,8 +60,7 @@ class TopicList(object):
             ValueError: Missing topics file.
         """
         self.topics = [
-            Topic(topic, self._config)
-            for topic in self._config.sections()
+            Topic(topic, self._config) for topic in self._config.sections()
         ]
         if not self.topics:
             err = "'{}' either missing or empty".format(self.filename)

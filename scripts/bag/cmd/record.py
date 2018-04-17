@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 """McGill Robotics ROS Bag Recorder.
 
 This tool records all the specified topics into 15 second bags to the
@@ -68,8 +67,8 @@ class Record(object):
             cmd = split("rosbag record --split --duration={} {} {} -O {}/split"
                         .format(self.duration, self.compression, topics, dir))
         else:
-            cmd = split("rosbag record {} {} -O {}"
-                        .format(topics, self.compression, dir))
+            cmd = split("rosbag record {} {} -O {}".format(
+                topics, self.compression, dir))
 
         print("recording to {dir}".format(dir=dir))
         print("ctrl+c to stop")
