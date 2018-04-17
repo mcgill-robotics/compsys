@@ -6,7 +6,7 @@ python-numpy
 python3-numpy
 python-pyqtgraph
 python3-pyqtgraph
-vim
+vim-nox-py2
 tmux
 tmuxinator
 mosh
