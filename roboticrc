@@ -96,7 +96,9 @@ function rosworkon {
 }
 
 # Set up default robot
-rosworkon ${ROBOT}
+if [[ -n "${ROBOT}" ]]; then
+  rosworkon "${ROBOT}"
+fi
 
 # Add compsys scripts to PYTHONPATH
 export PYTHONPATH="${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts"
