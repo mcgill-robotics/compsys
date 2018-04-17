@@ -30,7 +30,7 @@ sudo -H pip3 install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/p
 
 if [[ -d "${HOME}/.vim/bundle/Vundle.vim" ]]; then
   echo "Updating vim plugins..."
-  vim +PluginInstall +qall
+  vim +PluginInstall +PluginUpdate +PluginClean +qall
 fi
 
 # Update tools.sh repository.
