@@ -49,6 +49,7 @@ if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
   Plugin 'cocopon/lightline-hybrid.vim'
   Plugin 'fholgado/minibufexpl.vim'
   Plugin 'bronson/vim-trailing-whitespace'
+  Plugin 'taketwo/vim-ros'
 
   call vundle#end()
   filetype plugin indent on
@@ -131,6 +132,9 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 " Lightline
 let g:lightline = {}
 let g:lightline.colorscheme = 'hybrid'
+
+" ROS
+let g:ros_build_system = 'catkin-tools'
 
 " Python specific settings
 autocmd Filetype python setlocal shiftwidth=4 softtabstop=4
