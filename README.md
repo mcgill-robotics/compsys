@@ -1,5 +1,9 @@
 # CompSys
 
+[job_icon]: https://dev.mcgillrobotics.com/buildStatus/icon?job=compsys/master
+[job_url]: https://dev.mcgillrobotics.com/job/compsys/job/master
+[![job_icon]][job_url]
+
 This package sets up the user's computer to accommodate McGill Robotics'
 development environment. This is optional, but **highly recommended**
 especially if you are interacting with our robots or the ROS bags in any way.
@@ -17,7 +21,7 @@ Virtual Machine. If you are planning on using a VM, be sure you have a powerful
 enough computer to handle it. For both methods, there are plenty of quality
 online instruction sets and guides for installing Ubuntu.
 
-*Note that McGill students have access to free VMware licenses and downloads*.
+*Note that McGill students have access to free VMware licenses*.
 
 Once you have Ubuntu set up, you will need to install `git` and setup your
 SSH keys. Open a terminal and issue the following commands to install git:
@@ -49,7 +53,7 @@ cd compsys
 and follow the on-screen instructions.
 **This may ask for your user's password several times.**
 
-#### git branch for robot specific setup
+#### Git branch for robot specific setup
 
 The install script will invoke the setup script in the robot repository and
 setup robot specific settings.
@@ -67,7 +71,7 @@ and you will need to `cd` to the robot repository, optionally checkout to a
 branch, and run `./setup.sh` to setup robot specific settings.**
 
 ## Functions
-### rosworkon
+### `rosworkon`
 To switch between projects, you can use the function `rosworkon`:
 
 ```bash
@@ -75,13 +79,13 @@ rosworkon <project> [profile]
 ```
 
 #### Parameters:
-- `<project>`: name of the project you wish to switch to (ex. auv). This
+- `<project>`: name of the project you wish to switch to (ex. `auv`). This
 parameter is required.
 - `[profile]`: catkin profile of the project you wish to switch to. This
 parameter is not required. Leave it empty if you don't know the profile to
 use.
 
-### rosconnect
+### `rosconnect`
 To connect to a remote ROS master, you can use the function `rosconnect`:
 
 ```bash
@@ -90,9 +94,9 @@ rosconnect [host_name]
 #### Parameter:
 - `[host_name]`: the name of the host you wish to connect to, the host must be
 present in your `/etc/hosts` file. This parameter is not required. Leave it
-empty to set the roscore to your local host.
+empty to set the `roscore` to your local host.
 
-## Tmux
+## `tmux`
 CompSys installs and configures [tmux](https://github.com/tmux/tmux/wiki), a
 terminator multiplexer, to switch easily between several programs in one
 terminal, to detach them (they keep running in the background), and to
@@ -102,14 +106,14 @@ reattach them to a different terminal.
 - Start new session: `tmux`
 - Start new session with name: `tmux new -s <name>`
 - List all sessions:`tmux ls`
-- Reattach most recent disattached session: `tmux a`
+- Reattach most recently detached session: `tmux a`
 - Reattach a specific session: `tmux a -t <name>`, `<name>` can be found by
 `tmux ls` and can be either string or integer.
 - Kill specific session: `tmux kill-session -t <name>`
 - kill all sessions: `tmux kill-session -a`
 
 ### Key-bindings
-The key-bining prefix is changed from `ctrl-b` to `ctrl-a`.
+The key-binding prefix is changed from `ctrl-b` to `ctrl-a`.
 
 To use a key-bind shortcut, first hit the prefix `ctrl-a` then hit a specific
 character.
@@ -139,11 +143,11 @@ ctrl-o        Rotate window
 -             Split pane horizontally
 !             Move pane into new window
 x             Kill pane
-SPACE         Toggle between defualt layouts
+SPACE         Toggle between default layouts
 ```
 
 Use the `arrow` key to navigate between panes.
-Mutiple keys can be enter in quick succession.
+Multiple keys can be enter in quick succession.
 ```
 UP            Move to pane on top of the current pane
 DOWN          Move to pane below of the current pane
@@ -152,8 +156,8 @@ RIGHT         Move to pane on the right of the current pane
 ```
 
 Use the `ctrl + arrow` keys to navigate between panes.
-Subtitute `ctrl` with `alt` to move much more.
-Mutiple keys can be enter in quick succession.
+Substitute `ctrl` with `alt` to move much more.
+Multiple keys can be enter in quick succession.
 ```
 ctrl-UP       Resize pane up
 ctrl-DOWN     Resize pane down
@@ -204,10 +208,10 @@ You can use the mouse to accelerate certain tasks:
 
 ## tmuxinator
 [tmuxinator](https://github.com/tmuxinator/tmuxinator) is used to quickly
-launch complex tmux sessions, either on robot bootup, or by user invocation.
+launch complex `tmux` sessions, either on robot boot up, or by user invocation.
 
-`tmuxinator` uses yaml profiles stored in `~/.tmuxinator/` to configure the
-layout. Proifiles are, by convention, stored in robot repository and symlinked
+`tmuxinator` uses YAML profiles stored in `~/.tmuxinator/` to configure the
+layout. Profiles are, by convention, stored in robot repository and symlinked
 into `~/.tmuxinator/`.
 
 To symlink a profile, run:
@@ -217,11 +221,11 @@ ln -s <absolute_path_to_profile>/<profile_name>.yml ${HOME}/.tmuxinator
 
 To launch a profile, run `mux start <profile_name>` where `profile_name` is
 the profile file name without `.yml`, the session might be created and
-dettached, so you would need to attach to it by using `tmux a -t <name>`,
-where `<name>` is the `name:` tag in the yml file. If the the `name:` is set
+detached, so you would need to attach to it by using `tmux a -t <name>`,
+where `<name>` is the `name:` tag in the YAML file. If the the `name:` is set
 to `MAIN` then you can simply run `main` to attach to the session.
 
-To autorun a profile on bootup, run `crontab -e`, and add:
+To automatically run a profile on boot up, run `crontab -e`, and add:
 ```
 @reboot bash -c '. <init_file> && /usr/bin/mux start obc'
 ```
@@ -318,7 +322,7 @@ Two things to note though:
 #### What will my shell look like?
 By setting this option, you will be using the default `sorin` prompt which
 looks like this:
-![GitHub Logo](/setup/zsh/zsh.png)
+![zsh prompt](/setup/zsh/zsh.png)
 *Colors and font may vary depending on your terminal settings.*
 
 - The path on the far left is a shortened path to your current working
