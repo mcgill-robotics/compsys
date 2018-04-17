@@ -13,6 +13,15 @@ sudo apt-get -qq update
 # piping the contents of the requirements list into xargs.
 sed 's/#.*//' "${ROBOTIC_PATH}/compsys/packages/apt" | xargs sudo apt-get install -y
 
+# Suppress pip version checks.
+if [[ ! -f "${HOME}/.config/pip/pip.conf" ]]; then
+  echo "${section}Suppressing future pip update warnings...${reset}"
+  mkdir -p "${HOME}/.config/pip/"
+  PIP_CONF="${HOME}/.config/pip/pip.conf"
+  echo "[global]" > "${PIP_CONF}"
+  echo "disable-pip-version-check = True" >> "${PIP_CONF}"
+fi
+
 echo "${section}Updating pip dependencies...${reset}"
 sudo -H pip install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pip"
 
