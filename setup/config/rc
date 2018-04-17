@@ -18,6 +18,6 @@ if [[ -f "${ROBOTIC_PATH}/compsys/roboticrc" ]]; then
 else
   echo "Could not find ${ROBOTIC_PATH}/compsys/roboticrc"
   echo "This could occur when moving the robotics directory."
-  echo "Please modify ROBOTIC_PATH in your ${rcfile}"
+  echo "Please modify ROBOTIC_PATH in your ${rcfile:?}"
   echo "to point to your robotics directory."
 fi

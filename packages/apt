@@ -2,7 +2,11 @@ git
 wget
 python-pip
 python3-pip
-vim
+python-numpy
+python3-numpy
+python-pyqtgraph
+python3-pyqtgraph
+vim-nox-py2
 tmux
 tmuxinator
 mosh
@@ -14,7 +18,8 @@ tree
 libv4l-dev
 python-pygame
 pyqt4-dev-tools
-software-properties-common 
+software-properties-common
 python-software-properties
 curl
 clang-format
+shellcheck

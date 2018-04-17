@@ -1,12 +1,4 @@
 .DS_Store
 *.pyc
-
-# FTDI driver build files.
-*.o
-*.ok
-*.order
-*.symvers
-*.mod
-*.cmd
-*.ko
-*.mod.c
+*~
+*.swp

@@ -49,6 +49,7 @@ if filereadable($HOME.'/.vim/bundle/Vundle.vim/autoload/vundle.vim')
   Plugin 'cocopon/lightline-hybrid.vim'
   Plugin 'fholgado/minibufexpl.vim'
   Plugin 'bronson/vim-trailing-whitespace'
+  Plugin 'taketwo/vim-ros'
 
   call vundle#end()
   filetype plugin indent on
@@ -95,6 +96,10 @@ set wrap
 set colorcolumn=80
 set number
 
+" Spell checker
+set spell
+set spelllang=en
+
 " Colorscheme
 set t_Co=256
 if filereadable($HOME.'/.vim/bundle/vim-colorschemes/colors/gruvbox.vim')
@@ -127,6 +132,9 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 " Lightline
 let g:lightline = {}
 let g:lightline.colorscheme = 'hybrid'
+
+" ROS
+let g:ros_build_system = 'catkin-tools'
 
 " Python specific settings
 autocmd Filetype python setlocal shiftwidth=4 softtabstop=4

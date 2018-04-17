@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """McGill Robotics ROS Bagger.
 
 This tool can:
@@ -22,7 +21,6 @@ from util import Parser, TopicList
 __author__ = "Anass Al-Wohoush"
 __version__ = "1.2.0"
 
-
 if __name__ == "__main__":
     try:
         topics_path = os.environ["TOPICS_PATH"]
@@ -34,8 +32,6 @@ if __name__ == "__main__":
 
     args = Parser(topics, __doc__, __version__)
     status = args.cmd(
-        topics=args.enabled, name=args.name,
-        dir=args.dir, args=args.raw
-    ).run()
+        topics=args.enabled, name=args.name, dir=args.dir, args=args.raw).run()
 
     sys.exit(status)

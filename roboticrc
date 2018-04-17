@@ -16,13 +16,13 @@ if [[ ${SHELL_EXT} = "zsh" ]]; then
 fi
 
 # Setup ROS
-if [[ -s /opt/ros/kinetic/setup.${SHELL_EXT} ]]; then
-  source /opt/ros/kinetic/setup.${SHELL_EXT}
+if [[ -s "/opt/ros/kinetic/setup.${SHELL_EXT}" ]]; then
+  source "/opt/ros/kinetic/setup.${SHELL_EXT}"
 fi
 
 function rosconnect {
   if [[ -n "${1}" ]]; then
-    export ROS_MASTER_URI=http://${1}:11311
+    export ROS_MASTER_URI="http://${1}:11311"
   else
     # Default is cancelling previous behaviour by setting master to localhost.
     rosconnect localhost
@@ -37,23 +37,23 @@ function rosworkon {
     fi
 
     # Reset ROBOT
-    export ROBOT=${1}
+    export ROBOT="${1}"
     local repo_path="${ROBOTIC_PATH}/${ROBOT}"
 
     # Reset package path from previous workspace
     export ROS_PACKAGE_PATH=/opt/ros/kinetic/share
 
     # Source the new workspace
-    if [[ -s ${repo_path}/catkin_ws/devel/setup.${SHELL_EXT} ]]; then
-      source ${repo_path}/catkin_ws/devel/setup.${SHELL_EXT}
+    if [[ -s "${repo_path}/catkin_ws/devel/setup.${SHELL_EXT}" ]]; then
+      source "${repo_path}/catkin_ws/devel/setup.${SHELL_EXT}"
     fi
 
     # Set environment variables
     export ROS_WORKSPACE="${repo_path}/catkin_ws"
 
     # Source robot-specific configuration
-    if [[ -f ${repo_path}/robotrc ]]; then
-      source ${repo_path}/robotrc
+    if [[ -f "${repo_path}/robotrc" ]]; then
+      source "${repo_path}/robotrc"
     fi
 
     # Determine CATKIN_PROFILE
@@ -67,14 +67,15 @@ function rosworkon {
         return 1
       else
         export CATKIN_PROFILE="${2}"
-        pushd ${ROS_WORKSPACE}
-        catkin profile set ${CATKIN_PROFILE} > /dev/null
+        pushd "${ROS_WORKSPACE}"
+        catkin profile set "${CATKIN_PROFILE}" > /dev/null
         popd
       fi
     else
       # When the second parameter is not set, find the current active profile
       if [[ -e "${catkin_profiles_root}/profiles.yaml" ]]; then
-        local active_profile=$(
+        local active_profile
+        active_profile=$(
           head -n 1 "${catkin_profiles_root}/profiles.yaml" | cut -d' ' -f2)
         export CATKIN_PROFILE="${active_profile}"
         local profile_path="${catkin_profiles_root}/${CATKIN_PROFILE}"
@@ -84,7 +85,7 @@ function rosworkon {
     # Set TOPICS_PATH for bagging
     if [[ -z "${CATKIN_PROFILE}" ]] ||
       [[ "${CATKIN_PROFILE}" == "default" ]]
-      [[ ! -e ${profile_path}/topics ]]; then
+      [[ ! -e "${profile_path}/topics" ]]; then
       export TOPICS_PATH="${ROBOTIC_PATH}/${ROBOT}/topics"
     else
       export TOPICS_PATH="${profile_path}/topics"
@@ -96,15 +97,20 @@ function rosworkon {
 }
 
 # Set up default robot
-rosworkon ${ROBOT}
+if [[ -n "${ROBOT}" ]]; then
+  rosworkon "${ROBOT}"
+fi
 
 # Add compsys scripts to PYTHONPATH
-export PYTHONPATH=${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts
+export PYTHONPATH="${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts"
+
+# Add tools.sh to PATH
+export PATH="${ROBOTIC_PATH}/tools.sh:${PATH}"
 
 # Source custom aliases and functions
-source ${ROBOTIC_PATH}/compsys/aliases
+source "${ROBOTIC_PATH}/compsys/aliases"
 
 # Source catkin-tools shell verbs
 if [[ -x $(command -v catkin) ]]; then
-  source $(catkin locate --shell-verbs)
+  source "$(catkin locate --shell-verbs)"
 fi

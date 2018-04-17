@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 """McGill Robotics ROS Bag Merger.
 
 This tool merges all bags in the specified directory that were split by
@@ -63,6 +62,7 @@ class Merge(object):
 
     def get_bags(self):
         """Get sorted bags to merge from current directory."""
+
         def is_bag(filename):
             starts_correctly = filename.startswith(Merge.prefix)
             ends_correctly = filename.endswith(Merge.extension)
@@ -71,10 +71,7 @@ class Merge(object):
             return (starts_correctly and ends_correctly and not corrupt)
 
         for (dirpath, dirs, files) in os.walk(self.dir):
-            bags = [
-                filename for filename in files
-                if is_bag(filename)
-            ]
+            bags = [filename for filename in files if is_bag(filename)]
             break
 
         return sorted(bags, key=Merge.bag_number)
@@ -108,10 +105,7 @@ class Merge(object):
         name = self.name
         while not name:
             name = raw_input("name me: ")
-        path = "{dir}/{name}.bag".format(
-            dir=self.dir,
-            name=name
-        )
+        path = "{dir}/{name}.bag".format(dir=self.dir, name=name)
 
         print("merging to {bag}".format(bag=path))
 
@@ -123,8 +117,7 @@ class Merge(object):
             for bag in self.bags:
                 print("merging {} of {}".format(
                     Merge.bag_number(bag) + 1,
-                    Merge.bag_number(self.bags[-1]) + 1
-                ))
+                    Merge.bag_number(self.bags[-1]) + 1))
                 self.append(bag)
         except rosbag.ROSBagUnindexedException:
             status = 1

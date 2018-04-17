@@ -7,41 +7,33 @@ echo "Installing zsh..."
 sudo apt-get -y -qq install zsh
 
 echo "Installing Prezto..."
-if [[ ! -d ${HOME}/.zprezto ]]; then
+if [[ ! -d "${HOME}/.zprezto" ]]; then
   prezto_git=https://github.com/sorin-ionescu/prezto.git
-  git clone -q --recursive ${prezto_git} ~/.zprezto
+  git clone -q --recursive "${prezto_git}" ~/.zprezto
 fi
 
 echo "Setting up .zshrc..."
-if [[ ! -f $HOME/.zshrc ]]; then
-  cp ${ROBOTIC_PATH}/compsys/setup/zsh/zshrc ${HOME}/.zshrc
+if [[ ! -f "${HOME}/.zshrc" ]]; then
+  cp "${ROBOTIC_PATH}/compsys/setup/zsh/zshrc" "${HOME}/.zshrc"
 fi
 
-if [[ ! -f ${HOME}/.zpreztorc ]]; then
-  if [[ -L ${HOME}/.zpreztorc ]]; then
-    rm -f ${HOME}/.zpreztorc
+if [[ ! -f "${HOME}/.zpreztorc" ]]; then
+  if [[ -L "${HOME}/.zpreztorc" ]]; then
+    rm -f "${HOME}/.zpreztorc"
   fi
-  ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc ${HOME}/.zpreztorc
-fi
-
-mcgill_prompt=${HOME}/.zprezto/modules/prompt/functions/prompt_mcgill_setup
-if [[ ! -f ${mcgill_prompt} ]]; then
-  if [[ -L ${mcgill_prompt} ]]; then
-    rm -f ${mcgill_prompt}
-  fi
-  ln -s ${ROBOTIC_PATH}/compsys/setup/zsh/prompt_mcgill_setup ${mcgill_prompt}
+  ln -s "${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc" "${HOME}/.zpreztorc"
 fi
 
 echo "Setting up Fasd..."
-if [[ ! -f /usr/bin/fasd ]]; then
-  fasd_url=https://raw.githubusercontent.com/clvv/fasd/master/fasd
-  sudo wget -q ${fasd_url} -P /usr/bin
-  sudo chmod +x /usr/bin/fasd
+if ! dpkg -l | grep -q fasd; then
+  sudo add-apt-repository -y ppa:aacebedo/fasd
+  sudo apt-get update -y -qq
+  sudo apt-get install -y -qq fasd
 fi
 
 echo "Switching default login shell..."
 if [[ ${SHELL##*/} != "zsh" ]]; then
-  sudo sed -i -e "s/$(whoami):\/bin\/bash/$(whoami):\/usr\/bin\/zsh/" \
+  sudo sed -i -e "s/$(whoami):\\/bin\\/bash/$(whoami):\\/usr\\/bin\\/zsh/" \
     /etc/passwd
 fi
 
