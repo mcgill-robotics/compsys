@@ -6,7 +6,7 @@ pipeline {
         stage('install') {
           steps {
             sh 'shellcheck --version'
-            sh 'shellcheck --exclude=SC1091 install'
+            sh 'shellcheck install'
           }
         }
         stage('update') {
@@ -18,7 +18,7 @@ pipeline {
         stage('roboticrc') {
           steps {
             sh 'shellcheck --version'
-            sh 'shellcheck -s bash --exclude=SC1090,SC2164 roboticrc'
+            sh 'shellcheck -s bash roboticrc'
             sh 'shellcheck -s bash aliases'
           }
         }

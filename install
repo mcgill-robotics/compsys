@@ -1,6 +1,9 @@
 #!/bin/bash
 #
 # Install the McGill Robotics CompSys package
+#
+# shellcheck disable=SC1091
+#
 
 # Fail on first error
 set -e

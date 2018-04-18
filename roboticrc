@@ -1,4 +1,7 @@
 # Initialize McGill Robotics customizations, ROS setup and paths
+#
+# shellcheck disable=SC1090,SC2164
+#
 
 # Determine shell
 SHELL_EXT=$(
