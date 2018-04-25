@@ -9,7 +9,7 @@ section=$(tput bold; tput setaf 2)
 reset=$(tput sgr0)
 
 echo "${section}Updating apt dependencies...${reset}"
-sudo apt-get -qq update
+sudo apt-get -q -y update
 # Filter out all comments in the apt requirements file using sed before
 # piping the contents of the requirements list into xargs.
 sed 's/#.*//' "${ROBOTIC_PATH}/compsys/packages/apt" | xargs sudo apt-get install -y
@@ -37,9 +37,9 @@ sudo -H pip install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pi
 echo "${section}Updating pip3 dependencies...${reset}"
 sudo -H pip3 install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pip3"
 
-if [[ -d "${HOME}/.vim/bundle/Vundle.vim" ]]; then
+if [[ -f "${HOME}/.vim/autoload/plug.vim" ]]; then
   echo "${section}Updating vim plugins...${reset}"
-  vim +PluginInstall +PluginUpdate +PluginClean +qall
+  vim +PlugUpgrade +PlugInstall +PlugUpdate +PlugClean +qall
 fi
 
 # Update tools.sh repository.
