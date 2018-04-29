@@ -11,6 +11,20 @@ especially if you are interacting with our robots or the ROS bags in any way.
 This will install **ROS Kinetic Kame** on **Ubuntu 16.04** along with a set of
 other software tools McGill Robotics uses.
 
+## Table of Contents
+   * [Installation](#installation)
+      * [0. Pre-requisites](#0-pre-requisites)
+      * [1. Setup](#1-setup)
+   * [Functions](#functions)
+      * [`rosworkon`](#rosworkon)
+      * [`rosconnect`](#rosconnect)
+   * [Applications](#applications)
+      * [`bag`](#bag)
+      * [`vim`](#vim)
+      * [`tmux`](#tmux)
+      * [`tmuxinator`](#tmuxinator)
+   * [FAQs](#faqs)
+
 ## Installation
 
 ### 0. Pre-requisites
@@ -110,13 +124,48 @@ rosconnect [host_name]
 present in your `/etc/hosts` file. This parameter is not required. Leave it
 empty to set the `roscore` to your local host.
 
-## `tmux`
-CompSys installs and configures [tmux](https://github.com/tmux/tmux/wiki), a
+## Applications
+
+### `bag`
+`bag` is a custom higher-level extension to ROS's `rosbag` tool that was
+developed by McGill Robotics. Refer [here](scripts/bag/README.md) for more
+details.
+
+### `vim`
+CompSys installs and configures the [`vim`](https://vim.org) editor with a
+handful of useful plugins.
+![vim screen](/setup/config/vim.png)
+A few noteworthy highlights:
+
+- [`fzf`](https://github.com/junegunn/fzf): `fzf` is a fuzzy-searching tool
+  that can search the entire codebase for files and open them really quickly.
+  You may trigger this search with `Ctrl-P`. Then start typing, select a file
+  and press `ENTER`.
+- [`nerdtree`](https://github.com/scrooloose/nerdtree): This adds a file
+  explorer to quickly browse through your file directory. This can be toggled
+  with `Ctrl-t`.
+- [`vim-autoformat`](https://github.com/Chiel92/vim-autoformat): This plugin
+  autoformats your code with the same formatters McGill Robotics' codebase uses
+  with `:Autoformat`. A custom keybinding was mapped to `<SPACE>-f`.
+- [`vim-ros`](https://github.com/taketwo/vim-ros): This plugin adds ROS syntax
+  highlighting and `vim` bindings to help you navigate your ROS workspace and
+  packages with commands like `:Rosed`.
+
+Additional plugins and settings are documented in the
+[`vimrc`](setup/config/vimrc) file.
+
+**Note**: If you already have `.vimrc` file in your `${HOME}` directory when
+first installing CompSys, it will _not_ be overwritten. If you wish to change
+your `vim` settings after the fact, simply `rm -f ${HOME}/.vimrc` to remove the
+symlink and create your own.
+
+### `tmux`
+CompSys installs and configures [`tmux`](https://github.com/tmux/tmux/wiki), a
 terminator multiplexer, to switch easily between several programs in one
 terminal, to detach them (they keep running in the background), and to
 reattach them to a different terminal.
 
-### Basics
+#### Basics
 - Start new session: `tmux`
 - Start new session with name: `tmux new -s <name>`
 - List all sessions:`tmux ls`
@@ -126,19 +175,19 @@ reattach them to a different terminal.
 - Kill specific session: `tmux kill-session -t <name>`
 - kill all sessions: `tmux kill-session -a`
 
-### Key-bindings
+#### Key-bindings
 The key-binding prefix is changed from `ctrl-b` to `ctrl-a`.
 
 To use a key-bind shortcut, first hit the prefix `ctrl-a` then hit a specific
 character.
 
-#### Sessions:
+##### Sessions:
 ```
 s             List and switch sessions
 $             Rename current session
 ```
 
-#### Windows (tabs)
+##### Windows (tabs)
 ```
 c             Create new window
 w             List and switch windows
@@ -151,7 +200,7 @@ p             Go to previous window
 ctrl-o        Rotate window
 ```
 
-#### Pane
+##### Pane
 ```
 |             Split pane vertically
 -             Split pane horizontally
@@ -179,7 +228,7 @@ ctrl-LEFT     Resize pane left
 ctrl-RIGHT    Resize pane right
 ```
 
-#### Miscellaneous
+##### Miscellaneous
 ```
 d             Detach from current session
 t             Show current time, press any key to exit
@@ -190,7 +239,7 @@ t             Show current time, press any key to exit
 ctrl-c        Put the last copy buffer into the system clipboard
 ```
 
-### Copy Mode
+#### Copy Mode
 You can enter copy mode by either hitting the prefix key (`ctrl-a`) then `[`
 or use mouse wheel up. Copy mode is indicated by the yellow line number
 indicator in the top right.
@@ -209,7 +258,7 @@ ENTER        End selection and put selected section into copy mode buffer
 ESC          Cancel selection
 ```
 
-### Mouse Mode
+#### Mouse Mode
 You can use the mouse to accelerate certain tasks:
 - Click on a pane to select it.
 - Drag a pane border to resize it.
@@ -220,8 +269,8 @@ You can use the mouse to accelerate certain tasks:
   scrolled down pass the last line.
 - Highlight text to put it into copy mode buffer.
 
-## tmuxinator
-[tmuxinator](https://github.com/tmuxinator/tmuxinator) is used to quickly
+### `tmuxinator`
+[`tmuxinator`](https://github.com/tmuxinator/tmuxinator) is used to quickly
 launch complex `tmux` sessions, either on robot boot up, or by user invocation.
 
 `tmuxinator` uses YAML profiles stored in `~/.tmuxinator/` to configure the
@@ -249,7 +298,7 @@ environment variables. **Note:** Avoid using user environment variables in the
 
 Here is a example for `<init_file>`:
 
-```
+```bash
 #!/bin/bash
 
 # If user has zsh installed and uses zsh as default shell
@@ -388,7 +437,7 @@ git pull && git submodule update --init --recursive
 and launch a new terminal.
 
 ### 6. I don't like *something*. Can I change it?
-**No.**
+**Maybe.**
 Remember that any change you make can and will change everybody else's
 environment. If you wish to make a change, you should be able to overwrite
 the option we set in your own `.bashrc` (or `.zshrc`).

@@ -27,10 +27,11 @@ for rcfile in "vimrc" "tmux.conf"; do
   fi
 done
 
-if [[ ! -d "${HOME}/.vim/bundle/Vundle.vim" ]]; then
-  echo "Setting up vim bundles..."
-  git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  vim +PluginInstall +qall
+if [[ ! -f "${HOME}/.vim/autoload/plug.vim" ]]; then
+  echo "Setting up vim plugins..."
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  vim +PlugInstall +qall
 fi
 
 echo "Done."
