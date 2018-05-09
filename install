@@ -236,15 +236,24 @@ if [[ ! -d "${gitdir}" ]]; then
   echo "Cloning ${ROBOT} git repository..."
 
   if [[ ${GIT_BRANCH} ]]; then
-    gitcmd="-b${GIT_BRANCH}"
+    git clone --recursive "git@github.com:${GIT_URL}" \
+              --branch "${GIT_BRANCH}" \
+              "${gitdir}" || {
+      echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
+      echo "${warning}Falling back to HTTPS for now...${reset}"
+
+      git clone --recursive "https://github.com/${GIT_URL}" \
+                --branch "${GIT_BRANCH}" \
+                "${gitdir}"
+    }
+  else
+    git clone --recursive "git@github.com:${GIT_URL}" "${gitdir}" || {
+      echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
+      echo "${warning}Falling back to HTTPS for now...${reset}"
+
+      git clone --recursive "https://github.com/${GIT_URL}" "${gitdir}"
+    }
   fi
-
-  git clone --recursive "git@github.com:${GIT_URL}" "${gitdir}" "${gitcmd}" || {
-    echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
-    echo "${warning}Falling back to HTTPS for now...${reset}"
-
-    git clone --recursive "https://github.com/${GIT_URL}" "${gitdir}" "${gitcmd}"
-  }
 fi
 
 if [[ -f /opt/ros/kinetic/setup.bash ]]; then
