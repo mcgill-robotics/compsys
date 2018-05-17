@@ -19,7 +19,6 @@ pipeline {
           steps {
             sh 'shellcheck --version'
             sh 'shellcheck -s bash roboticrc'
-            sh 'shellcheck -s bash aliases'
           }
         }
         stage('setup/config') {
