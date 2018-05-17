@@ -1,8 +1,8 @@
 # Initialize McGill Robotics aliases and functions
 
 # Connecting to robot
-alias robosh='mosh robotics@10.0.0.1'
-alias robotx='ssh -Y robotics@10.0.0.1'
+alias robosh="mosh robotics@${ROBOT}"
+alias robotx="ssh -Y robotics@${ROBOT}"
 
 # Monitoring
 alias glances='glances -t 5'
