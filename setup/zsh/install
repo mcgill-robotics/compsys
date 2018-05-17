@@ -3,6 +3,9 @@
 # Install Zsh and set up Prezto
 set -e
 
+# Infer repository root directory
+DIR="$(git rev-parse --show-toplevel 2> /dev/null)"
+
 echo "Installing zsh..."
 sudo apt-get -y -qq install zsh
 
@@ -14,14 +17,14 @@ fi
 
 echo "Setting up .zshrc..."
 if [[ ! -f "${HOME}/.zshrc" ]]; then
-  cp "${ROBOTIC_PATH}/compsys/setup/zsh/zshrc" "${HOME}/.zshrc"
+  cp "${DIR}/setup/zsh/zshrc" "${HOME}/.zshrc"
 fi
 
 if [[ ! -f "${HOME}/.zpreztorc" ]]; then
   if [[ -L "${HOME}/.zpreztorc" ]]; then
     rm -f "${HOME}/.zpreztorc"
   fi
-  ln -s "${ROBOTIC_PATH}/compsys/setup/zsh/zpreztorc" "${HOME}/.zpreztorc"
+  ln -s "${DIR}/setup/zsh/zpreztorc" "${HOME}/.zpreztorc"
 fi
 
 echo "Setting up Fasd..."
