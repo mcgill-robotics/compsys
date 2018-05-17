@@ -13,8 +13,8 @@ export EDITOR=vim
 export ROBOT=${ROBOT}
 export IAMROBOT=${IAMROBOT}
 export ROBOTIC_PATH="${ROBOTIC_PATH}"
-if [[ -f "${ROBOTIC_PATH}/compsys/roboticrc" ]]; then
-  source "${ROBOTIC_PATH}/compsys/roboticrc"
+if [[ -f "${ROBOTIC_PATH}/${repo:?}/roboticrc" ]]; then
+  source "${ROBOTIC_PATH}/${repo:?}/roboticrc"
 else
   echo "Could not find ${ROBOTIC_PATH}/compsys/roboticrc"
   echo "This could occur when moving the robotics directory."

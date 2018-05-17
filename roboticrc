@@ -3,6 +3,9 @@
 # shellcheck disable=SC1090,SC2164
 #
 
+# Infer compsys directory
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Determine shell
 SHELL_EXT=$(
   ([ -n "${ZSH_VERSION}" ] && echo zsh) ||
@@ -108,7 +111,7 @@ fi
 export PATH="${ROBOTIC_PATH}/tools.sh:${PATH}"
 
 # Source custom aliases and functions
-source "${ROBOTIC_PATH}/compsys/aliases"
+source "${DIR}/aliases"
 
 # Source catkin-tools shell verbs
 if [[ -x $(command -v catkin) ]]; then
