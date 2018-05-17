@@ -104,9 +104,6 @@ if [[ -n "${ROBOT}" ]]; then
   rosworkon "${ROBOT}"
 fi
 
-# Add compsys scripts to PYTHONPATH
-export PYTHONPATH="${PYTHONPATH}:${ROBOTIC_PATH}/compsys/scripts"
-
 # Add tools.sh to PATH
 export PATH="${ROBOTIC_PATH}/tools.sh:${PATH}"
 

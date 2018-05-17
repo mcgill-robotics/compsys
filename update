@@ -38,6 +38,15 @@ fi
 echo "${section}Updating Python 2 dependencies...${reset}"
 sudo -H pip2 install --upgrade --requirement "${DIR}/packages/pip"
 
+# Install/update all scripts.
+pushd "${DIR}/scripts"
+for package in *; do
+  echo "${section}Installing ${package}...${reset}"
+  pushd "${package}"
+  sudo -H python setup.py install
+  popd
+done
+
 if [[ -f "${HOME}/.vim/autoload/plug.vim" ]]; then
   echo "${section}Updating vim plugins...${reset}"
   vim +PlugUpgrade +PlugInstall +PlugUpdate +PlugClean +qall

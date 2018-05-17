@@ -4,6 +4,4 @@
 from parser import Parser
 from topics import TopicList
 
-__author__ = "Anass Al-Wohoush"
-
 __all__ = ["Parser", "TopicList"]

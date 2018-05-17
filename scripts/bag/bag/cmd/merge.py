@@ -12,8 +12,6 @@ import os
 import re
 import rosbag
 
-__author__ = "Anass Al-Wohoush"
-
 
 class Merge(object):
 

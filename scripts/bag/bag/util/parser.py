@@ -5,8 +5,6 @@ import sys
 import argparse
 from bag.cmd import record, merge
 
-__author__ = "Anass Al-Wohoush"
-
 
 class Help(argparse.Action):
 
