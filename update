@@ -8,7 +8,7 @@ set -e
 section=$(tput bold; tput setaf 2)
 reset=$(tput sgr0)
 
-# Infer directory and ROBOTIC_PATH
+# Infer compsys directory and ROBOTIC_PATH
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROBOTIC_PATH="$(dirname "${DIR}")"
 

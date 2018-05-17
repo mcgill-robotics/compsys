@@ -1,10 +1,11 @@
 #!/bin/bash
 #
-# Install Zsh and set up Prezto
+# Install zsh and set up Prezto
 set -e
 
-# Infer repository root directory
-DIR="$(git rev-parse --show-toplevel 2> /dev/null)"
+# Infer compsys directory
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR="$(dirname "$(dirname "${DIR}")")"  # This file is 2 levels deep.
 
 echo "Installing zsh..."
 sudo apt-get -y -qq install zsh

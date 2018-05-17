@@ -21,9 +21,9 @@ function onerr {
 }
 trap onerr ERR
 
-# Infer repository root directory and ROBOTIC_PATH
+# Infer compsys directory and ROBOTIC_PATH
 export ROBOTIC_PATH
-DIR="$(git rev-parse --show-toplevel 2> /dev/null)"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROBOTIC_PATH="$(dirname "${DIR}")"
 
 # Move into the repository

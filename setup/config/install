@@ -3,8 +3,9 @@
 # Set up shell, vim and tmux configuration files
 set -e
 
-# Infer repository root directory and ROBOTIC_PATH
-DIR="$(git rev-parse --show-toplevel 2> /dev/null)"
+# Infer compsys directory and ROBOTIC_PATH
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR="$(dirname "$(dirname "${DIR}")")"  # This file is 2 levels deep.
 ROBOTIC_PATH="$(dirname "${DIR}")"
 
 for rcfile in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
@@ -14,7 +15,8 @@ for rcfile in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
       sed -e "s@=\${ROBOT}@=${ROBOT}@" \
         -e "s@=\${IAMROBOT}@=${IAMROBOT}@" \
         -e "s@=\"\${ROBOTIC_PATH}\"@=\"${ROBOTIC_PATH//\//\/}\"@" \
-        -e "s@\${rcfile}@~\\/${rcfile##*/}@" \
+        -e "s@\${rcfile:?}@~\\/${rcfile##*/}@" \
+        -e "s@\${repo:?}@${DIR##*/}@" \
         "${DIR}/setup/config/rc" >> "${rcfile}"
     fi
   fi
