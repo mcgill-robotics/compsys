@@ -11,10 +11,16 @@ By default, all the topics defined in your project's `topics` file will be
 recorded/merged if no arguments are specified. Otherwise, only the topics
 specified will be recorded/merged.
 
-## Usage
+## Install
 If the `compsys` package is installed correctly, the tool should already be
-mapped to `bag` in your terminal.
+installed for you. Should you need to install this manually, from this
+directory, run:
 
+```bash
+sudo python setup.py install
+```
+
+## Usage
 To begin, you can run:
 
 ```bash
@@ -140,7 +146,11 @@ topics: status/temperature
 ```
 
 ## Version History
-**1.1** (June 15, 2015)
+### 1.3.0
+* Add `setup.py`
+### 1.2.0
+* Add support for `catkin` profile-specific topics
+### 1.1.0
 * Add `--split` argument.
-**1.0** (December 24, 2014)
+### 1.0.0
 * Initial release.

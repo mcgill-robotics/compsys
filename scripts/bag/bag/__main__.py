@@ -18,10 +18,11 @@ import os
 import sys
 from util import Parser, TopicList
 
-__author__ = "Anass Al-Wohoush"
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
-if __name__ == "__main__":
+
+def main():
+    """Runs the CLI."""
     try:
         topics_path = os.environ["TOPICS_PATH"]
     except KeyError:
@@ -35,3 +36,7 @@ if __name__ == "__main__":
         topics=args.enabled, name=args.name, dir=args.dir, args=args.raw).run()
 
     sys.exit(status)
+
+
+if __name__ == "__main__":
+    main()

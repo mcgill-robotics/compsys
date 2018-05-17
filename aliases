@@ -4,9 +4,6 @@
 alias robosh='mosh robotics@10.0.0.1'
 alias robotx='ssh -Y robotics@10.0.0.1'
 
-# Bagging
-alias bag='python -m bag.run'
-
 # Monitoring
 alias glances='glances -t 5'
 
