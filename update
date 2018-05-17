@@ -12,7 +12,8 @@ echo "${section}Updating apt dependencies...${reset}"
 sudo apt-get -q -y update
 # Filter out all comments in the apt requirements file using sed before
 # piping the contents of the requirements list into xargs.
-sed 's/#.*//' "${ROBOTIC_PATH}/compsys/packages/apt" | xargs sudo apt-get install -y
+sed 's/#.*//' "${ROBOTIC_PATH}/compsys/packages/apt" |
+  xargs sudo apt-get install -y
 
 # Suppress pip version checks.
 ROBOTICS_PIP_CONF="${ROBOTIC_PATH}/compsys/setup/config/pip.conf"
@@ -31,11 +32,8 @@ if [[ ! -f "${ROOT_PIP_CONF}" ]]; then
   sudo cp "${ROBOTICS_PIP_CONF}" "${ROOT_PIP_CONF}"
 fi
 
-echo "${section}Updating pip dependencies...${reset}"
-sudo -H pip install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pip"
-
-echo "${section}Updating pip3 dependencies...${reset}"
-sudo -H pip3 install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pip3"
+echo "${section}Updating Python 2 dependencies...${reset}"
+sudo -H pip2 install --upgrade --requirement "${ROBOTIC_PATH}/compsys/packages/pip"
 
 if [[ -f "${HOME}/.vim/autoload/plug.vim" ]]; then
   echo "${section}Updating vim plugins...${reset}"
