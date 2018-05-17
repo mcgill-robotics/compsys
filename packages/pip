@@ -6,3 +6,4 @@ catkin_lint==1.4.20
 pipenv
 yapf==0.20.2
 futures
+grip  # Offline MarkDown previewer
