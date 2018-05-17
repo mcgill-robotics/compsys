@@ -1,9 +1,8 @@
-ipython<6.0
-pysensors
-enum34
-catkin_tools
-catkin_lint==1.4.20
-pipenv
-yapf==0.20.2
-futures
+ipython<6.0  # Interactive python interpreter
+pysensors  # lm-sensors bindings
+catkin_tools  # ROS build tool
+catkin_lint==1.4.20  # ROS package linter
+pipenv  # Python virtual environment tool
+yapf==0.20.2  # Python formatter
+futures  # Enables multiprocessing in yapf
 grip  # Offline MarkDown previewer
