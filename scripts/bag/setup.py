@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
     name="bag",
-    version="1.3.0",
+    version="1.3.1",
     description="McGill Robotics ROS Bagger",
     author="McGill Robotics",
     author_email="dev@mcgillrobotics.com",
