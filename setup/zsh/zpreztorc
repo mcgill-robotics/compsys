@@ -21,7 +21,6 @@ zstyle ':prezto:load' pmodule \
   'tmux' \
   'fasd' \
   'archive' \
-  'wakeonlan' \
   'syntax-highlighting' \
   'history-substring-search' \
   'autosuggestions' \
@@ -46,3 +45,7 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
 
 # Case sensitivity
 zstyle ':prezto:*:*' case-sensitive 'no'
+
+# Disable automatic virtualenv and virtualenvwrapper initialization
+zstyle ':prezto:module:python:virtualenv' initialize 'no'
+zstyle ':prezto:module:python' skip-virtualenvwrapper-init 'on'
