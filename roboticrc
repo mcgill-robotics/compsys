@@ -3,9 +3,6 @@
 # shellcheck disable=SC1090,SC2164
 #
 
-# Infer compsys directory
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 # Determine shell
 SHELL_EXT=$(
   ([ -n "${ZSH_VERSION}" ] && echo zsh) ||
@@ -110,10 +107,13 @@ fi
 # Add tools.sh to PATH
 export PATH="${ROBOTIC_PATH}/tools.sh:${PATH}"
 
-# Source custom aliases and functions
-source "${DIR}/aliases"
-
 # Source catkin-tools shell verbs
 if [[ -x $(command -v catkin) ]]; then
   source "$(catkin locate --shell-verbs)"
 fi
+
+# Aliases
+alias glances='glances -t 5'
+alias main='tmux new-session -t MAIN || tmux new -s MAIN'
+alias killmain='tmux kill-session -t MAIN'
+[[ -n $(which fasd_cd) ]] && alias j='fasd_cd'
