@@ -15,8 +15,6 @@ from shlex import split
 from subprocess import Popen
 from datetime import datetime
 
-__author__ = "Anass Al-Wohoush"
-
 
 class Record(object):
 

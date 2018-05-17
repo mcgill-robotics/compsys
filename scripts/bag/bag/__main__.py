@@ -16,12 +16,20 @@ specified will be recorded/merged.
 
 import os
 import sys
+
+try:
+    import rosbag
+except ImportError:
+    sys.stderr.write("Could not find rosbag package. Is ROS installed?\n")
+    sys.exit(-1)
+
 from util import Parser, TopicList
 
-__author__ = "Anass Al-Wohoush"
-__version__ = "1.2.0"
+__version__ = "1.3.1"
 
-if __name__ == "__main__":
+
+def main():
+    """Runs the CLI."""
     try:
         topics_path = os.environ["TOPICS_PATH"]
     except KeyError:
@@ -35,3 +43,7 @@ if __name__ == "__main__":
         topics=args.enabled, name=args.name, dir=args.dir, args=args.raw).run()
 
     sys.exit(status)
+
+
+if __name__ == "__main__":
+    main()

@@ -4,6 +4,5 @@ enum34
 catkin_tools
 catkin_lint==1.4.20
 pipenv
-virtualenvwrapper
 yapf==0.20.2
 futures

@@ -21,9 +21,13 @@ function onerr {
 }
 trap onerr ERR
 
-# Determine ROBOTIC_PATH
+# Infer repository root directory and ROBOTIC_PATH
 export ROBOTIC_PATH
-ROBOTIC_PATH=$(dirname "${PWD}")
+DIR="$(git rev-parse --show-toplevel 2> /dev/null)"
+ROBOTIC_PATH="$(dirname "${DIR}")"
+
+# Move into the repository
+cd "${DIR}"
 
 # Verify running on Ubuntu 16.04
 if [[ $(lsb_release -sc) != "xenial" ]]; then
@@ -236,15 +240,24 @@ if [[ ! -d "${gitdir}" ]]; then
   echo "Cloning ${ROBOT} git repository..."
 
   if [[ ${GIT_BRANCH} ]]; then
-    gitcmd="-b${GIT_BRANCH}"
+    git clone --recursive "git@github.com:${GIT_URL}" \
+              --branch "${GIT_BRANCH}" \
+              "${gitdir}" || {
+      echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
+      echo "${warning}Falling back to HTTPS for now...${reset}"
+
+      git clone --recursive "https://github.com/${GIT_URL}" \
+                --branch "${GIT_BRANCH}" \
+                "${gitdir}"
+    }
+  else
+    git clone --recursive "git@github.com:${GIT_URL}" "${gitdir}" || {
+      echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
+      echo "${warning}Falling back to HTTPS for now...${reset}"
+
+      git clone --recursive "https://github.com/${GIT_URL}" "${gitdir}"
+    }
   fi
-
-  git clone --recursive "git@github.com:${GIT_URL}" "${gitdir}" "${gitcmd}" || {
-    echo "${warning}GitHub SSH key doesn't seem to be set up properly${reset}"
-    echo "${warning}Falling back to HTTPS for now...${reset}"
-
-    git clone --recursive "https://github.com/${GIT_URL}" "${gitdir}" "${gitcmd}"
-  }
 fi
 
 if [[ -f /opt/ros/kinetic/setup.bash ]]; then

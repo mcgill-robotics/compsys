@@ -3,8 +3,6 @@
 
 import ConfigParser
 
-__author__ = "Anass Al-Wohoush"
-
 
 class Topic(object):
 
