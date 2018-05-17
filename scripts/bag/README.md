@@ -146,6 +146,8 @@ topics: status/temperature
 ```
 
 ## Version History
+### 1.3.1
+* Print more user-friendly error message if ROS is not installed
 ### 1.3.0
 * Add `setup.py`
 ### 1.2.0

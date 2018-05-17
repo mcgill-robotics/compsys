@@ -16,9 +16,16 @@ specified will be recorded/merged.
 
 import os
 import sys
+
+try:
+    import rosbag
+except ImportError:
+    sys.stderr.write("Could not find rosbag package. Is ROS installed?\n")
+    sys.exit(-1)
+
 from util import Parser, TopicList
 
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 
 
 def main():
