@@ -1,8 +1,6 @@
 git
 wget
 python-pip
-python-numpy
-python-pyqtgraph
 vim-nox-py2
 tmux
 tmuxinator
@@ -10,11 +8,8 @@ mosh
 glances
 tig
 colordiff
-libsensors4
+libsensors4  # Required by pysensors
 tree
-libv4l-dev
-python-pygame
-pyqt4-dev-tools
 software-properties-common
 python-software-properties
 curl
