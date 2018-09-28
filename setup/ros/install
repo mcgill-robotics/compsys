@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Install ROS Melodic Morenia on Ubuntu 18.04 LTS
+# Install ROS Kinetic Kame on Ubuntu 16.04 LTS
 set -e
 
 echo "Adding ROS PPA..."
-ros_ppa_cmd="echo 'deb http://packages.ros.org/ros/ubuntu bionic main'"
+ros_ppa_cmd="echo 'deb http://packages.ros.org/ros/ubuntu xenial main'"
 ros_ppa_cmd="${ros_ppa_cmd} > /etc/apt/sources.list.d/ros-latest.list"
 sudo sh -c "${ros_ppa_cmd}"
 
@@ -25,7 +25,7 @@ echo "Updating apt package list..."
 sudo apt-get -qq update
 
 echo "Installing ROS..."
-sudo apt-get -y install ros-melodic-desktop-full python-rosinstall
+sudo apt-get -y install ros-kinetic-desktop-full python-rosinstall
 
 echo "Setting up ROS dependencies..."
 if [[ ! -e /etc/ros/rosdep/sources.list.d/20-default.list ]]; then

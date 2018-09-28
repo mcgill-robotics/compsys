@@ -30,6 +30,8 @@ fi
 
 echo "Setting up Fasd..."
 if ! dpkg -l | grep -q fasd; then
+  sudo add-apt-repository -y ppa:aacebedo/fasd
+  sudo apt-get update -y -qq
   sudo apt-get install -y -qq fasd
 fi
 

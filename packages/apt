@@ -1,7 +1,7 @@
 git
 wget
 python-pip
-vim
+vim-nox-py2
 tmux
 tmuxinator
 mosh
@@ -11,6 +11,7 @@ colordiff
 libsensors4  # Required by pysensors
 tree
 software-properties-common
+python-software-properties
 curl
 clang-format
 shellcheck
