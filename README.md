@@ -8,8 +8,8 @@ This package sets up the user's computer to accommodate McGill Robotics'
 development environment. This is optional, but **highly recommended**
 especially if you are interacting with our robots or the ROS bags in any way.
 
-This will install **ROS Kinetic Kame** on **Ubuntu 16.04** along with a set of
-other software tools McGill Robotics uses.
+This will install **ROS Melodic Morenia** on **Ubuntu 18.04** along with a set
+of other software tools McGill Robotics uses.
 
 ## Table of Contents
    * [Installation](#installation)
@@ -28,7 +28,7 @@ other software tools McGill Robotics uses.
 ## Installation
 
 ### 0. Pre-requisites
-This package requires *Ubuntu 16.04*. The **.iso** can be found on the
+This package requires *Ubuntu 18.04*. The **.iso** can be found on the
 [Ubuntu download page](http://www.ubuntu.com/download/desktop). You may choose
 to install either directly on your machine with a bootable USB or by using a
 Virtual Machine. If you are planning on using a VM, be sure you have a powerful
@@ -135,7 +135,8 @@ A few noteworthy highlights:
   with `:Autoformat`. A custom keybinding was mapped to `<SPACE>-f`.
 - [`vim-ros`](https://github.com/taketwo/vim-ros): This plugin adds ROS syntax
   highlighting and `vim` bindings to help you navigate your ROS workspace and
-  packages with commands like `:Rosed`.
+  packages with commands like `:Rosed`. **Note**: This plugin is only enabled
+  if `vim` was compiled with `+python`, which is not the case by default.
 
 Additional plugins and settings are documented in the
 [`vimrc`](setup/config/vimrc) file.
