@@ -3,19 +3,19 @@
 # Install ROS Kinetic Kame on Ubuntu 16.04 LTS
 set -e
 
-if [[ $(lsb_release -sc) != "xenial" ]]; then
-  OS_VERSION="xenial"
+OS_VERSION=$(lsb_release -sc)
+
+if [[ ${OS_VERSION} == "xenial" ]]; then
   ROS_VERSION="kinetic"
-elif if [[ $(lsb_release -sc) != "xenial" ]]; then
-  OS_VERSION="bionic"
+elif [[ ${OS_VERSION} == "bionic" ]]; then
   ROS_VERSION="melodic"
 else
   echo "Unknown OS detected, installation aborted!"
   exit -1
-if
+fi
 
 echo "Adding ROS PPA..."
-ros_ppa_cmd="echo 'deb http://packages.ros.org/ros/ubuntu $(OS_VERSION) main'"
+ros_ppa_cmd="echo 'deb http://packages.ros.org/ros/ubuntu ${OS_VERSION} main'"
 ros_ppa_cmd="${ros_ppa_cmd} > /etc/apt/sources.list.d/ros-latest.list"
 sudo sh -c "${ros_ppa_cmd}"
 
@@ -36,7 +36,7 @@ echo "Updating apt package list..."
 sudo apt-get -qq update
 
 echo "Installing ROS..."
-sudo apt-get -y install ros-$(ROS_VERSION)-desktop-full python-rosinstall
+sudo apt-get -y install ros-${ROS_VERSION}-desktop-full python-rosinstall
 
 echo "Setting up ROS dependencies..."
 if [[ ! -e /etc/ros/rosdep/sources.list.d/20-default.list ]]; then

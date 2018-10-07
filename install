@@ -30,12 +30,15 @@ ROBOTIC_PATH="$(dirname "${DIR}")"
 cd "${DIR}"
 
 # Verify running on Ubuntu 16.04
-if [[ $(lsb_release -sc) == "xenial" ]]; then
+OS_VERSION=$(lsb_release -sc)
+if [[ ${OS_VERSION} == "xenial" ]]; then
   echo "${warning}Ubuntu 16.04 Xenial Xerus detected!${reset}"
-elif [[ $(lsb_release -sc) == "bionic" ]]; then
+  ROS_VERSION="kinetic"
+elif [[ ${OS_VERSION} == "bionic" ]]; then
   echo "${warning}Ubuntu 18.04 Bionic Beaver detected!${reset}"
+  ROS_VERSION="melodic"
 else
-  echo "${warning}Compsys currently do not support your OS!${reset}"
+  echo "${warning}CompSys currently do not support your OS!${reset}"
   exit -1
 fi
 
