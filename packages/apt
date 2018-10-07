@@ -1,17 +1,16 @@
-git
-wget
-python-pip
-vim-nox-py2
-tmux
-tmuxinator
-mosh
-glances
-tig
-colordiff
+git  # Version control
+wget  # Get stuff from the web
+python-pip  # python package manager
+vim  # Command line edditor 
+tmux  # Terminal multiplexer
+tmuxinator  # Tmux addon, multi-panel
+mosh  # Better ssh
+glances  # All system info at a glance
+tig  # Text mode interface for git
+colordiff  # Add color to diff
 libsensors4  # Required by pysensors
-tree
+tree  # Directory visualizer
+curl  # Get stuff from the web
+clang-format  # Coding style checks
+shellcheck  # Check bugs for shell script
 software-properties-common
-python-software-properties
-curl
-clang-format
-shellcheck
