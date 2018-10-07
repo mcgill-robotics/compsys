@@ -30,8 +30,13 @@ ROBOTIC_PATH="$(dirname "${DIR}")"
 cd "${DIR}"
 
 # Verify running on Ubuntu 16.04
-if [[ $(lsb_release -sc) != "xenial" ]]; then
-  echo "${warning}CompSys only supports Ubuntu 16.04${reset}"
+OS_VERSION=$(lsb_release -sc)
+if [[ ${OS_VERSION} == "xenial" ]]; then
+  echo "${warning}Ubuntu 16.04 Xenial Xerus detected!${reset}"
+elif [[ ${OS_VERSION} == "bionic" ]]; then
+  echo "${warning}Ubuntu 18.04 Bionic Beaver detected!${reset}"
+else
+  echo "${warning}CompSys currently do not support your OS!${reset}"
   exit -1
 fi
 
@@ -260,9 +265,17 @@ if [[ ! -d "${gitdir}" ]]; then
   fi
 fi
 
-if [[ -f /opt/ros/kinetic/setup.bash ]]; then
-  echo "Sourcing ROS setup script..."
-  source /opt/ros/kinetic/setup.bash
+echo "Sourcing ROS setup script..."
+if [[ $(lsb_release -sc) == "xenial" ]]; then
+  if [[ -f /opt/ros/kinetic/setup.bash ]]; then
+    source /opt/ros/kinetic/setup.bash
+  fi
+fi
+
+if [[ $(lsb_release -sc) == "bionic" ]]; then
+  if [[ -f /opt/ros/melodic/setup.bash ]]; then
+    source /opt/ros/melodic/setup.bash
+  fi
 fi
 
 if [[ -f "${gitdir}/setup.sh" ]]; then

@@ -9,6 +9,14 @@ SHELL_EXT=$(
   ([ -n "${BASH_VERSION}" ] && echo bash)
 )
 
+
+if [[ $(lsb_release -sc) == "xenial" ]]; then
+  ROS_VERSION="kinetic"
+elif [[ $(lsb_release -sc) == "bionic" ]]; then
+  ROS_VERSION="melodic"
+fi
+
+
 # ZSH-specific settings
 if [[ ${SHELL_EXT} = "zsh" ]]; then
   # Set CLOBBER option to properly source ROS
@@ -19,8 +27,8 @@ if [[ ${SHELL_EXT} = "zsh" ]]; then
 fi
 
 # Setup ROS
-if [[ -s "/opt/ros/kinetic/setup.${SHELL_EXT}" ]]; then
-  source "/opt/ros/kinetic/setup.${SHELL_EXT}"
+if [[ -s "/opt/ros/${ROS_VERSION}/setup.${SHELL_EXT}" ]]; then
+  source "/opt/ros/${ROS_VERSION}/setup.${SHELL_EXT}"
 fi
 
 function rosconnect {
@@ -44,7 +52,7 @@ function rosworkon {
     local repo_path="${ROBOTIC_PATH}/${ROBOT}"
 
     # Reset package path from previous workspace
-    export ROS_PACKAGE_PATH=/opt/ros/kinetic/share
+    export ROS_PACKAGE_PATH=/opt/ros/${ROS_VERSION}/share
 
     # Source the new workspace
     if [[ -s "${repo_path}/catkin_ws/devel/setup.${SHELL_EXT}" ]]; then
