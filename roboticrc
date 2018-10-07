@@ -27,7 +27,7 @@ if [[ ${SHELL_EXT} = "zsh" ]]; then
 fi
 
 # Setup ROS
-if [[ -s "/opt/ros/${ROS_VERSiON}/setup.${SHELL_EXT}" ]]; then
+if [[ -s "/opt/ros/${ROS_VERSION}/setup.${SHELL_EXT}" ]]; then
   source "/opt/ros/${ROS_VERSION}/setup.${SHELL_EXT}"
 fi
 
@@ -52,7 +52,7 @@ function rosworkon {
     local repo_path="${ROBOTIC_PATH}/${ROBOT}"
 
     # Reset package path from previous workspace
-    export ROS_PACKAGE_PATH=/opt/ros/$(ROS_VERSION)/share
+    export ROS_PACKAGE_PATH=/opt/ros/${ROS_VERSION}/share
 
     # Source the new workspace
     if [[ -s "${repo_path}/catkin_ws/devel/setup.${SHELL_EXT}" ]]; then
