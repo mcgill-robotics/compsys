@@ -1,6 +1,5 @@
 ipython<6.0  # Interactive python interpreter
 pysensors  # lm-sensors bindings
-catkin_tools  # ROS build tool
 catkin_lint==1.4.20  # ROS package linter
 pipenv  # Python virtual environment tool
 yapf==0.20.2  # Python formatter
