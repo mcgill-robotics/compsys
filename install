@@ -29,9 +29,9 @@ ROBOTIC_PATH="$(dirname "${DIR}")"
 # Move into the repository
 cd "${DIR}"
 
-# Verify running on Ubuntu 16.04
-if [[ $(lsb_release -sc) != "xenial" ]]; then
-  echo "${warning}CompSys only supports Ubuntu 16.04${reset}"
+# Verify running on Ubuntu 18.04
+if [[ $(lsb_release -sc) != "bionic" ]]; then
+  echo "${warning}CompSys only supports Ubuntu 18.04${reset}"
   exit -1
 fi
 
@@ -260,9 +260,9 @@ if [[ ! -d "${gitdir}" ]]; then
   fi
 fi
 
-if [[ -f /opt/ros/kinetic/setup.bash ]]; then
+if [[ -f /opt/ros/melodic/setup.bash ]]; then
   echo "Sourcing ROS setup script..."
-  source /opt/ros/kinetic/setup.bash
+  source /opt/ros/melodic/setup.bash
 fi
 
 if [[ -f "${gitdir}/setup.sh" ]]; then
