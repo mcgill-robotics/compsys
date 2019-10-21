@@ -8,12 +8,20 @@
 # Fail on first error
 set -e
 
-# Colors
-header=$(tput setab 1; tput setaf 0)
-question=$(tput bold; tput setaf 4)
-section=$(tput bold; tput setaf 2)
-warning=$(tput bold; tput setaf 1)
-reset=$(tput sgr0)
+# Colors only if interactive session
+if tty -s ; then
+  header=$(tput setab 1; tput setaf 0)
+  question=$(tput bold; tput setaf 4)
+  section=$(tput bold; tput setaf 2)
+  warning=$(tput bold; tput setaf 1)
+  reset=$(tput sgr0)
+else
+  header=""
+  question=""
+  section=""
+  warning=""
+  reset=""
+fi
 
 # Print err message when failed
 function onerr {
