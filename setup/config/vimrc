@@ -50,7 +50,12 @@ if filereadable($HOME.'/.vim/autoload/plug.vim')
 
   " Show trailing whitespace
   Plug 'bronson/vim-trailing-whitespace'
+
   call plug#end()
+
+  " Remove trailing whitespaces
+  let ignore = ["markdown", "latex", "plaintex"]  " Ignore for these filetypes
+  autocmd BufWritePre * if index(ignore, &ft) < 0 | RemoveTrailingSpaces
 endif
 
 " Mappings <leader> = <space>
@@ -158,7 +163,3 @@ let g:ros_build_system = 'catkin-tools'
 " Syntax-specific settings
 let g:vim_markdown_folding_disabled = 1
 autocmd Filetype python setlocal shiftwidth=4 softtabstop=4
-
-" Remove trailing whitespaces
-let ignore = ["markdown", "latex", "plaintex"]  " Ignore for these filetypes
-autocmd BufWritePre * if index(ignore, &ft) < 0 | RemoveTrailingSpaces
